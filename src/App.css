@@ -1,42 +1,252 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* Header */
+.header {
+  background-color: #6c9b41;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00cc66;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #00cc66;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background-image: url('/src/assets/canchaFondo.png'); 
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+}
+
+.hero-content {
+  position: relative;
+  max-width: 900px;
+  text-align: center;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.search-bar {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.search-bar select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: white;
+  color: #00cc66;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #e6e6e6;
+}
+
+/* Monthly Tournaments Section */
+.monthly-tournaments {
+  background-image: url('/src/assets/torneo1.png'); /* Replace with actual image path */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.tournaments-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.tournaments-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.tournaments-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.btn-secondary {
+  background-color: #00cc66;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #007744;
+}
+
+/* Free Play Section */
+.free-play {
+  background-color: #00cc66;
+  color: white;
+  padding: 3rem 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Features Section */
+.features {
+  padding: 4rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.features h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #00cc66;
+}
+
+.feature-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .card {
-  padding: 2em;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  max-width: 300px;
+  transition: transform 0.2s ease-in-out;
 }
 
-.read-the-docs {
-  color: #888;
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin-bottom: 1rem;
+  color: #007744;
+}
+
+.card p {
+  font-size: 1rem;
+}
+
+/* Growth Section */
+.growth {
+  background-color: #f0f0f0;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.growth-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.growth-content h2 {
+  color: #00cc66;
+  margin-bottom: 1rem;
+}
+
+.growth-content blockquote {
+  font-style: italic;
+  color: #555;
+  margin-top: 2rem;
+}
+
+.growth-content blockquote p {
+  margin-bottom: 1rem;
+}
+
+/* Footer */
+.footer {
+  background-color: #1f1f1f;
+  color: white;
+  text-align: center;
+  padding: 2rem 2rem;
+  margin-top: 4rem;
 }
