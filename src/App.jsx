@@ -54,23 +54,32 @@ function App() {
       <section className="features" id="funcionalidades">
         <h2>¿Qué podés hacer en Por La Cancha?</h2>
         <div className="feature-cards">
-          <div className="card">
-            <h3>Unite a partidos</h3>
-            <p>Unite a partidos abiertos en tu zona y jugá cuando quieras.</p>
-          </div>
-          <div className="card">
-            <h3>Reservá tu cancha</h3>
-            <p>Alquilá canchas disponibles y jugá sin complicaciones.</p>
-          </div>
-          <div className="card">
-            <h3>Invitá a tus amigos</h3>
-            <p>Sumá amigos a tu partido y organizá encuentros fácilmente.</p>
-          </div>
-          <div className="card">
-            <h3>Gestioná tu equipo</h3>
-            <p>Organizá horarios, votá figuras y registrá estadísticas.</p>
-          </div>
-        </div>
+  <div className="feature-card">
+    <img src="/src/assets/Ej1.png" alt="Unite a partidos" className="feature-icon" />
+    <h3>Unete a partidos</h3>
+    <p>Unite a partidos abiertos o encontrá equipos para jugar contra tu equipo.</p>
+  </div>
+  <div className="vertical-divider"></div>
+  <div className="feature-card">
+    <img src="/src/assets/Ej2.png" alt="Reservá tu cancha" className="feature-icon" />
+    <h3>Reserva tu canchas</h3>
+    <p>Alquilá canchas en diferentes ubicaciones y horarios en minutos.</p>
+  </div>
+  <div className="vertical-divider"></div>
+  <div className="feature-card">
+    <img src="/src/assets/Ej3.png" alt="Invitá a tus amigos" className="feature-icon" />
+    <h3>Invita a tus amigos</h3>
+    <p>Sumá amigos a tus partidos y armá tu equipo ideal fácilmente.</p>
+  </div>
+  <div className="vertical-divider"></div>
+  <div className="feature-card">
+    <img src="/src/assets/Ej4.png" alt="Gestioná tu equipo" className="feature-icon" />
+    <h3>Gestiona tu equipo</h3>
+    <p>Controlá tus partidos, estadísticas y el rendimiento de tu equipo.</p>
+    
+  </div>
+</div>
+
       </section>
 
       <section className="growth">
