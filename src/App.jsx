@@ -26,7 +26,7 @@ function App() {
                 <option>Zona 2</option>
               </select>
               <select aria-label="Fecha">
-                <option>Ma&ntilde;ana 25</option>
+                <option>Mañana 25</option>
                 <option>Hoy 24</option>
               </select>
               <select aria-label="Hora">
@@ -54,32 +54,27 @@ function App() {
       <section className="features" id="funcionalidades">
         <h2>¿Qué podés hacer en Por La Cancha?</h2>
         <div className="feature-cards">
-  <div className="feature-card">
-    <img src="/src/assets/Ej1.png" alt="Unite a partidos" className="feature-icon" />
-    <h3>Unete a partidos</h3>
-    <p>Unite a partidos abiertos o encontrá equipos para jugar contra tu equipo.</p>
-  </div>
-  <div className="vertical-divider"></div>
-  <div className="feature-card">
-    <img src="/src/assets/Ej2.png" alt="Reservá tu cancha" className="feature-icon" />
-    <h3>Reserva tu canchas</h3>
-    <p>Alquilá canchas en diferentes ubicaciones y horarios en minutos.</p>
-  </div>
-  <div className="vertical-divider"></div>
-  <div className="feature-card">
-    <img src="/src/assets/Ej3.png" alt="Invitá a tus amigos" className="feature-icon" />
-    <h3>Invita a tus amigos</h3>
-    <p>Sumá amigos a tus partidos y armá tu equipo ideal fácilmente.</p>
-  </div>
-  <div className="vertical-divider"></div>
-  <div className="feature-card">
-    <img src="/src/assets/Ej4.png" alt="Gestioná tu equipo" className="feature-icon" />
-    <h3>Gestiona tu equipo</h3>
-    <p>Controlá tus partidos, estadísticas y el rendimiento de tu equipo.</p>
-    
-  </div>
-</div>
-
+          <div className="feature-card">
+            <img src="/src/assets/Ej1.png" alt="Unite a partidos" className="feature-icon" />
+            <h3>Unite a partidos</h3>
+            <p>Unite a partidos abiertos o encontrá equipos para jugar contra tu equipo.</p>
+          </div>
+          <div className="feature-card">
+            <img src="/src/assets/Ej2.png" alt="Reservá tu cancha" className="feature-icon" />
+            <h3>Reserva tu canchas</h3>
+            <p>Alquilá canchas en diferentes ubicaciones y horarios en minutos.</p>
+          </div>
+          <div className="feature-card">
+            <img src="/src/assets/Ej3.png" alt="Invitá a tus amigos" className="feature-icon" />
+            <h3>Invita a tus amigos</h3>
+            <p>Sumá amigos a tus partidos y armá tu equipo ideal fácilmente.</p>
+          </div>
+          <div className="feature-card">
+            <img src="/src/assets/Ej4.png" alt="Gestioná tu equipo" className="feature-icon" />
+            <h3>Gestiona tu equipo</h3>
+            <p>Controlá tus partidos, estadísticas y el rendimiento de tu equipo.</p>
+          </div>
+        </div>
       </section>
 
       <section className="growth">
@@ -90,7 +85,6 @@ function App() {
             className="growth-image"
           />
           <div className="growth-content">
-         
             <h2>Estamos creciendo.</h2>
             <p>Sumate a la comunidad de jugadores amateur más grande.</p>
             <blockquote>
@@ -103,7 +97,7 @@ function App() {
       </section>
 
       <footer className="footer" id="contacto">
-        <p>© 2025 PorLaCancha. Marca registrada por Uriel Cordero De Felice y co.</p>
+        <p>© 2025 PorLaCancha. Marca registrada por SASSON S.A.</p>
       </footer>
     </div>
   );
