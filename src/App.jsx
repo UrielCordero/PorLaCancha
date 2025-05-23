@@ -22,16 +22,28 @@ function App() {
             <div className="search-bar">
               <select aria-label="Buscar zona">
                 <option>Buscar zona</option>
-                <option>Zona 1</option>
-                <option>Zona 2</option>
+                <option>Almagro</option>
+                <option>Caballito</option>
+                <option>Marapode</option>
+                <option>MarasiLandia</option>
+                <option>Lanús</option>
+                <option>La Fortaleza</option>
               </select>
               <select aria-label="Fecha">
-                <option>Mañana 25</option>
-                <option>Hoy 24</option>
+                <option>25/5</option>
+                <option>26/5</option>
+                <option>27/5</option>
+                <option>28/5</option>
+                <option>29/5</option>
               </select>
               <select aria-label="Hora">
-                <option>14:30</option>
+                <option>14:00</option>
                 <option>15:00</option>
+                <option>16:00</option>
+                <option>17:00</option>
+                <option>18:00</option>
+                <option>19:00</option>
+                <option>20:00</option>
               </select>
               <button className="btn-primary">Buscar partido</button>
             </div>
