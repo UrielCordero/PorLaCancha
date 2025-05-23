@@ -1,6 +1,27 @@
 import './App.css';
+import { useState, useEffect, useRef } from 'react';
 
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  // Cerrar el menú al hacer clic fuera
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+    if (menuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuOpen]);
+
   return (
     <div>
       <header className="header">
@@ -9,10 +30,35 @@ function App() {
             <img src="/src/assets/Logo.png" alt="PorLaCancha Logo" style={{ height: '70px' }} />
           </div>
           <div className="nav-links">
-            <img src="/src/assets/Menu.png" alt="Menu Icon" style={{ height: '60px', cursor: 'pointer' }} />
+            <img
+              src="/src/assets/Menu.png"
+              alt="Menu Icon"
+              style={{ height: '60px', cursor: 'pointer' }}
+              onClick={() => setMenuOpen(!menuOpen)}
+            />
           </div>
         </nav>
       </header>
+
+      {/* Menú lateral con imagen de perfil */}
+      <div className={`side-menu ${menuOpen ? 'open' : ''}`} ref={menuRef}>
+        <button className="close-button" onClick={() => setMenuOpen(false)}>×</button>
+        
+        {/* Imagen de perfil */}
+        <div className="profile-section">
+          <img src="/src/assets/ImgPerfil.png" alt="Perfil" className="profile-image" />
+        </div>
+
+        <ul>
+          <li><a href="#funcionalidades" onClick={() => setMenuOpen(false)}>Partidos</a></li>
+          <li><a href="#contacto" onClick={() => setMenuOpen(false)}>Torneos</a></li>
+          <li><a href="#torneos" onClick={() => setMenuOpen(false)}>Equipos</a></li>
+           <li><a href="#torneos" onClick={() => setMenuOpen(false)}>Historial</a></li>
+            <li><a href="#torneos" onClick={() => setMenuOpen(false)}>Cerrar Sesion</a></li>
+            
+        </ul>
+      </div>
+
 
       <section className="hero">
         <div className="hero-overlay">
