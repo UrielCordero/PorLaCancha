@@ -118,21 +118,49 @@ body {
   color: #ffffff;
 }
 
-.nav-links {
-  list-style: none;
+.search-bar-container {
+  display: inline-flex;
+  align-items: center;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  gap: 20px;
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-option {
   display: flex;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 2px solid #00B56A;
+  padding-bottom: 4px;
+  color: #888;
 }
 
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.nav-links a:hover {
+.search-option i {
   color: #00B56A;
+}
+
+.search-option select {
+  border: none;
+  background: none;
+  outline: none;
+  color: #555;
+  font-size: 16px;
+}
+
+.search-button {
+  background-color: #00B56A;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  
 }
 
 /* Hero */

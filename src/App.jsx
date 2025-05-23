@@ -65,34 +65,38 @@ function App() {
           <div className="hero-content">
             <h1>¿Tenés ganas de jugar? Nosotros te conseguimos rival y cancha.</h1>
             <p>Compite en torneos organizados o arma partidos con jugadores cerca tuyo.</p>
-            <div className="search-bar">
-              <select aria-label="Buscar zona">
-                <option>Buscar zona</option>
-                <option>Almagro</option>
-                <option>Caballito</option>
-                <option>Marapode</option>
-                <option>MarasiLandia</option>
-                <option>Lanús</option>
-                <option>La Fortaleza</option>
-              </select>
-              <select aria-label="Fecha">
-                <option>25/5</option>
-                <option>26/5</option>
-                <option>27/5</option>
-                <option>28/5</option>
-                <option>29/5</option>
-              </select>
-              <select aria-label="Hora">
-                <option>14:00</option>
-                <option>15:00</option>
-                <option>16:00</option>
-                <option>17:00</option>
-                <option>18:00</option>
-                <option>19:00</option>
-                <option>20:00</option>
-              </select>
-              <button className="btn-primary">Buscar partido</button>
-            </div>
+            <div className="search-bar-container">
+  <div className="search-option">
+    <i className="fa fa-map-marker-alt"></i>
+    <select>
+      <option>Buscar zona</option>
+      <option>Lanus</option>
+      <option>Almagro</option>
+      <option>Caballito</option>
+      
+    </select>
+  </div>
+  <div className="search-option">
+    <i className="fa fa-calendar-alt"></i>
+    <select>
+      <option> Hoy 2/5</option>
+      <option>3/5</option>
+      <option>4/5</option>
+      <option>5/5</option>
+    </select>
+  </div>
+  <div className="search-option">
+    <i className="fa fa-clock"></i>
+    <select>
+      <option>14:00</option>
+      <option>15:00</option>
+      <option>16:00</option>
+      <option>17:00</option>
+    </select>
+  </div>
+  <button className="search-button">Buscar partido</button>
+</div>
+
           </div>
         </div>
       </section>
