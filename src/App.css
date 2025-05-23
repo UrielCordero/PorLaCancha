@@ -60,7 +60,7 @@ body {
 }
 
 .nav-links a:hover {
-  color: #00cc66;
+  color: #00B56A;
 }
 
 /* Hero */
@@ -125,7 +125,7 @@ body {
 
 .btn-primary {
   background-color: white;
-  color: #00cc66;
+  color: #00B56A;
   padding: 0.75rem 1.5rem;
   font-weight: bold;
   border-radius: 8px;
@@ -140,17 +140,16 @@ body {
 
 /* Monthly Tournaments Section */
 .monthly-tournaments {
-  background-image: url('/src/assets/torneo1.png'); /* Replace with actual image path */
+  background-image: url('/src/assets/torneo1.png'); 
   background-size: cover;
   background-position: center;
   color: white;
-  padding: 12rem 2rem;
+  padding: 12.5rem ;
   text-align: center;
   width: 100vw;
   max-width: none;
   margin: 0;
-  overflow-x: hidden;
-  height: 500px;
+  height: 550px;
 }
 
 .tournaments-content {
@@ -170,7 +169,7 @@ body {
 }
 
 .btn-secondary {
-  background-color: #00cc66;
+  background-color: #00B56A;
   color: white;
   padding: 0.75rem 1.5rem;
   font-weight: bold;
@@ -181,12 +180,12 @@ body {
 }
 
 .btn-secondary:hover {
-  background-color: #007744;
+  background-color: #00B56A;
 }
 
 /* Free Play Section */
 .free-play {
-  background-color: #00cc66;
+  background-color: #00B56A;
   color: white;
   padding: 3rem 2rem;
   text-align: center;
@@ -211,7 +210,7 @@ body {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: #00cc66;
+  color: #00B56A;
 }
 
 .feature-cards {
@@ -236,7 +235,7 @@ body {
 
 .card h3 {
   margin-bottom: 1rem;
-  color: #007744;
+  color: #00B56A;
 }
 
 .card p {
@@ -246,33 +245,80 @@ body {
 /* Growth Section */
 .growth {
   background-color: #f0f0f0;
-  padding: 4rem 2rem;
-  text-align: center;
+  padding: 1rem;
   width: 100vw;
   max-width: none;
   margin: 0;
   overflow-x: hidden;
 }
 
-.growth-content {
+.growth-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 6rem;
+  text-align: left;
   width: 100%;
-  max-width: none;
-  margin: 0 auto;
+  flex-wrap: nowrap;
 }
 
+.growth-image {
+  max-width: 300px;
+  width: 300px;
+  height: auto;
+  border-radius: 0;
+  box-shadow: none;
+  flex-shrink: 0;
+  margin-right: 5rem;
+  margin-left: 25rem; /* <- Esto mueve la imagen hacia la derecha */
+}
+
+
+.growth-content {
+  max-width: 700px;
+  margin-left: 0;
+  margin-right: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 0;
+  text-align: center;
+  padding-left: 2rem; /* Ajustá este valor según lo que necesites */
+  padding: 75px;
+}
+
+
+
+
 .growth-content h2 {
-  color: #00cc66;
-  margin-bottom: 1rem;
+  color: #00B56A;
+  margin-bottom: 1.5rem;
 }
 
 .growth-content blockquote {
   font-style: italic;
   color: #555;
   margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
 }
 
-.growth-content blockquote p {
+.growth-content blockquote span {
   margin-bottom: 1rem;
+  max-width: 30%;
+  display: inline-block;
+}
+
+.quote-left {
+  text-align: left;
+}
+
+.quote-center {
+  text-align: center;
+}
+
+.quote-right {
+  text-align: right;
 }
 
 /* Footer */
@@ -280,7 +326,7 @@ body {
   background-color: #1f1f1f;
   color: white;
   text-align: center;
-  padding: 2rem 2rem;
+  padding: 4rem;
   margin-top: 4rem;
   width: 100vw;
   max-width: none;

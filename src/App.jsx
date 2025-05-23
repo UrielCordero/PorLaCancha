@@ -75,19 +75,27 @@ function App() {
       </section>
 
       <section className="growth">
-        <div className="growth-content">
-          <h2>Estamos creciendo.</h2>
-          <p>Sumate a la comunidad de jugadores amateur más grande.</p>
-          <blockquote>
-            <p>"Me ayudó a organizar y encontrar rivales para mi equipo"</p>
-            <p>"Organizar partidos nunca fue tan simple, en minutos ya tengo rival y cancha confirmada."</p>
-            <p>"Encontré partido en 10 minutos, increíble!"</p>
-          </blockquote>
+        <div className="growth-wrapper">
+          <img
+            src="/src/assets/mapaArgEjemplo.png"
+            alt="Mapa Argentina Ejemplo"
+            className="growth-image"
+          />
+          <div className="growth-content">
+         
+            <h2>Estamos creciendo.</h2>
+            <p>Sumate a la comunidad de jugadores amateur más grande.</p>
+            <blockquote>
+              <span className="quote-left">"Me ayudó a organizar y encontrar rivales para mi equipo"</span>
+              <span className="quote-center">"Organizar partidos nunca fue tan simple, en minutos ya tengo rival y cancha confirmada."</span>
+              <span className="quote-right">"Encontré partido en 10 minutos, increíble!"</span>
+            </blockquote>
+          </div>
         </div>
       </section>
 
       <footer className="footer" id="contacto">
-        <p>© 2025 PorLaCancha. Marca registrada por Tomás Alan Sosaín Delmastro.</p>
+        <p>© 2025 PorLaCancha. Marca registrada por Uriel Cordero De Felice y co.</p>
       </footer>
     </div>
   );
