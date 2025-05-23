@@ -5,13 +5,12 @@ function App() {
     <div>
       <header className="header">
         <nav className="navbar">
-          <div className="logo">PorLaCancha</div>
-          <ul className="nav-links">
-            <li><a href="#torneos">Torneos</a></li>
-            <li><a href="#funcionalidades">Funcionalidades</a></li>
-            <li><a href="#testimonios">Testimonios</a></li>
-            <li><a href="#contacto">Contacto</a></li>
-          </ul>
+          <div className="logo">
+            <img src="/src/assets/Logo.png" alt="PorLaCancha Logo" style={{ height: '70px' }} />
+          </div>
+          <div className="nav-links">
+            <img src="/src/assets/Menu.png" alt="Menu Icon" style={{ height: '60px', cursor: 'pointer' }} />
+          </div>
         </nav>
       </header>
 
