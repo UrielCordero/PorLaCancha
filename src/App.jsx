@@ -1,13 +1,13 @@
 import './App.css';
 import { useState } from 'react';
-import Header from './components/Header';
-import SideMenu from './components/SideMenu';
-import Hero from './components/Hero';
-import MonthlyTournaments from './components/MonthlyTournaments';
-import FreePlay from './components/FreePlay';
-import Features from './components/Features';
-import Growth from './components/Growth';
-import Footer from './components/Footer';
+import Header from './components/Header/Header';
+import SideMenu from './components/SideMenu/SideMenu';
+import Hero from './components/Hero/Hero';
+import MonthlyTournaments from './components/MonthlyTournaments/MonthlyTournaments';
+import FreePlay from './components/FreePlay/FreePlay';
+import Features from './components/Features/Features';
+import Growth from './components/Growth/Growth';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
