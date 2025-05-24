@@ -1,0 +1,43 @@
+.monthly-tournaments {
+  background-image: url('/src/assets/torneo1.png');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 12.5rem;
+  text-align: center;
+  width: 100vw;
+  max-width: none;
+  margin: 0;
+  height: 550px;
+}
+
+.tournaments-content {
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+}
+
+.tournaments-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.tournaments-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.btn-secondary {
+  background-color: #00B56A;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #00B56A;
+}
