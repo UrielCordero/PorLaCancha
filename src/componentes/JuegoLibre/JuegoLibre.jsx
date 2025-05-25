@@ -1,7 +1,7 @@
 import React from 'react';
-import './FreePlay.css';
+import './JuegoLibre.css';
 
-function FreePlay() {
+function JuegoLibre() {
   return (
     <section className="free-play">
       <h2>¡Juega de forma segura y gratuita!</h2>
@@ -9,4 +9,4 @@ function FreePlay() {
   );
 }
 
-export default FreePlay;
+export default JuegoLibre;

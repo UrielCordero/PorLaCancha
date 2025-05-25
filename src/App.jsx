@@ -1,13 +1,13 @@
 import './App.css';
 import { useState } from 'react';
-import Header from './components/Header/Header';
-import SideMenu from './components/SideMenu/SideMenu';
-import Hero from './components/Hero/Hero';
-import MonthlyTournaments from './components/MonthlyTournaments/MonthlyTournaments';
-import FreePlay from './components/FreePlay/FreePlay';
-import Features from './components/Features/Features';
-import Growth from './components/Growth/Growth';
-import Footer from './components/Footer/Footer';
+import Header from './componentes/Header/Header';
+import MenuLateral from './componentes/MenuLateral/MenuLateral';
+import Heroe from './componentes/Heroe/Heroe';
+import TorneosMensuales from './componentes/TorneosMensuales/TorneosMensuales';
+import JuegoLibre from './componentes/JuegoLibre/JuegoLibre';
+import Caracteristicas from './componentes/Caracteristicas/Caracteristicas';
+import Crecimiento from './componentes/Crecimiento/Crecimiento';
+import Footer from './componentes/Footer/Footer';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -15,12 +15,12 @@ function App() {
   return (
     <>
       <Header onMenuClick={() => setMenuOpen(!menuOpen)} />
-      <SideMenu menuOpen={menuOpen} onClose={() => setMenuOpen(false)} />
-      <Hero />
-      <MonthlyTournaments />
-      <FreePlay />
-      <Features />
-      <Growth />
+      <MenuLateral menuOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      <Heroe />
+      <TorneosMensuales />
+      <JuegoLibre />
+      <Caracteristicas />
+      <Crecimiento />
       <Footer />
     </>
   );

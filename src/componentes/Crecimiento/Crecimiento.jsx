@@ -1,7 +1,7 @@
 import React from 'react';
-import './Growth.css';
+import './Crecimiento.css';
 
-function Growth() {
+function Crecimiento() {
   return (
     <section className="growth">
       <div className="growth-wrapper">
@@ -24,4 +24,4 @@ function Growth() {
   );
 }
 
-export default Growth;
+export default Crecimiento;

@@ -1,7 +1,7 @@
 import React from 'react';
-import './MonthlyTournaments.css';
+import './TorneosMensuales.css';
 
-function MonthlyTournaments() {
+function TorneosMensuales() {
   return (
     <section className="monthly-tournaments">
       <div className="tournaments-content">
@@ -13,4 +13,4 @@ function MonthlyTournaments() {
   );
 }
 
-export default MonthlyTournaments;
+export default TorneosMensuales;

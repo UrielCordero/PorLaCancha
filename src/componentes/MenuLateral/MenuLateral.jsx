@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
-import './SideMenu.css';
+import './MenuLateral.css';
 
-function SideMenu({ menuOpen, onClose }) {
+function MenuLateral({ menuOpen, onClose }) {
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -37,4 +37,4 @@ function SideMenu({ menuOpen, onClose }) {
   );
 }
 
-export default SideMenu;
+export default MenuLateral;

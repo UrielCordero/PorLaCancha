@@ -1,7 +1,7 @@
 import React from 'react';
-import './Hero.css';
+import './Heroe.css';
 
-function Hero() {
+function Heroe() {
   return (
     <section className="hero">
       <div className="hero-overlay">
@@ -44,4 +44,4 @@ function Hero() {
   );
 }
 
-export default Hero;
+export default Heroe;
