@@ -20,21 +20,11 @@ function Heroe() {
             </div>
             <div className="search-option">
               <i className="fa fa-calendar-alt"></i>
-              <select>
-                <option>23/6</option>
-                <option>24/6</option>
-                <option>25/6</option>
-                <option>26/6</option>
-              </select>
+              <input type="date" />
             </div>
             <div className="search-option">
               <i className="fa fa-clock"></i>
-              <select>
-                <option>14:00</option>
-                <option>15:00</option>
-                <option>16:00</option>
-                <option>17:00</option>
-              </select>
+              <input type="time" />
             </div>
             <button className="search-button">Buscar partido</button>
           </div>
