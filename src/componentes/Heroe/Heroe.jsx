@@ -21,10 +21,10 @@ function Heroe() {
             <div className="search-option">
               <i className="fa fa-calendar-alt"></i>
               <select>
-                <option> Hoy 2/5</option>
-                <option>3/5</option>
-                <option>4/5</option>
-                <option>5/5</option>
+                <option>23/6</option>
+                <option>24/6</option>
+                <option>25/6</option>
+                <option>26/6</option>
               </select>
             </div>
             <div className="search-option">
