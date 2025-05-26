@@ -475,4 +475,15 @@ body {
   max-width: none;
   margin: 0;
   overflow-x: hidden;
+  flex-shrink: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex-grow: 1;
 }

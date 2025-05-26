@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 
 function Header({ onMenuClick }) {
@@ -6,7 +7,9 @@ function Header({ onMenuClick }) {
     <header className="header">
       <nav className="navbar">
         <div className="logo">
-          <img src="/src/assets/Logo.png" alt="PorLaCancha Logo" style={{ height: '70px' }} />
+          <Link to="/">
+            <img src="/src/assets/Logo.png" alt="PorLaCancha Logo" style={{ height: '70px' }} />
+          </Link>
         </div>
         <div className="nav-links">
           <img

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './MenuLateral.css';
 
 function MenuLateral({ menuOpen, onClose }) {
@@ -27,7 +28,7 @@ function MenuLateral({ menuOpen, onClose }) {
         <img src="/src/assets/ImgPerfil.png" alt="Perfil" className="profile-image" />
       </div>
       <ul>
-        <li><a href="#funcionalidades" onClick={onClose}>Partidos</a></li>
+        <li><Link to="/nueva-pagina" onClick={onClose}>Partidos</Link></li>
         <li><a href="#contacto" onClick={onClose}>Torneos</a></li>
         <li><a href="#torneos" onClick={onClose}>Equipos</a></li>
         <li><a href="#torneos" onClick={onClose}>Historial</a></li>
