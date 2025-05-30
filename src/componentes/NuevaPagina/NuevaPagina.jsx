@@ -20,13 +20,22 @@ const NuevaPagina = () => {
       .from('partidos')
       .select(`
         id_Partidos,
-        fotoTorneos,
         fecha,
         horaInicio,
         horaFin,
-        Cancha (nombre),
-        equipo1: idEquipo1 (nombre),
-        equipo2: idEquipo2 (nombre)
+        Cancha (
+          nombre,
+          FotoCancha,
+          precioXHora
+        ),
+        equipo1: idEquipo1 (
+          nombre,
+          imgEscudo
+        ),
+        equipo2: idEquipo2 (
+          nombre,
+          imgEscudo
+        )
       `)
       .order('fecha', { ascending: false });
 
@@ -76,7 +85,7 @@ const NuevaPagina = () => {
 
       <div className="partidos-container">
         <h2>Partidos disponibles</h2>
-        
+
         {/* Contador de partidos */}
         {!loading && partidos.length > 0 && (
           <p className="contador-partidos">- {partidos.length} partidos disponibles</p>
@@ -89,18 +98,23 @@ const NuevaPagina = () => {
         ) : (
           partidos.map((partido) => (
             <div key={partido.id_Partidos} className="partido-card">
-  <img src={partido.fotoTorneos} alt="Torneo" className="partido-imagen" />
-  <div className="partido-info">
-    <p><strong>Fecha:</strong> {new Date(partido.fecha).toLocaleDateString()}</p>
-    <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
-    <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
-    <p><strong>Equipos:</strong> {partido.equipo1?.nombre || 'Equipo 1'} vs {partido.equipo2?.nombre || 'Equipo 2'}</p>
-    <div className="boton-unirse-container">
-      <button className="boton-crear boton-unirse">Unirse al partido</button>
-    </div>
-  </div>
-</div>
+              <img
+                src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
+                alt="Foto cancha"
+                className="partido-imagen"
+              />
+              <div className="partido-info">
+                <p><strong>Fecha:</strong> {new Date(partido.fecha).toLocaleDateString()}</p>
+                <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
+                <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
+                <p><strong>Equipos:</strong> {partido.equipo1?.nombre || 'Equipo 1'} vs {partido.equipo2?.nombre || 'Equipo 2'}</p>
+                <p><strong>Precio:</strong> {partido.Cancha?.precioXHora || 'Desconocida'}</p>
 
+                <div className="boton-unirse-container">
+                  <button className="boton-crear boton-unirse">Unirse al partido</button>
+                </div>
+              </div>
+            </div>
           ))
         )}
       </div>
