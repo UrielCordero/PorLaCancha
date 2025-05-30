@@ -1,14 +1,13 @@
-// src/componentes/NuevaPagina/NuevaPagina.jsx
-
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // 👈 Importar useNavigate
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import './NuevaPagina.css';
+import '/src/componentes/Heroe/Heroe.css';
 
 const NuevaPagina = () => {
   const [partidos, setPartidos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); // 👈 Inicializar useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPartidos();
@@ -21,12 +20,10 @@ const NuevaPagina = () => {
       .from('partidos')
       .select(`
         id_Partidos,
+        fotoTorneos,
         fecha,
         horaInicio,
         horaFin,
-        idCancha,
-        idEquipo1,
-        idEquipo2,
         Cancha (nombre),
         equipo1: idEquipo1 (nombre),
         equipo2: idEquipo2 (nombre)
@@ -43,11 +40,34 @@ const NuevaPagina = () => {
   };
 
   const handleCrearPartido = () => {
-    navigate('/crear-partido'); // 👈 Redirige a la ruta correspondiente
+    navigate('/crear-partido');
   };
 
   return (
     <div className="pagina-container">
+
+      {/* Navbar de búsqueda */}
+      <div className="search-bar-container" style={{ marginTop: '2rem' }}>
+        <div className="search-option">
+          <i className="fa fa-map-marker-alt"></i>
+          <select>
+            <option>Buscar zona</option>
+            <option>La boca</option>
+            <option>Almagro</option>
+            <option>Caballito</option>
+          </select>
+        </div>
+        <div className="search-option">
+          <i className="fa fa-calendar-alt"></i>
+          <input type="date" />
+        </div>
+        <div className="search-option">
+          <i className="fa fa-clock"></i>
+          <input type="time" />
+        </div>
+        <button className="search-button">Buscar partido</button>
+      </div>
+
       <div className="crear-container">
         <button className="boton-crear" onClick={handleCrearPartido}>
           Crear un partido
@@ -57,6 +77,11 @@ const NuevaPagina = () => {
       <div className="partidos-container">
         <h2>Partidos disponibles</h2>
 
+        {/* Contador de partidos */}
+        {!loading && partidos.length > 0 && (
+          <p className="contador-partidos">- {partidos.length} partidos disponibles</p>
+        )}
+
         {loading ? (
           <p>Cargando...</p>
         ) : partidos.length === 0 ? (
@@ -64,10 +89,13 @@ const NuevaPagina = () => {
         ) : (
           partidos.map((partido) => (
             <div key={partido.id_Partidos} className="partido-card">
-              <p><strong>Fecha:</strong> {new Date(partido.fecha).toLocaleDateString()}</p>
-              <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
-              <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
-              <p><strong>Equipos:</strong> {partido.equipo1?.nombre || partido.idEquipo1} vs {partido.equipo2?.nombre || partido.idEquipo2}</p>
+              <img src={partido.fotoTorneos} alt="Torneo" className="partido-imagen" />
+              <div className="partido-info">
+                <p><strong>Fecha:</strong> {new Date(partido.fecha).toLocaleDateString()}</p>
+                <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
+                <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
+                <p><strong>Equipos:</strong> {partido.equipo1?.nombre || 'Equipo 1'} vs {partido.equipo2?.nombre || 'Equipo 2'}</p>
+              </div>
             </div>
           ))
         )}
