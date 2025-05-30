@@ -86,3 +86,9 @@
   font-size: 16px;
   cursor: pointer;
 }
+
+input{
+  border: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  
+}

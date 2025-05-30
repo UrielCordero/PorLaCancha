@@ -15,7 +15,7 @@ function Header({ onMenuClick }) {
           <img
             src="/src/assets/Menu.png"
             alt="Menu Icon"
-            style={{ height: '60px', cursor: 'pointer' }}
+            style={{ height: '50px', cursor: 'pointer' }}
             onClick={onMenuClick}
           />
         </div>

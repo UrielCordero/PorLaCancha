@@ -12,7 +12,7 @@ function Heroe() {
             <div className="search-option">
               <i className="fa fa-map-marker-alt"></i>
               <select>
-                <option>Buscar zona</option>
+                <option value="" disabled selected>Busca Tu zona</option>
                 <option>La boca</option>
                 <option>Almagro</option>
                 <option>Caballito</option>
