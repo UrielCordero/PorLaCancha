@@ -29,7 +29,6 @@
   color: #00B56A;
 }
 
-
 .partidos-container {
   margin-top: 2rem;
 }
@@ -47,6 +46,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   text-align: left;
   transition: transform 0.2s ease;
+  position: relative;
 }
 
 .partido-card:hover {
@@ -59,6 +59,20 @@
   object-fit: cover;
   border-radius: 8px;
   margin-right: 1rem;
+}
+
+.boton-unirse-container {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.3rem;
+  margin-top: 0;
+}
+
+.boton-unirse {
+  padding: 8px 16px;
+  font-size: 14px;
 }
 
 .partido-info p {
