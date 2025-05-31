@@ -145,8 +145,9 @@ const NuevaPagina = () => {
           />
         </div>
 
-        <div className="search-option">
-          <button className="boton-crear boton-buscar-sin-subrayado" onClick={handleBuscar}>
+        {/* Botón fuera de .search-option para evitar el subrayado */}
+        <div className="search-button-wrapper">
+          <button className="boton-crear" onClick={handleBuscar}>
             Buscar partido
           </button>
         </div>

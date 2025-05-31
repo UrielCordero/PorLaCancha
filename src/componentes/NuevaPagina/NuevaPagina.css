@@ -7,8 +7,6 @@
   margin-bottom: 2rem;
 }
 
-
-
 .boton-crear {
   background-color: #00b66f;
   color: white;
@@ -24,7 +22,6 @@
 .boton-crear:hover {
   background-color: #00995c;
 }
-
 
 .contador-partidos {
   font-weight: bold;
@@ -80,4 +77,10 @@
 
 .partido-info p {
   margin: 0.3rem 0;
+}
+
+/* NUEVO: evita subrayado en el botón de búsqueda */
+.search-button-wrapper {
+  border-bottom: none;
+  padding-bottom: 0;
 }
