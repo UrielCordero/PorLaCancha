@@ -6,12 +6,25 @@ import '/src/componentes/Heroe/Heroe.css';
 
 const NuevaPagina = () => {
   const [partidos, setPartidos] = useState([]);
+  const [zonasDisponibles, setZonasDisponibles] = useState([]);
+  const [tiposCancha, setTiposCancha] = useState([]);
+  const [partidosFiltrados, setPartidosFiltrados] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [zonaSeleccionada, setZonaSeleccionada] = useState('');
+  const [tipoSeleccionado, setTipoSeleccionado] = useState('');
+  const [fechaSeleccionada, setFechaSeleccionada] = useState('');
+
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchPartidos();
+    fetchTiposCancha();
   }, []);
+
+  useEffect(() => {
+    extraerZonasUnicas();
+  }, [partidos]);
 
   const fetchPartidos = async () => {
     setLoading(true);
@@ -26,7 +39,11 @@ const NuevaPagina = () => {
         Cancha (
           nombre,
           FotoCancha,
-          precioXHora
+          precioXHora,
+          zona,
+          tipoCancha: id_Tipo (
+            descripcion
+          )
         ),
         equipo1: idEquipo1 (
           nombre,
@@ -43,38 +60,96 @@ const NuevaPagina = () => {
       console.error('Error al obtener partidos:', error);
     } else {
       setPartidos(data || []);
+      setPartidosFiltrados(data || []);
     }
 
     setLoading(false);
+  };
+
+  const fetchTiposCancha = async () => {
+    const { data, error } = await supabase
+      .from('tipoCancha')
+      .select('descripcion');
+
+    if (error) {
+      console.error('Error al obtener tipos de cancha:', error);
+    } else {
+      setTiposCancha(data.map((t) => t.descripcion));
+    }
+  };
+
+  const extraerZonasUnicas = () => {
+    const zonas = partidos
+      .map((p) => p.Cancha?.zona)
+      .filter((zona, index, self) => zona && self.indexOf(zona) === index);
+    setZonasDisponibles(zonas);
   };
 
   const handleCrearPartido = () => {
     navigate('/crear-partido');
   };
 
+  const handleBuscar = () => {
+    const filtrados = partidos.filter((partido) => {
+      const zonaMatch = zonaSeleccionada
+        ? partido.Cancha?.zona === zonaSeleccionada
+        : true;
+
+      const tipoMatch = tipoSeleccionado
+        ? partido.Cancha?.tipoCancha?.descripcion === tipoSeleccionado
+        : true;
+
+      const fechaMatch = fechaSeleccionada
+        ? partido.fecha === fechaSeleccionada
+        : true;
+
+      return zonaMatch && tipoMatch && fechaMatch;
+    });
+
+    setPartidosFiltrados(filtrados);
+  };
+
   return (
     <div className="pagina-container">
-
-      {/* Navbar de búsqueda */}
       <div className="search-bar-container" style={{ marginTop: '2rem' }}>
         <div className="search-option">
           <i className="fa fa-map-marker-alt"></i>
-          <select>
-            <option>Buscar zona</option>
-            <option>La boca</option>
-            <option>Almagro</option>
-            <option>Caballito</option>
+          <select value={zonaSeleccionada} onChange={(e) => setZonaSeleccionada(e.target.value)}>
+            <option value="">Buscar zona</option>
+            {zonasDisponibles.map((zona, index) => (
+              <option key={index} value={zona}>
+                {zona}
+              </option>
+            ))}
           </select>
         </div>
+
+        <div className="search-option">
+          <i className="fa fa-futbol"></i>
+          <select value={tipoSeleccionado} onChange={(e) => setTipoSeleccionado(e.target.value)}>
+            <option value="">Tipo cancha</option>
+            {tiposCancha.map((tipo, index) => (
+              <option key={index} value={tipo}>
+                {tipo}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="search-option">
           <i className="fa fa-calendar-alt"></i>
-          <input type="date" />
+          <input
+            type="date"
+            value={fechaSeleccionada}
+            onChange={(e) => setFechaSeleccionada(e.target.value)}
+          />
         </div>
+
         <div className="search-option">
-          <i className="fa fa-clock"></i>
-          <input type="time" />
+          <button className="boton-crear boton-buscar-sin-subrayado" onClick={handleBuscar}>
+            Buscar partido
+          </button>
         </div>
-        <button className="search-button">Buscar partido</button>
       </div>
 
       <div className="crear-container">
@@ -86,17 +161,16 @@ const NuevaPagina = () => {
       <div className="partidos-container">
         <h2>Partidos disponibles</h2>
 
-        {/* Contador de partidos */}
-        {!loading && partidos.length > 0 && (
-          <p className="contador-partidos">- {partidos.length} partidos disponibles</p>
+        {!loading && partidosFiltrados.length > 0 && (
+          <p className="contador-partidos">- {partidosFiltrados.length} partidos encontrados</p>
         )}
 
         {loading ? (
           <p>Cargando...</p>
-        ) : partidos.length === 0 ? (
-          <p>No hay partidos disponibles</p>
+        ) : partidosFiltrados.length === 0 ? (
+          <p>No hay partidos disponibles con los filtros aplicados</p>
         ) : (
-          partidos.map((partido) => (
+          partidosFiltrados.map((partido) => (
             <div key={partido.id_Partidos} className="partido-card">
               <img
                 src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
@@ -104,11 +178,16 @@ const NuevaPagina = () => {
                 className="partido-imagen"
               />
               <div className="partido-info">
-                <p><strong>Fecha:</strong> {new Date(partido.fecha).toLocaleDateString()}</p>
+                <p><strong>Fecha:</strong> {(() => {
+                  const [year, month, day] = partido.fecha.split('-');
+                  return `${day}/${month}/${year}`;
+                })()}</p>
                 <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
                 <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
+                <p><strong>Zona:</strong> {partido.Cancha?.zona || 'Sin zona'}</p>
+                <p><strong>Tipo de cancha:</strong> {partido.Cancha?.tipoCancha?.descripcion || 'Sin tipo'}</p>
                 <p><strong>Equipos:</strong> {partido.equipo1?.nombre || 'Equipo 1'} vs {partido.equipo2?.nombre || 'Equipo 2'}</p>
-                <p><strong>Precio:</strong> {partido.Cancha?.precioXHora || 'Desconocida'}</p>
+                <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
 
                 <div className="boton-unirse-container">
                   <button className="boton-crear boton-unirse">Unirse al partido</button>

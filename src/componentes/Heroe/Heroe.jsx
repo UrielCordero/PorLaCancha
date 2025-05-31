@@ -15,7 +15,7 @@ function Heroe() {
                 <option value="" disabled selected>Busca Tu zona</option>
                 <option>La boca</option>
                 <option>Almagro</option>
-                <option>Caballito</option>
+                <option>Cabllito</option>
               </select>
             </div>
             <div className="search-option">
