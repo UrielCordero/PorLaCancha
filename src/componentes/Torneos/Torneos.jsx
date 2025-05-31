@@ -2,22 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import './Torneos.css';
-import '/src/componentes/Heroe/Heroe.css';
 
 const Torneos = () => {
   const [torneos, setTorneos] = useState([]);
-  const [tiposCancha, setTiposCancha] = useState([]);
-  const [torneosFiltrados, setTorneosFiltrados] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const [tipoSeleccionado, setTipoSeleccionado] = useState('');
-  const [fechaSeleccionada, setFechaSeleccionada] = useState('');
 
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchTorneos();
-    fetchTiposCancha();
   }, []);
 
   const fetchTorneos = async () => {
@@ -30,13 +23,7 @@ const Torneos = () => {
         fotoTorneo,
         nombreTorneo,
         fechaInicio,
-        fechaFin,
-        cantEquipos,
-        premio,
-        precioPersona,
-        tipoCancha: id_Tipo (
-          descripcion
-        )
+        fechaFin
       `)
       .order('fechaInicio', { ascending: true });
 
@@ -44,122 +31,70 @@ const Torneos = () => {
       console.error('Error al obtener torneos:', error);
     } else {
       setTorneos(data || []);
-      setTorneosFiltrados(data || []);
     }
 
     setLoading(false);
-  };
-
-  const fetchTiposCancha = async () => {
-    const { data, error } = await supabase
-      .from('tipoCancha')
-      .select('descripcion');
-
-    if (error) {
-      console.error('Error al obtener tipos de cancha:', error);
-    } else {
-      setTiposCancha(data.map((t) => t.descripcion));
-    }
   };
 
   const handleCrearTorneo = () => {
     navigate('/crear-torneo');
   };
 
-  const handleBuscar = () => {
-    const filtrados = torneos.filter((torneo) => {
-      const tipoMatch = tipoSeleccionado
-        ? torneo.tipoCancha?.descripcion === tipoSeleccionado
-        : true;
-
-      const fechaMatch = fechaSeleccionada
-        ? torneo.fechaInicio === fechaSeleccionada
-        : true;
-
-      return tipoMatch && fechaMatch;
-    });
-
-    setTorneosFiltrados(filtrados);
-  };
-
   return (
-    <div className="pagina-container">
-      <div className="search-bar-container" style={{ marginTop: '2rem' }}>
-        <div className="search-option">
-          <i className="fa fa-futbol"></i>
-          <select value={tipoSeleccionado} onChange={(e) => setTipoSeleccionado(e.target.value)}>
-            <option value="">Tipo de cancha</option>
-            {tiposCancha.map((tipo, index) => (
-              <option key={index} value={tipo}>
-                {tipo}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="search-option">
-          <i className="fa fa-calendar-alt"></i>
-          <input
-            type="date"
-            value={fechaSeleccionada}
-            onChange={(e) => setFechaSeleccionada(e.target.value)}
-          />
-        </div>
-
-        <div className="search-button-wrapper">
-          <button className="boton-crear" onClick={handleBuscar}>
-            Buscar torneo
+    <div className="torneos-container">
+      <div className="torneos-header">
+        <div className="header-texto">
+          <h2>Participa en torneos <br />amateurs organizados</h2>
+          <p>
+            Conéctate con otros jugadores y formá tu equipo para competir en diversos torneos
+          </p>
+          <button className="boton-crear" onClick={handleCrearTorneo}>
+            Crea un torneo
           </button>
         </div>
+        <img
+          src="/src/assets/TorneoEj.png"
+          alt="Jugadores festejando"
+          className="imagen-header"
+        />
       </div>
 
-      <div className="crear-container">
-        <button className="boton-crear" onClick={handleCrearTorneo}>
-          Crear un torneo
-        </button>
-      </div>
-
-      <div className="partidos-container">
-        <h2>Torneos disponibles</h2>
-
-        {!loading && torneosFiltrados.length > 0 && (
-          <p className="contador-partidos">- {torneosFiltrados.length} torneos encontrados</p>
-        )}
-
+      <div className="torneos-lista">
         {loading ? (
-          <p>Cargando...</p>
-        ) : torneosFiltrados.length === 0 ? (
-          <p>No hay torneos disponibles con los filtros aplicados</p>
+          <p>Cargando torneos...</p>
+        ) : torneos.length === 0 ? (
+          <p>No hay torneos disponibles actualmente.</p>
         ) : (
-          torneosFiltrados.map((torneo) => (
-            <div key={torneo.id} className="partido-card">
+          torneos.map((torneo) => (
+            <div key={torneo.id} className="torneo-card">
               <img
                 src={torneo.fotoTorneo || 'https://via.placeholder.com/300x150'}
-                alt="Foto torneo"
-                className="partido-imagen"
+                alt="Torneo"
+                className="torneo-imagen"
               />
-              <div className="partido-info">
-                <p><strong>Nombre:</strong> {torneo.nombreTorneo}</p>
-                <p><strong>Fecha:</strong> {(() => {
+              <h3>{torneo.nombreTorneo}</h3>
+              <p>
+                {(() => {
                   const [y1, m1, d1] = torneo.fechaInicio.split('-');
                   const [y2, m2, d2] = torneo.fechaFin.split('-');
-                  return `${d1}/${m1}/${y1} - ${d2}/${m2}/${y2}`;
-                })()}</p>
-                <p><strong>Tipo de cancha:</strong> {torneo.tipoCancha?.descripcion || 'Sin tipo'}</p>
-                <p><strong>Cantidad de equipos:</strong> {torneo.cantEquipos}</p>
-                <p><strong>Premio:</strong> ${torneo.premio}</p>
-                <p><strong>Precio por persona:</strong> ${torneo.precioPersona}</p>
-
-                <div className="boton-unirse-container">
-                  <button className="boton-crear boton-unirse">Unirse al torneo</button>
-                </div>
-              </div>
+                  return `${parseInt(d1)} de ${getMes(m1)} - ${parseInt(d2)} de ${getMes(m2)}`;
+                })()}
+              </p>
+              <button className="ver-info">Ver más info</button>
             </div>
           ))
         )}
       </div>
     </div>
   );
+};
+
+const getMes = (mesNumero) => {
+  const meses = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+  return meses[parseInt(mesNumero, 10) - 1];
 };
 
 export default Torneos;
