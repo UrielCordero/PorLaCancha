@@ -1,118 +1,163 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { supabase } from '../../supabaseClient';
 import './CrearPartido.css';
 
-function CrearPartido() {
-  const [escudo, setEscudo] = useState(null);
-  const [cancha, setCancha] = useState('');
-  const [fecha, setFecha] = useState('');
-  const [hora, setHora] = useState('');
-  const [duracion, setDuracion] = useState('1 hora');
-  const [tipoPartido, setTipoPartido] = useState('Futbol 5');
-  const [precio, setPrecio] = useState('');
-  const [mensaje, setMensaje] = useState('');
+export default function CrearPartidoForm() {
+  const [canchas, setCanchas] = useState([]);
+  const [tiposCancha, setTiposCancha] = useState([]);
+  const [equipos, setEquipos] = useState([]);
+  const [errorMensaje, setErrorMensaje] = useState('');
 
-  const handleFileChange = (e) => {
-    setEscudo(e.target.files[0]);
+  const [formData, setFormData] = useState({
+    cancha: '',
+    tipoCancha: '',
+    fecha: '',
+    horaInicio: '',
+    horaFin: '',
+    equipo1: '',
+    equipo2: ''
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data: canchasData } = await supabase.from('Cancha').select('*');
+      setCanchas(canchasData);
+
+      const { data: tiposData } = await supabase.from('tipoCancha').select('*');
+      setTiposCancha(tiposData);
+
+      const { data: equiposData } = await supabase.from('equipos').select('*');
+      setEquipos(equiposData);
+    };
+
+    fetchData();
+  }, []);
+
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!escudo || !cancha || !fecha || !hora || !duracion || !tipoPartido || !precio) {
-      setMensaje('Por favor, complete todos los campos.');
+    setErrorMensaje('');
+
+    const {
+      cancha,
+      tipoCancha,
+      fecha,
+      horaInicio,
+      horaFin,
+      equipo1,
+      equipo2
+    } = formData;
+
+    if (!cancha || !tipoCancha || !fecha || !horaInicio || !horaFin || !equipo1 || !equipo2) {
+      setErrorMensaje('Todos los campos son obligatorios.');
       return;
     }
-    const nuevoPartido = {
-      escudo,
-      cancha,
-      fecha,
-      hora,
-      duracion,
-      tipoPartido,
-      precio,
-    };
-    console.log('Nuevo partido creado:', nuevoPartido);
-    setMensaje('Partido creado con éxito!');
-    
-    setEscudo(null);
-    setCancha('');
-    setFecha('');
-    setHora('');
-    setDuracion('1 hora');
-    setTipoPartido('Futbol 5');
-    setPrecio('');
-    
-    e.target.reset();
+
+    if (equipo1 === equipo2) {
+      setErrorMensaje('Equipo 1 y Equipo 2 no pueden ser iguales.');
+      return;
+    }
+
+    const fechaActual = new Date().toISOString().split('T')[0];
+    if (fecha < fechaActual) {
+      setErrorMensaje('La fecha debe ser igual o posterior a hoy.');
+      return;
+    }
+
+    const inicio = new Date(`2000-01-01T${horaInicio}`);
+    const fin = new Date(`2000-01-01T${horaFin}`);
+    const diferenciaHoras = (fin - inicio) / (1000 * 60 * 60);
+
+    if (diferenciaHoras < 1) {
+      setErrorMensaje('La hora de finalización debe ser al menos 1 hora después de la hora de inicio.');
+      return;
+    }
+
+    const { data, error } = await supabase.from('partidos').insert([
+      {
+        idCancha: parseInt(cancha),
+        fecha,
+        horaInicio: horaInicio + ':00',
+        horaFin: horaFin + ':00',
+        idEquipo1: parseInt(equipo1),
+        idEquipo2: parseInt(equipo2)
+      }
+    ]);
+
+    if (error) {
+      console.error('Error al insertar el partido:', error.message);
+      setErrorMensaje('Error al publicar el partido.');
+    } else {
+      alert('¡Partido publicado con éxito!');
+      setFormData({
+        cancha: '',
+        tipoCancha: '',
+        fecha: '',
+        horaInicio: '',
+        horaFin: '',
+        equipo1: '',
+        equipo2: ''
+      });
+    }
   };
 
   return (
-    <main className="crear-partido-content">
-      <h2>Crea un partido</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Foto del escudo del equipo:</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
-          {escudo && <p>Archivo seleccionado: {escudo.name}</p>}
-        </div>
-        <div>
-          <label>Nombre de la cancha:</label>
-          <input
-            type="text"
-            value={cancha}
-            onChange={(e) => setCancha(e.target.value)}
-            placeholder="Nombre de la cancha"
-          />
-        </div>
-        <div>
-          <label>Fecha:</label>
-          <input
-            type="date"
-            value={fecha}
-            onChange={(e) => setFecha(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Hora de arranque:</label>
-          <input
-            type="time"
-            value={hora}
-            onChange={(e) => setHora(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Duración:</label>
-          <select value={duracion} onChange={(e) => setDuracion(e.target.value)}>
-            <option value="1 hora">1/2 hora</option>
-            <option value="1.5 horas">1 hora</option>
-            <option value="1.5 horas">1.5 hora</option>
-            <option value="2 horas">2 horas</option>
-          </select>
-        </div>
-        <div>
-          <label>Tipo de partido:</label>
-          <select value={tipoPartido} onChange={(e) => setTipoPartido(e.target.value)}>
-            <option value="Futbol 5">Futbol 5</option>
-            <option value="Futbol 8">Futbol 8</option>
-          </select>
-        </div>
-        <div>
-          <label>Precio de la cancha:</label>
-          <input
-            type="number"
-            value={precio}
-            onChange={(e) => setPrecio(e.target.value)}
-            placeholder="$3500"
-            min="0"
-          />
-        </div>
-        <button type="submit" className="btn-publicar">Publicar el partido</button>
-      </form>
-      {mensaje && <p className="mensaje">{mensaje}</p>}
-    </main>
+    <form className="formulario" onSubmit={handleSubmit}>
+      <h2 className="titulo-formulario">Crear un partido</h2>
+
+      {errorMensaje && <p style={{ color: 'red' }}>{errorMensaje}</p>}
+
+      <label>Nombre de la cancha:</label>
+      <select name="cancha" value={formData.cancha} onChange={handleChange}>
+        <option value="">Selecciona una cancha</option>
+        {[...new Set(canchas.map(c => c.nombre))].map((nombre) => {
+          const cancha = canchas.find(c => c.nombre === nombre);
+          return (
+            <option key={cancha.id_Cancha} value={cancha.id_Cancha}>{nombre}</option>
+          );
+        })}
+      </select>
+
+      <label>Tipo de cancha:</label>
+      <select name="tipoCancha" value={formData.tipoCancha} onChange={handleChange}>
+        <option value="">Selecciona el tipo de cancha</option>
+        {tiposCancha.map((tipo) => (
+          <option key={tipo.id_Tipo} value={tipo.id_Tipo}>{tipo.descripcion}</option>
+        ))}
+      </select>
+
+      <label>Equipo 1:</label>
+      <select name="equipo1" value={formData.equipo1} onChange={handleChange}>
+        <option value="">Selecciona el equipo 1</option>
+        {equipos.map((equipo) => (
+          <option key={equipo.id_Equipo} value={equipo.id_Equipo}>{equipo.nombre}</option>
+        ))}
+      </select>
+
+      <label>Equipo 2:</label>
+      <select name="equipo2" value={formData.equipo2} onChange={handleChange}>
+        <option value="">Selecciona el equipo 2</option>
+        {equipos.map((equipo) => (
+          <option key={equipo.id_Equipo} value={equipo.id_Equipo}>{equipo.nombre}</option>
+        ))}
+      </select>
+
+      <label>Fecha:</label>
+      <input type="date" name="fecha" min={new Date().toISOString().split('T')[0]} value={formData.fecha} onChange={handleChange} />
+
+      <label>Hora de inicio:</label>
+      <input type="time" name="horaInicio" value={formData.horaInicio} onChange={handleChange} />
+
+      <label>Hora de finalización:</label>
+      <input type="time" name="horaFin" value={formData.horaFin} onChange={handleChange} />
+
+      <button type="submit" className="boton">Publicar el partido</button>
+    </form>
   );
 }
-
-export default CrearPartido;

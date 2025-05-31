@@ -1,57 +1,49 @@
-.crear-partido-content {
+.formulario {
   max-width: 500px;
-  margin: 20px auto;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: sans-serif;
 }
 
-.crear-partido-content h2 {
+.titulo-formulario {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
   text-align: center;
-  margin-bottom: 20px;
-  color: #333;
+  color: #2c2c2c;
 }
 
-.crear-partido-content form div {
-  margin-bottom: 15px;
-}
-
-.crear-partido-content label {
+label {
   display: block;
-  margin-bottom: 5px;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
   font-weight: bold;
-  color: #555;
 }
 
-.crear-partido-content input[type="text"],
-.crear-partido-content input[type="date"],
-.crear-partido-content input[type="time"] {
+select, input {
   width: 100%;
-  padding: 8px;
+  padding: 0.5rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  border-radius: 0.5rem;
+  font-size: 1rem;
 }
 
-.crear-partido-content button {
-  width: 100%;
-  padding: 10px;
-  background-color: #00B56A;
-  border: none;
-  border-radius: 4px;
+.boton {
+  margin-top: 2rem;
+  background-color: #00b864;
   color: white;
-  font-weight: bold;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
   cursor: pointer;
+  width: 100%;
 }
 
-.crear-partido-content button:hover {
-  background-color: #00B56A;
-}
 
-.crear-partido-content p {
-  text-align: center;
-  margin-top: 15px;
-  font-weight: bold;
-  color: green;
+
+.boton:hover {
+  background-color: #009f55;
 }
