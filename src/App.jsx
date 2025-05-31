@@ -11,6 +11,8 @@ import Crecimiento from './componentes/Crecimiento/Crecimiento';
 import Footer from './componentes/Footer/Footer';
 import NuevaPagina from './componentes/NuevaPagina/NuevaPagina';
 import CrearPartido from './componentes/CrearPartido/CrearPartido';
+import Torneos from './componentes/Torneos/Torneos';
+import CrearTorneoForm from './componentes/CrearTorneo/CrearTorneo';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -32,6 +34,8 @@ function App() {
           } />
           <Route path="/nueva-pagina" element={<NuevaPagina />} />
           <Route path="/crear-partido" element={<CrearPartido />} />
+          <Route path="/torneos" element={<Torneos />} />
+          <Route path="/crear-torneo" element={<CrearTorneoForm />} />
         </Routes>
       </div>
       <Footer />
