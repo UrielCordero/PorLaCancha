@@ -145,7 +145,6 @@ const NuevaPagina = () => {
           />
         </div>
 
-        {/* Botón fuera de .search-option para evitar el subrayado */}
         <div className="search-button-wrapper">
           <button className="boton-crear" onClick={handleBuscar}>
             Buscar partido
@@ -187,7 +186,11 @@ const NuevaPagina = () => {
                 <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
                 <p><strong>Zona:</strong> {partido.Cancha?.zona || 'Sin zona'}</p>
                 <p><strong>Tipo de cancha:</strong> {partido.Cancha?.tipoCancha?.descripcion || 'Sin tipo'}</p>
-                <p><strong>Equipos:</strong> {partido.equipo1?.nombre || 'Equipo 1'} vs {partido.equipo2?.nombre || 'Equipo 2'}</p>
+                <p><strong>Equipos:</strong> 
+                  {partido.equipo1?.nombre ? partido.equipo1.nombre : 'Sin equipo preestablecido'} 
+                  {' vs '} 
+                  {partido.equipo2?.nombre ? partido.equipo2.nombre : 'Sin equipo preestablecido'}
+                </p>
                 <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
 
                 <div className="boton-unirse-container">
