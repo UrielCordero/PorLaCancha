@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import './NuevaPagina.css';
 import '/src/componentes/Heroe/Heroe.css';
@@ -16,6 +16,7 @@ const NuevaPagina = () => {
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     fetchPartidos();
@@ -25,6 +26,23 @@ const NuevaPagina = () => {
   useEffect(() => {
     extraerZonasUnicas();
   }, [partidos]);
+
+  // Prefill filters from navigation state if available
+  useEffect(() => {
+    if (location.state) {
+      const { zonaSeleccionada, tipoSeleccionado, fechaSeleccionada } = location.state;
+      if (zonaSeleccionada) setZonaSeleccionada(zonaSeleccionada);
+      if (tipoSeleccionado) setTipoSeleccionado(tipoSeleccionado);
+      if (fechaSeleccionada) setFechaSeleccionada(fechaSeleccionada);
+    }
+  }, [location.state]);
+
+  // Automatically filter partidos when filters or partidos change
+  useEffect(() => {
+    if (partidos.length > 0) {
+      handleBuscar();
+    }
+  }, [zonaSeleccionada, tipoSeleccionado, fechaSeleccionada, partidos]);
 
   const fetchPartidos = async () => {
     setLoading(true);
@@ -145,11 +163,7 @@ const NuevaPagina = () => {
           />
         </div>
 
-        <div className="search-button-wrapper">
-          <button className="boton-crear" onClick={handleBuscar}>
-            Buscar partido
-          </button>
-        </div>
+        
       </div>
 
       <div className="crear-container">
