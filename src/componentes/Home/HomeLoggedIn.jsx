@@ -9,8 +9,8 @@ import './HomeLoggedIn.css';
 function HomeLoggedIn() {
   return (
     <>
-      <Heroe />
-      <TorneosMensuales />
+      <Heroe isLoggedIn={true} />
+      <TorneosMensuales isLoggedIn={true} />
       <JuegoLibre />
       <Caracteristicas />
       <Crecimiento />

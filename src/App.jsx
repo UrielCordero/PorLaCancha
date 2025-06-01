@@ -35,11 +35,15 @@ function App() {
   const handleLoginSuccess = (user) => {
     setIsLoggedIn(true);
     setShowLoginModal(false);
+    // Redirect to home logged-in page after login
+    window.history.pushState({}, '', '/');
   };
 
   const handleRegisterSuccess = (user) => {
     setIsLoggedIn(true);
     setShowRegisterModal(false);
+    // Redirect to home logged-in page after registration
+    window.history.pushState({}, '', '/');
   };
 
   const handleCloseModal = () => {
@@ -60,7 +64,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={isLoggedIn ? <HomeLoggedIn /> : <HomeLoggedOut />}
+            element={isLoggedIn ? <HomeLoggedIn /> : <HomeLoggedOut isLoggedIn={isLoggedIn} />}
           />
           <Route path="/nueva-pagina" element={<NuevaPagina />} />
           <Route path="/crear-partido" element={<CrearPartido />} />

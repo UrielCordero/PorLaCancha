@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import './Heroe.css';
 
-function Heroe() {
+function Heroe({ isLoggedIn }) {
   const [zonasDisponibles, setZonasDisponibles] = useState([]);
   const [tiposCancha, setTiposCancha] = useState([]);
 
@@ -46,6 +46,10 @@ function Heroe() {
   };
 
   const handleBuscar = () => {
+    if (!isLoggedIn) {
+      alert('Debe iniciar sesión para realizar esta acción.');
+      return;
+    }
     navigate('/nueva-pagina', {
       state: {
         zonaSeleccionada,
