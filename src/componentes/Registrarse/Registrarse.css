@@ -61,3 +61,19 @@
 .btn-register:hover {
   background-color: #45a049;
 }
+
+.btn-close {
+  margin-top: 0.5rem;
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-close:hover {
+  background-color: #4caf50;
+}

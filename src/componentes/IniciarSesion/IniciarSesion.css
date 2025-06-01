@@ -49,7 +49,7 @@
 }
 
 .modal form .error {
-  color: red;
+  color: #4caf50;
   margin-top: 0.5rem;
   font-size: 0.9rem;
 }
@@ -78,4 +78,20 @@
   padding: 0;
   font-size: 1rem;
   text-decoration: underline;
+}
+
+.btn-close {
+  margin-top: 0.5rem;
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-close:hover {
+  background-color: #4caf50;
 }

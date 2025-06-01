@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { supabase } from '../../supabaseClient';
 import './IniciarSesion.css';
 
-function IniciarSesion({ onClose, onLoginSuccess }) {
+function IniciarSesion({ onClose, onLoginSuccess, onSwitchToRegister }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -49,11 +49,12 @@ function IniciarSesion({ onClose, onLoginSuccess }) {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <a href="#" className="forgot-password">Olvide mi contraseña</a>
+          {/* Removed Olvide mi contraseña link */}
           {errorMsg && <p className="error">{errorMsg}</p>}
+          <p>¿No tienes cuenta? <button className="link-button" onClick={() => { onClose(); onSwitchToRegister(); }}>Registrate.</button></p>
           <button type="submit" className="btn-login">Iniciar sesion</button>
+          <button type="button" className="btn-close" onClick={onClose}>Cerrar</button>
         </form>
-        <p>¿No tienes cuenta? <button className="link-button" onClick={() => { onClose(); }}>Registrate.</button></p>
       </div>
     </div>
   );

@@ -74,7 +74,14 @@ function App() {
       </div>
       <Footer />
       {showLoginModal && (
-        <IniciarSesion onClose={handleCloseModal} onLoginSuccess={handleLoginSuccess} />
+        <IniciarSesion
+          onClose={handleCloseModal}
+          onLoginSuccess={handleLoginSuccess}
+          onSwitchToRegister={() => {
+            setShowLoginModal(false);
+            setShowRegisterModal(true);
+          }}
+        />
       )}
       {showRegisterModal && (
         <Registrarse onClose={handleCloseModal} onRegisterSuccess={handleRegisterSuccess} />

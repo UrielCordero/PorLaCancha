@@ -107,6 +107,7 @@ function Registrarse({ onClose, onRegisterSuccess }) {
           </select>
           {errorMsg && <p className="error">{errorMsg}</p>}
           <button type="submit" className="btn-register">Registrarse</button>
+          <button type="button" className="btn-close" onClick={onClose}>Cerrar</button>
         </form>
       </div>
     </div>
