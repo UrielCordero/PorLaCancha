@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../supabaseClient';
+import { useNavigate } from 'react-router-dom';
 import './CrearPartido.css';
 
 export default function CrearPartidoForm() {
   const [canchas, setCanchas] = useState([]);
   const [equipos, setEquipos] = useState([]);
   const [errorMensaje, setErrorMensaje] = useState('');
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     nombreCancha: '',
@@ -166,6 +168,7 @@ export default function CrearPartidoForm() {
       <input type="time" name="horaFin" value={formData.horaFin} onChange={handleChange} />
 
       <button type="submit" className="boton">Publicar el partido</button>
+      <button type="button" className="boton" onClick={() => navigate('/nueva-pagina')}>Volver</button>
     </form>
   );
 }

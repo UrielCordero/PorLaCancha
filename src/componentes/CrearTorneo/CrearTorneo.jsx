@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../supabaseClient';
+import { useNavigate } from 'react-router-dom';
 import './CrearTorneo.css';
 
 export default function CrearTorneo() {
@@ -7,6 +8,7 @@ export default function CrearTorneo() {
   const [nombresCanchasUnicos, setNombresCanchasUnicos] = useState([]);
   const [tiposCancha, setTiposCancha] = useState([]);
   const [mensaje, setMensaje] = useState('');
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     nombreTorneo: '',
@@ -217,6 +219,7 @@ export default function CrearTorneo() {
         />
 
         <button type="submit" className="boton">Publicar el torneo</button>
+        <button type="button" className="boton" onClick={() => navigate('/torneos')}>Volver</button>
       </form>
     </div>
   );
