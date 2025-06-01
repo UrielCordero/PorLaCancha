@@ -68,7 +68,7 @@ const Torneos = () => {
           torneos.map((torneo) => (
             <div key={torneo.id} className="torneo-card">
               <img
-                src={torneo.fotoTorneo || 'https://via.placeholder.com/300x150'}
+                src={torneo.fotoTorneo}
                 alt="Torneo"
                 className="torneo-imagen"
               />
