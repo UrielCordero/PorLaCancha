@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-function Header({ onMenuClick }) {
+function Header({ onMenuClick, isLoggedIn, onLoginClick, onRegisterClick }) {
   return (
     <header className="header">
       <nav className="navbar">
@@ -12,12 +12,19 @@ function Header({ onMenuClick }) {
           </Link>
         </div>
         <div className="nav-links">
-          <img
-            src="/src/assets/Menu.png"
-            alt="Menu Icon"
-            style={{ height: '50px', cursor: 'pointer' }}
-            onClick={onMenuClick}
-          />
+          {isLoggedIn ? (
+            <img
+              src="/src/assets/Menu.png"
+              alt="Menu Icon"
+              style={{ height: '50px', cursor: 'pointer' }}
+              onClick={onMenuClick}
+            />
+          ) : (
+            <>
+              <button className="btn-header" onClick={onRegisterClick}>Registrarse</button>
+              <button className="btn-header" onClick={onLoginClick}>Iniciar sesión</button>
+            </>
+          )}
         </div>
       </nav>
     </header>
