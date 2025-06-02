@@ -16,6 +16,7 @@ import Footer from './componentes/Footer/Footer';
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
@@ -34,6 +35,7 @@ function App() {
 
   const handleLoginSuccess = (user) => {
     setIsLoggedIn(true);
+    setLoggedInUser(user);
     setShowLoginModal(false);
     // Redirect to home logged-in page after login
     window.history.pushState({}, '', '/');
@@ -41,6 +43,7 @@ function App() {
 
   const handleRegisterSuccess = (user) => {
     setIsLoggedIn(true);
+    setLoggedInUser(user);
     setShowRegisterModal(false);
     // Redirect to home logged-in page after registration
     window.history.pushState({}, '', '/');
@@ -59,7 +62,7 @@ function App() {
         onLoginClick={handleLoginClick}
         onRegisterClick={handleRegisterClick}
       />
-      <MenuLateral menuOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+      <MenuLateral menuOpen={menuOpen} onClose={() => setMenuOpen(false)} user={loggedInUser} />
       <div className="content">
         <Routes>
           <Route
