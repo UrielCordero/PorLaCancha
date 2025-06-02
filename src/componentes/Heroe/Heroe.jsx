@@ -90,7 +90,7 @@ function Heroe({ isLoggedIn }) {
               </select>
             </div>
 
-            <div className="search-option">
+            <div className="search-option no-border">
               <i className="fa fa-calendar-alt"></i>
               <input
                 type="date"

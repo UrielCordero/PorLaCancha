@@ -154,14 +154,14 @@ const NuevaPagina = () => {
           </select>
         </div>
 
-        <div className="search-option">
-          <i className="fa fa-calendar-alt"></i>
-          <input
-            type="date"
-            value={fechaSeleccionada}
-            onChange={(e) => setFechaSeleccionada(e.target.value)}
-          />
-        </div>
+            <div className="search-option no-border">
+              <i className="fa fa-calendar-alt"></i>
+              <input
+                type="date"
+                value={fechaSeleccionada}
+                onChange={(e) => setFechaSeleccionada(e.target.value)}
+              />
+            </div>
 
         
       </div>

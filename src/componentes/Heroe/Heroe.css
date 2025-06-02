@@ -63,6 +63,33 @@
   border-bottom: 2px solid #00B56A;
   padding-bottom: 4px;
   color: #888;
+  height: 36px;
+}
+
+.search-option i {
+  color: #00B56A;
+  line-height: 36px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.search-option select,
+.search-option input[type="date"] {
+  height: 32px;
+  line-height: 32px;
+  padding: 0 6px;
+  font-size: 16px;
+  box-sizing: border-box;
+  color: #555;
+  background: none;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .search-option i {
@@ -91,4 +118,18 @@ input{
   border: 0;
   font-family: Arial, Helvetica, sans-serif;
   
+}
+
+.search-option input[type="date"] {
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+  padding: 0;
+  height: auto;
+  font-size: inherit;
+  color: inherit;
 }
