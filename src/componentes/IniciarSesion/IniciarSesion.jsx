@@ -34,7 +34,12 @@ function IniciarSesion({ onClose, onLoginSuccess, onSwitchToRegister }) {
     <div className="modal-backdrop">
       <div className="modal">
         <h2>INICIAR SESION</h2>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            handleLogin(e);
+          }
+        }}>
           <label>Email</label>
           <input
             type="email"
