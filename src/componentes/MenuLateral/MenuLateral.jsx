@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './MenuLateral.css';
 
-function MenuLateral({ menuOpen, onClose, user }) {
+function MenuLateral({ menuOpen, onClose, user, onLogout }) {
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function MenuLateral({ menuOpen, onClose, user }) {
     };
   }, [menuOpen, onClose]);
 
-  const profilePhoto = user && user.fotoDePerfil ? user.fotoDePerfil : '/src/assets/ImgPerfil.png';
+  const profilePhoto = user && user.fotoDePerfil;
 
   return (
     <div className={`side-menu ${menuOpen ? 'open' : ''}`} ref={menuRef}>
@@ -38,7 +38,7 @@ function MenuLateral({ menuOpen, onClose, user }) {
         <li><Link to="/torneos" onClick={onClose}>Torneos</Link></li>
         <li><a href="#torneos" onClick={onClose}>Equipos</a></li>
         <li><a href="#torneos" onClick={onClose}>Historial</a></li>
-        <li><a href="#torneos" onClick={onClose}>Cerrar Sesion</a></li>
+        <li><button className="logout-button" onClick={() => { onLogout(); onClose(); }}>Cerrar Sesion</button></li>
       </ul>
     </div>
   );

@@ -73,7 +73,13 @@ function App() {
         onLoginClick={handleLoginClick}
         onRegisterClick={handleRegisterClick}
       />
-      <MenuLateral menuOpen={menuOpen} onClose={() => setMenuOpen(false)} user={loggedInUser} />
+      <MenuLateral menuOpen={menuOpen} onClose={() => setMenuOpen(false)} user={loggedInUser} onLogout={() => {
+        setIsLoggedIn(false);
+        setLoggedInUser(null);
+        localStorage.removeItem('loggedInUser');
+        setMenuOpen(false);
+        window.history.pushState({}, '', '/');
+      }} />
       <div className="content">
         <Routes>
           <Route
