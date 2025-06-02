@@ -19,6 +19,10 @@ function Registrarse({ onClose, onRegisterSuccess }) {
       setErrorMsg('Las contraseñas no coinciden');
       return;
     }
+    if (nivelHabilidad === 0) {
+      setErrorMsg('Debe seleccionar un nivel de habilidad');
+      return;
+    }
     try {
       // Insert user data into "Usuarios" table
       const { error: insertError } = await supabase
@@ -86,12 +90,15 @@ function Registrarse({ onClose, onRegisterSuccess }) {
             required
           />
           <label>Genero</label>
-          <input
-            type="text"
+          <select
             value={genero}
             onChange={(e) => setGenero(e.target.value)}
             required
-          />
+          >
+            <option value="">Seleccione género</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+          </select>
           <label>Nivel de habilidad</label>
           <select
             value={nivelHabilidad}
