@@ -20,6 +20,15 @@ function App() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
 
+  // Load login state from localStorage on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('loggedInUser');
+    if (storedUser) {
+      setLoggedInUser(JSON.parse(storedUser));
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   // For debugging, log the login state
   useEffect(() => {
     console.log('isLoggedIn:', isLoggedIn);
@@ -36,6 +45,7 @@ function App() {
   const handleLoginSuccess = (user) => {
     setIsLoggedIn(true);
     setLoggedInUser(user);
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
     setShowLoginModal(false);
     // Redirect to home logged-in page after login
     window.history.pushState({}, '', '/');
@@ -44,6 +54,7 @@ function App() {
   const handleRegisterSuccess = (user) => {
     setIsLoggedIn(true);
     setLoggedInUser(user);
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
     setShowRegisterModal(false);
     // Redirect to home logged-in page after registration
     window.history.pushState({}, '', '/');
