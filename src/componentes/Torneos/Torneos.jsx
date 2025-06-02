@@ -36,7 +36,21 @@ const Torneos = () => {
     setLoading(false);
   };
 
-  const handleCrearTorneo = () => {
+  const handleCrearTorneo = async () => {
+    // Check if hamburger menu is present in DOM
+    const hamburgerMenu = document.querySelector('img[src*="Menu.png"]');
+    if (hamburgerMenu) {
+      // Hamburger menu present, assume user logged in, allow navigation
+      navigate('/crear-torneo');
+      return;
+    }
+
+    // Otherwise, check user login status
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      alert('Debe iniciar sesión');
+      return;
+    }
     navigate('/crear-torneo');
   };
 

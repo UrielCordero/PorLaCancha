@@ -14,6 +14,7 @@ const NuevaPagina = () => {
   const [zonaSeleccionada, setZonaSeleccionada] = useState('');
   const [tipoSeleccionado, setTipoSeleccionado] = useState('');
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,6 +22,23 @@ const NuevaPagina = () => {
   useEffect(() => {
     fetchPartidos();
     fetchTiposCancha();
+
+    // Get current user on mount and subscribe to auth changes
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      console.log('getUser user:', user);
+      setCurrentUser(user);
+    };
+    getUser();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log('onAuthStateChange session:', session);
+      setCurrentUser(session?.user ?? null);
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -103,7 +121,21 @@ const NuevaPagina = () => {
     setZonasDisponibles(zonas);
   };
 
-  const handleCrearPartido = () => {
+  const handleCrearPartido = async () => {
+    // Check if hamburger menu is present in DOM
+    const hamburgerMenu = document.querySelector('img[src*="Menu.png"]');
+    if (hamburgerMenu) {
+      // Hamburger menu present, assume user logged in, allow navigation
+      navigate('/crear-partido');
+      return;
+    }
+
+    // Otherwise, check user login status
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      alert('Debe iniciar sesión');
+      return;
+    }
     navigate('/crear-partido');
   };
 
