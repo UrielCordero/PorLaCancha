@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../supabaseClient';
+import StarRating from '../StarRating/StarRating';
 import './Equipos.css';
 
 function Equipos() {
@@ -37,7 +38,7 @@ function Equipos() {
         <div key={team.idEquipos} className="equipo-card">
           {team.imgEscudo && <img src={team.imgEscudo} alt={`${team.nombre} escudo`} className="equipo-escudo" />}
           <h3>{team.nombre}</h3>
-          <p><strong>Nivel de Habilidad:</strong> {team.nivelHabilidad}</p>
+          <p><strong>Nivel de Habilidad:</strong> <StarRating level={team.nivelHabilidad} /></p>
           <p><strong>Partidos Ganados:</strong> {team.partidosGanados}</p>
           <p><strong>Partidos Empatados:</strong> {team.partidosEmpatados}</p>
           <p><strong>Partidos Perdidos:</strong> {team.partidosPerdidos}</p>
