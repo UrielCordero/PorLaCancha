@@ -4,6 +4,8 @@
   gap: 16px;
   padding: 16px;
   justify-content: center;
+  min-height: calc(100vh - 160px);
+  box-sizing: border-box;
 }
 
 .equipo-card {
@@ -11,7 +13,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   padding: 16px;
-  width: 220px;
+  width: 280px;
   text-align: center;
   transition: transform 0.2s ease;
 }
