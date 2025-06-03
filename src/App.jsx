@@ -12,6 +12,7 @@ import Registrarse from './componentes/Registrarse/Registrarse';
 import HomeLoggedOut from './componentes/Home/HomeLoggedOut';
 import HomeLoggedIn from './componentes/Home/HomeLoggedIn';
 import Footer from './componentes/Footer/Footer';
+import Perfil from './componentes/Perfil/Perfil';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -90,6 +91,7 @@ function App() {
           <Route path="/crear-partido" element={<CrearPartido />} />
           <Route path="/torneos" element={<Torneos />} />
           <Route path="/crear-torneo" element={<CrearTorneoForm />} />
+          <Route path="/perfil" element={<Perfil />} />
         </Routes>
       </div>
       <Footer />

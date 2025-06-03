@@ -27,11 +27,13 @@ function MenuLateral({ menuOpen, onClose, user, onLogout }) {
     <div className={`side-menu ${menuOpen ? 'open' : ''}`} ref={menuRef}>
       <button className="close-button" onClick={onClose}>×</button>
       <div className="profile-section">
-        <img
-          src={profilePhoto}
-          alt="Perfil"
-          className="profile-image"
-        />
+        <Link to="/perfil" onClick={onClose}>
+          <img
+            src={profilePhoto}
+            alt="Perfil"
+            className="profile-image"
+          />
+        </Link>
       </div>
       <ul>
         <li><Link to="/nueva-pagina" onClick={onClose}>Partidos</Link></li>
