@@ -13,6 +13,8 @@ function Perfil() {
     nombre: '',
     genero: '',
     email: '',
+    contrasenia: '',
+    confirmarContrasenia: '',
     fotoDePerfil: '',
     nivelHabilidad: 0,
     fechaNacimiento: '',
@@ -37,7 +39,7 @@ function Perfil() {
         // Use exact field names from schema
         const { data, error } = await supabase
           .from('Usuarios')
-          .select('idUsuarios, nombre, genero, email, fotoDePerfil, nivelHabilidad, fechaNacimiento')
+          .select('idUsuarios, nombre, genero, email, contrasenia, fotoDePerfil, nivelHabilidad, fechaNacimiento')
           .eq('email', loggedInUser.email)
           .single();
 
@@ -125,11 +127,19 @@ function Perfil() {
     setSaving(true);
     setSaveError(null);
     setSaveSuccess(false);
+
+    if (formData.contrasenia !== formData.confirmarContrasenia) {
+      setSaveError('La contraseña y la confirmación no coinciden.');
+      setSaving(false);
+      return;
+    }
+
     try {
       const updates = {
         nombre: formData.nombre,
         genero: formData.genero,
         email: formData.email,
+        contrasenia: formData.contrasenia,
         fotoDePerfil: formData.fotoDePerfil,
         nivelHabilidad: formData.nivelHabilidad,
         fechaNacimiento: formData.fechaNacimiento,
@@ -231,6 +241,26 @@ function Perfil() {
               <StarRating level={formData.nivelHabilidad} editable={true} onChange={handleNivelHabilidadChange} />
             </label>
             <label>
+              Contraseña:
+              <input
+                type="password"
+                name="contrasenia"
+                value={formData.contrasenia}
+                onChange={handleInputChange}
+                className="perfil-input"
+              />
+            </label>
+            <label>
+              Confirmar Contraseña:
+              <input
+                type="password"
+                name="confirmarContrasenia"
+                value={formData.confirmarContrasenia}
+                onChange={handleInputChange}
+                className="perfil-input"
+              />
+            </label>
+            <label>
               Fecha de Nacimiento:
               <input
                 type="date"
@@ -261,6 +291,7 @@ function Perfil() {
             <h2>{userData.nombre}</h2>
             <p><strong>Género:</strong> {userData.genero}</p>
             <p><strong>Email:</strong> {userData.email}</p>
+            <p><strong>Contraseña:</strong> {userData.contrasenia ? '*'.repeat(userData.contrasenia.length) : ''}</p>
             <p><strong>Nivel de Habilidad:</strong> <StarRating level={userData.nivelHabilidad} /></p>
             <p><strong>Fecha de Nacimiento:</strong> {new Date(userData.fechaNacimiento).toLocaleDateString()}</p>
             <p><strong>Equipo:</strong> {userTeams ? userTeams : 'No pertenece a ningún equipo'}</p>
