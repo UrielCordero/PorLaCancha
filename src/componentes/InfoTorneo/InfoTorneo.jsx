@@ -82,15 +82,14 @@ const InfoTorneo = () => {
         <p className="info-torneo-detail"><strong>Premio del ganador:</strong> ${torneo.premio}</p>
       </div>
       <button
-        className="info-torneo-button"
+        className="boton"
         onClick={() => navigate(`/unirse-torneo/${torneo.id}`)}
       >
         Unirme al torneo
       </button>
       <button
-        className="info-torneo-button"
+        className="boton volver-button"
         onClick={() => navigate(-1)}
-        style={{ marginTop: '10px' }}
       >
         Volver
       </button>

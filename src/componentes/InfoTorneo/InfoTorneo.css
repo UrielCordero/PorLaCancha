@@ -70,3 +70,24 @@
 .info-torneo-button:hover {
   background-color: #219150;
 }
+
+.boton {
+  display: block;
+  margin-top: 2rem;
+  background-color: #00b864;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.volver-button {
+  display: block;
+  margin-top: 6px;
+}
