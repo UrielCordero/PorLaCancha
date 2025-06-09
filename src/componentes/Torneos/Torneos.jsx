@@ -94,7 +94,12 @@ const Torneos = () => {
                   return `${parseInt(d1)} de ${getMes(m1)} - ${parseInt(d2)} de ${getMes(m2)}`;
                 })()}
               </p>
-              <button className="ver-info">Ver más info</button>
+              <button
+                className="ver-info"
+                onClick={() => navigate(`/info-torneo/${torneo.id}`)}
+              >
+                Ver más info
+              </button>
             </div>
           ))
         )}

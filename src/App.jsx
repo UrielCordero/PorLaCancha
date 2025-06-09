@@ -14,6 +14,8 @@ import HomeLoggedIn from './componentes/Home/HomeLoggedIn';
 import Footer from './componentes/Footer/Footer';
 import Perfil from './componentes/Perfil/Perfil';
 import Equipos from './componentes/Equipos/Equipos';
+import InfoTorneo from './componentes/InfoTorneo/InfoTorneo';
+import UnirseTorneo from './componentes/UnirseTorneo/UnirseTorneo';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -94,6 +96,8 @@ function App() {
           <Route path="/crear-torneo" element={<CrearTorneoForm />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/equipos" element={<Equipos />} />
+          <Route path="/info-torneo/:id" element={<InfoTorneo />} />
+          <Route path="/unirse-torneo/:id" element={<UnirseTorneo />} />
         </Routes>
       </div>
       <Footer />

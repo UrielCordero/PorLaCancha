@@ -1,0 +1,72 @@
+.info-torneo-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.info-torneo-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.info-torneo-image {
+  display: block;
+  max-width: 300px;
+  height: auto;
+  border-radius: 12px;
+  margin: 0 auto 30px auto;
+  box-shadow: 0 0 10px 3px #27ae60;
+  transition: box-shadow 0.3s ease;
+}
+
+.info-torneo-image:hover {
+  box-shadow: 0 0 15px 5px #219150;
+}
+
+.info-torneo-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.info-torneo-detail {
+  flex: 1 1 45%;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.info-torneo-detail strong {
+  color: #34495e;
+}
+
+.info-torneo-button {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 14px 0;
+  background-color: #27ae60;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+}
+
+.info-torneo-button:hover {
+  background-color: #219150;
+}
