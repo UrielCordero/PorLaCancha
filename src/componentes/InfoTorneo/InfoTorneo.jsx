@@ -64,6 +64,36 @@ const InfoTorneo = () => {
     return `${parseInt(day)} de ${meses[parseInt(month, 10) - 1]} de ${year}`;
   };
 
+  const handleJoinTournament = async () => {
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+      alert('No se pudo obtener el usuario. Por favor, inicie sesión.');
+      return;
+    }
+
+    const { data: teamData, error: teamError } = await supabase
+      .from('user_teams')
+      .select('*')
+      .eq('user_id', user.id);
+
+    if (teamError) {
+      console.error('Error al verificar el equipo del usuario:', teamError);
+      alert('Error al verificar el equipo. Intente nuevamente más tarde.');
+      return;
+    }
+
+    if (teamData && teamData.length > 0) {
+      alert('te has unido correctamente al torneo');
+      navigate(`/unirse-torneo/${torneo.id}`);
+    } else {
+      alert('Conseguite un equipo para competir');
+    }
+  };
+
   return (
     <div className="info-torneo-container">
       <h2 className="info-torneo-title">{torneo.nombreTorneo}</h2>
@@ -83,7 +113,7 @@ const InfoTorneo = () => {
       </div>
       <button
         className="boton"
-        onClick={() => navigate(`/unirse-torneo/${torneo.id}`)}
+        onClick={handleJoinTournament}
       >
         Unirme al torneo
       </button>
