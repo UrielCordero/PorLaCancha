@@ -16,6 +16,7 @@ import Perfil from './componentes/Perfil/Perfil';
 import Equipos from './componentes/Equipos/Equipos';
 import InfoTorneo from './componentes/InfoTorneo/InfoTorneo';
 import UnirseTorneo from './componentes/UnirseTorneo/UnirseTorneo';
+import VerInfoPartido from './componentes/VerInfoPartido/VerInfoPartido';
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -97,25 +98,26 @@ function App() {
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/equipos" element={<Equipos />} />
           <Route path="/info-torneo/:id" element={<InfoTorneo />} />
-          <Route path="/unirse-torneo/:id" element={<UnirseTorneo />} />
-        </Routes>
-      </div>
-      <Footer />
-      {showLoginModal && (
-        <IniciarSesion
-          onClose={handleCloseModal}
-          onLoginSuccess={handleLoginSuccess}
-          onSwitchToRegister={() => {
-            setShowLoginModal(false);
-            setShowRegisterModal(true);
-          }}
-        />
-      )}
-      {showRegisterModal && (
-        <Registrarse onClose={handleCloseModal} onRegisterSuccess={handleRegisterSuccess} />
-      )}
-    </Router>
-  );
+        <Route path="/unirse-torneo/:id" element={<UnirseTorneo />} />
+        <Route path="/ver-info-partido/:id" element={<VerInfoPartido />} />
+      </Routes>
+    </div>
+    <Footer />
+    {showLoginModal && (
+      <IniciarSesion
+        onClose={handleCloseModal}
+        onLoginSuccess={handleLoginSuccess}
+        onSwitchToRegister={() => {
+          setShowLoginModal(false);
+          setShowRegisterModal(true);
+        }}
+      />
+    )}
+    {showRegisterModal && (
+      <Registrarse onClose={handleCloseModal} onRegisterSuccess={handleRegisterSuccess} />
+    )}
+  </Router>
+);
 }
 
 export default App;

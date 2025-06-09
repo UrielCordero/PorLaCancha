@@ -240,7 +240,12 @@ const NuevaPagina = () => {
                 <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
 
                 <div className="boton-unirse-container">
-                  <button className="boton-crear boton-unirse">Unirse al partido</button>
+                  <button
+                    className="boton-crear boton-unirse"
+                    onClick={() => navigate(`/ver-info-partido/${partido.id_Partidos}`)}
+                  >
+                    Ver mas info
+                  </button>
                 </div>
               </div>
             </div>
