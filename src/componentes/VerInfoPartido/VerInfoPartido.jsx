@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './VerInfoPartido.css';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
 
 const jugadores = [
   {
@@ -32,7 +30,6 @@ const VerInfoPartido = () => {
   const { id } = useParams();
   const [partido, setPartido] = useState(null);
   const [cancha, setCancha] = useState(null);
-  const [coordenadas, setCoordenadas] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -48,25 +45,9 @@ const VerInfoPartido = () => {
       } else {
         setPartido(partidoData);
         setCancha(partidoData.Cancha);
-        obtenerCoordenadas(partidoData.Cancha.ubicacion);
       }
 
       setLoading(false);
-    };
-
-    const obtenerCoordenadas = async (direccion) => {
-      try {
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}`);
-        const data = await response.json();
-        if (data.length > 0) {
-          setCoordenadas({
-            lat: parseFloat(data[0].lat),
-            lon: parseFloat(data[0].lon)
-          });
-        }
-      } catch (error) {
-        console.error('Error obteniendo coordenadas:', error);
-      }
     };
 
     fetchPartido();
@@ -75,27 +56,21 @@ const VerInfoPartido = () => {
   if (loading) return <div>Cargando...</div>;
   if (!partido || !cancha) return <div>No se encontró el partido</div>;
 
-  const marcadorIcono = new L.Icon({
-    iconUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-  });
-
   return (
     <div className="ver-info-container">
       <h2 className="titulo">Detalles del partido</h2>
       <div className="ubicacion-mapa">
-        {coordenadas && (
-          <MapContainer center={[coordenadas.lat, coordenadas.lon]} zoom={15} className="mapa-cancha">
-            <TileLayer
-              attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={[coordenadas.lat, coordenadas.lon]} icon={marcadorIcono}>
-              <Popup>{cancha.nombre}</Popup>
-            </Marker>
-          </MapContainer>
+        {cancha && (
+          <iframe
+            src={`https://maps.google.com/maps?q=${encodeURIComponent(cancha.ubicacion)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+            width="600"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Mapa de Cancha"
+          ></iframe>
         )}
         <p className="direccion">{cancha ? cancha.ubicacion : ''}</p>
       </div>
