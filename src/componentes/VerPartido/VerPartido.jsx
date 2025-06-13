@@ -224,19 +224,8 @@ const VerPartidos = () => {
                 className="partido-imagen"
               />
               <div className="partido-info">
-                <p><strong>Fecha:</strong> {(() => {
-                  const [year, month, day] = partido.fecha.split('-');
-                  return `${day}/${month}/${year}`;
-                })()}</p>
                 <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
                 <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
-                <p><strong>Zona:</strong> {partido.Cancha?.zona || 'Sin zona'}</p>
-                <p><strong>Tipo de cancha:</strong> {partido.Cancha?.tipoCancha?.descripcion || 'Sin tipo'}</p>
-                <p><strong>Equipos:</strong> 
-                  {partido.equipo1?.nombre ? partido.equipo1.nombre : 'Sin equipo preestablecido'} 
-                  {' vs '} 
-                  {partido.equipo2?.nombre ? partido.equipo2.nombre : 'Sin equipo preestablecido'}
-                </p>
                 <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
 
                 <div className="boton-unirse-container">
