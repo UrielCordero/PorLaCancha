@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
-import './NuevaPagina.css';
+import './VerPartido.css';
 import '/src/componentes/Heroe/Heroe.css';
 
-const NuevaPagina = () => {
+const VerPartidos = () => {
   const [partidos, setPartidos] = useState([]);
   const [zonasDisponibles, setZonasDisponibles] = useState([]);
   const [tiposCancha, setTiposCancha] = useState([]);
@@ -14,7 +14,7 @@ const NuevaPagina = () => {
   const [zonaSeleccionada, setZonaSeleccionada] = useState('');
   const [tipoSeleccionado, setTipoSeleccionado] = useState('');
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
-  const [currentUser, setCurrentUser] = useState(null);
+  const [CurrentUser, setCurrentUser] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -256,4 +256,4 @@ const NuevaPagina = () => {
   );
 };
 
-export default NuevaPagina;
+export default VerPartidos;

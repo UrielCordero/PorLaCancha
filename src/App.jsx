@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Header from './componentes/Header/Header';
 import MenuLateral from './componentes/MenuLateral/MenuLateral';
-import NuevaPagina from './componentes/NuevaPagina/NuevaPagina';
+import VerPartidos from './componentes/VerPartido/VerPartidos';
 import CrearPartido from './componentes/CrearPartido/CrearPartido';
 import Torneos from './componentes/Torneos/Torneos';
 import CrearTorneoForm from './componentes/CrearTorneo/CrearTorneo';
@@ -82,7 +82,7 @@ function App() {
       <div className="content">
         <Routes>
           <Route path="/" element={logueado ? <HomeLoggedIn /> : <HomeLoggedOut />} />
-          <Route path="/nueva-pagina" element={<NuevaPagina />} />
+          <Route path="/ver-partidos" element={<VerPartidos />} />
           <Route path="/crear-partido" element={<CrearPartido />} />
           <Route path="/torneos" element={<Torneos />} />
           <Route path="/crear-torneo" element={<CrearTorneoForm />} />
