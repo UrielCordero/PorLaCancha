@@ -4,7 +4,7 @@ import { supabase } from '../../supabaseClient';
 import './VerPartido.css';
 import '/src/componentes/Heroe/Heroe.css';
 
-const VerPartidos = () => {
+const VerPartido = () => {
   const [partidos, setPartidos] = useState([]);
   const [zonasDisponibles, setZonasDisponibles] = useState([]);
   const [tiposCancha, setTiposCancha] = useState([]);
@@ -122,10 +122,10 @@ const VerPartidos = () => {
   };
 
   const handleCrearPartido = async () => {
-    // Check if hamburger menu is present in DOM
+    
     const hamburgerMenu = document.querySelector('img[src*="Menu.png"]');
     if (hamburgerMenu) {
-      // Hamburger menu present, assume user logged in, allow navigation
+      
       navigate('/crear-partido');
       return;
     }
@@ -245,4 +245,4 @@ const VerPartidos = () => {
   );
 };
 
-export default VerPartidos;
+export default VerPartido;

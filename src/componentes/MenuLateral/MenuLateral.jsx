@@ -36,7 +36,7 @@ function MenuLateral({ menuOpen, onClose, user, onLogout }) {
         </Link>
       </div>
       <ul>
-        <li><Link to="/nueva-pagina" onClick={onClose}>Partidos</Link></li>
+        <li><Link to="/ver-partidos" onClick={onClose}>Partidos</Link></li>
         <li><Link to="/torneos" onClick={onClose}>Torneos</Link></li>
         <li><Link to="/equipos" onClick={onClose}>Equipos</Link></li>
         <li><a href="#torneos" onClick={onClose}>Historial</a></li>
