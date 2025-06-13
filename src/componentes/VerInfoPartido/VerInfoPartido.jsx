@@ -1,9 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import './verInfoPartido.css';
+import './VerInfoPartido.css';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
+
+const jugadores = [
+  {
+    id: 1,
+    nombre: 'Francisco Marapopoden',
+    foto: '/src/assets/ImgPerfil.png',
+  },
+  {
+    id: 2,
+    nombre: 'Jazinto Moguillner',
+    foto: '/src/assets/ImgPerfil.png',
+  },
+  {
+    id: 3,
+    nombre: 'Bruno Maratisto',
+    foto: '/src/assets/ImgPerfil.png',
+  },
+  {
+    id: 4,
+    nombre: 'Santiago Solemsky',
+    foto: '/src/assets/ImgPerfil.png',
+  },
+];
 
 const VerInfoPartido = () => {
   const { id } = useParams();
@@ -61,26 +84,49 @@ const VerInfoPartido = () => {
 
   return (
     <div className="ver-info-container">
-      <h1>Información del Partido</h1>
-      <div className="partido-info">
-        <p><strong>Fecha:</strong> {partido.fecha}</p>
-        <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
-        <p><strong>Cancha:</strong> {cancha.nombre}</p>
-        <p><strong>Dirección:</strong> {cancha.ubicacion}</p>
-        <p><strong>Precio/hora:</strong> ${cancha.precioXHora}</p>
+      <h2 className="titulo">Detalles del partido</h2>
+      <div className="ubicacion-mapa">
+        {coordenadas && (
+          <MapContainer center={[coordenadas.lat, coordenadas.lon]} zoom={15} className="mapa-cancha">
+            <TileLayer
+              attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={[coordenadas.lat, coordenadas.lon]} icon={marcadorIcono}>
+              <Popup>{cancha.nombre}</Popup>
+            </Marker>
+          </MapContainer>
+        )}
+        <p className="direccion">{cancha ? cancha.ubicacion : ''}</p>
       </div>
 
-      {coordenadas && (
-        <MapContainer center={[coordenadas.lat, coordenadas.lon]} zoom={15} className="mapa-cancha">
-          <TileLayer
-            attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker position={[coordenadas.lat, coordenadas.lon]} icon={marcadorIcono}>
-            <Popup>{cancha.nombre}</Popup>
-          </Marker>
-        </MapContainer>
-      )}
+      <div className="info-boxes">
+        <div className="info-box">
+          <div className="icono">&#128197;</div>
+          <div className="texto">{partido ? partido.fecha : ''}</div>
+        </div>
+        <div className="info-box">
+          <div className="icono">&#128337;</div>
+          <div className="texto">{partido ? partido.horaInicio.slice(0,5) : ''}</div>
+        </div>
+        <div className="info-box">
+          <div className="icono">&#36;</div>
+          <div className="texto">{cancha ? `$${cancha.precioXHora}` : ''}</div>
+        </div>
+      </div>
+
+      <h3 className="subtitulo">Jugadores ({jugadores.length}/10)</h3>
+      <div className="jugadores-lista">
+        {jugadores.map((jugador) => (
+          <div key={jugador.id} className="jugador">
+            <img src={jugador.foto} alt={jugador.nombre} className="avatar" />
+            <p className="nombre-jugador">{jugador.nombre}</p>
+          </div>
+        ))}
+      </div>
+
+      <button className="boton-unirme">Unirme al partido</button>
+      <p className="footer-texto">Faltan {10 - jugadores.length} jugadores</p>
     </div>
   );
 };
