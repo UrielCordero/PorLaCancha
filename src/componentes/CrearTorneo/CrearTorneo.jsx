@@ -203,10 +203,11 @@ export default function CrearTorneo() {
 
         <label>Premio:</label>
         <input
-          type="text"
+          type="number"
           name="premio"
           value={formData.premio}
           onChange={handleChange}
+          step="any"
         />
 
         <label>Precio por persona ($):</label>
