@@ -3,29 +3,6 @@ import './VerInfoPartido.css';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 
-const jugadores = [
-  {
-    id: 1,
-    nombre: 'Francisco Marapopoden',
-    foto: '/src/assets/ImgPerfil.png',
-  },
-  {
-    id: 2,
-    nombre: 'Jazinto Moguillner',
-    foto: '/src/assets/ImgPerfil.png',
-  },
-  {
-    id: 3,
-    nombre: 'Bruno Maratisto',
-    foto: '/src/assets/ImgPerfil.png',
-  },
-  {
-    id: 4,
-    nombre: 'Santiago Solemsky',
-    foto: '/src/assets/ImgPerfil.png',
-  },
-];
-
 const VerInfoPartido = () => {
   const { id } = useParams();
   const [partido, setPartido] = useState(null);
@@ -90,18 +67,7 @@ const VerInfoPartido = () => {
         </div>
       </div>
 
-      <h3 className="subtitulo">Jugadores ({jugadores.length}/10)</h3>
-      <div className="jugadores-lista">
-        {jugadores.map((jugador) => (
-          <div key={jugador.id} className="jugador">
-            <img src={jugador.foto} alt={jugador.nombre} className="avatar" />
-            <p className="nombre-jugador">{jugador.nombre}</p>
-          </div>
-        ))}
-      </div>
-
       <button className="boton-unirme">Unirme al partido</button>
-      <p className="footer-texto">Faltan {10 - jugadores.length} jugadores</p>
     </div>
   );
 };
