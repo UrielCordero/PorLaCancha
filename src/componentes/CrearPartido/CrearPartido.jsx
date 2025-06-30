@@ -168,7 +168,7 @@ export default function CrearPartidoForm() {
       <input type="time" name="horaFin" value={formData.horaFin} onChange={handleChange} />
 
       <button type="submit" className="boton">Publicar el partido</button>
-      <button type="button" className="boton" onClick={() => navigate('/nueva-pagina')}>Volver</button>
+      <button type="button" className="boton" onClick={() => navigate('/ver-partidos')}>Volver</button>
     </form>
   );
 }
