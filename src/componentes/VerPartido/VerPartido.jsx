@@ -194,6 +194,13 @@ const VerPartido = () => {
                 onChange={(e) => setFechaSeleccionada(e.target.value)}
               />
             </div>
+            <div className="search-option clear-filters" title="Reiniciar filtros" onClick={() => {
+              setZonaSeleccionada('');
+              setTipoSeleccionado('');
+              setFechaSeleccionada('');
+            }}>
+              <span style={{ color: 'white', fontWeight: 'bold' }}>×</span>
+            </div>
 
         
       </div>
