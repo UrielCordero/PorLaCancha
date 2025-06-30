@@ -50,7 +50,7 @@ function Heroe({ isLoggedIn }) {
       alert('Debe iniciar sesión para realizar esta acción.');
       return;
     }
-    navigate('/nueva-pagina', {
+    navigate('/ver-partidos', {
       state: {
         zonaSeleccionada,
         tipoSeleccionado,
