@@ -111,3 +111,16 @@
 .clear-filters:hover {
   background-color: #00995c;
 }
+
+.partidos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.partido-card {
+  margin: 0;
+  width: 100%;
+  max-width: none;
+}
