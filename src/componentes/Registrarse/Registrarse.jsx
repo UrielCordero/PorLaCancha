@@ -10,6 +10,7 @@ function Registrarse({ onClose, onRegisterSuccess }) {
   const [fechaNacimiento, setFechaNacimiento] = useState('');
   const [genero, setGenero] = useState('');
   const [nivelHabilidad, setNivelHabilidad] = useState(0);
+  const [fotoDePerfil, setFotoDePerfil] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleRegister = async (e) => {
@@ -35,11 +36,12 @@ function Registrarse({ onClose, onRegisterSuccess }) {
             fechaNacimiento,
             genero,
             nivelHabilidad,
-            fotoDePerfil: '',
+            fotoDePerfil,
           },
         ])
         .select()
         .single();
+
       if (insertError) {
         setErrorMsg(insertError.message);
         return;
@@ -101,6 +103,14 @@ function Registrarse({ onClose, onRegisterSuccess }) {
             <option value="Masculino">Masculino</option>
             <option value="Femenino">Femenino</option>
           </select>
+          <label>URL Foto de Perfil</label>
+          <input
+            type="text"
+            value={fotoDePerfil}
+            onChange={(e) => setFotoDePerfil(e.target.value)}
+            placeholder="https://example.com/mi-foto.jpg"
+            required
+          />
           <label>Nivel de habilidad</label>
           <select
             value={nivelHabilidad}
