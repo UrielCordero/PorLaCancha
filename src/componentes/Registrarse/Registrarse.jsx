@@ -25,7 +25,7 @@ function Registrarse({ onClose, onRegisterSuccess }) {
     }
     try {
       // Insert user data into "Usuarios" table
-      const { error: insertError } = await supabase
+      const { data, error: insertError } = await supabase
         .from('Usuarios')
         .insert([
           {
@@ -37,12 +37,14 @@ function Registrarse({ onClose, onRegisterSuccess }) {
             nivelHabilidad,
             fotoDePerfil: '',
           },
-        ]);
+        ])
+        .select()
+        .single();
       if (insertError) {
         setErrorMsg(insertError.message);
         return;
       }
-      onRegisterSuccess();
+      onRegisterSuccess(data);
       onClose();
     } catch (err) {
       setErrorMsg('Error al registrar usuario');

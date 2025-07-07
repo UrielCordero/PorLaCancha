@@ -41,7 +41,7 @@ function Perfil() {
           .from('Usuarios')
           .select('idUsuarios, nombre, genero, email, contrasenia, fotoDePerfil, nivelHabilidad, fechaNacimiento')
           .eq('email', loggedInUser.email)
-          .single();
+          .maybeSingle();
 
         if (error) {
           setError(error.message);
@@ -293,7 +293,7 @@ function Perfil() {
             <p><strong>Email:</strong> {userData.email}</p>
             <p><strong>Contraseña:</strong> {userData.contrasenia ? '*'.repeat(userData.contrasenia.length) : ''}</p>
             <p><strong>Nivel de Habilidad:</strong> <StarRating level={userData.nivelHabilidad} /></p>
-            <p><strong>Fecha de Nacimiento:</strong> {new Date(userData.fechaNacimiento).toLocaleDateString()}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {userData.fechaNacimiento ? new Date(userData.fechaNacimiento).toLocaleDateString() : ''}</p>
             <p><strong>Equipo:</strong> {userTeams ? userTeams : 'No pertenece a ningún equipo'}</p>
             <button onClick={() => setEditing(true)} className="perfil-edit-button">Editar Perfil</button>
           </>

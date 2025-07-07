@@ -21,7 +21,7 @@ function MenuLateral({ menuOpen, onClose, user, onLogout }) {
     };
   }, [menuOpen, onClose]);
 
-  const profilePhoto = user && user.fotoDePerfil;
+  const profilePhoto = (user && user.fotoDePerfil) || '/default-profile.png';
 
   return (
     <div className={`side-menu ${menuOpen ? 'open' : ''}`} ref={menuRef}>

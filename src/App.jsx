@@ -18,6 +18,7 @@ import Equipos from './componentes/Equipos/Equipos';
 import InfoTorneo from './componentes/InfoTorneo/InfoTorneo';
 import UnirseTorneo from './componentes/UnirseTorneo/UnirseTorneo';
 import VerInfoPartido from './componentes/VerInfoPartido/VerInfoPartido';
+import ErrorBoundary from './componentes/ErrorBoundary/ErrorBoundary';
 
 function App() {
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -28,7 +29,7 @@ function App() {
 
   useEffect(() => {
     const guardado = localStorage.getItem('loggedInUser');
-    if (guardado) {
+    if (guardado && guardado !== 'undefined') {
       setUsuario(JSON.parse(guardado));
       setLogueado(true);
     }
@@ -80,18 +81,20 @@ function App() {
       />
 
       <div className="content">
-        <Routes>
-          <Route path="/" element={logueado ? <HomeLoggedIn /> : <HomeLoggedOut />} />
-          <Route path="/ver-partidos" element={<VerPartido />} />
-          <Route path="/crear-partido" element={<CrearPartido />} />
-          <Route path="/torneos" element={<Torneos />} />
-          <Route path="/crear-torneo" element={<CrearTorneoForm />} />
-          <Route path="/perfil" element={<Perfil />} />
-          <Route path="/equipos" element={<Equipos />} />
-          <Route path="/info-torneo/:id" element={<InfoTorneo />} />
-          <Route path="/unirse-torneo/:id" element={<UnirseTorneo />} />
-          <Route path="/ver-info-partido/:id" element={<VerInfoPartido />} />
-        </Routes>
+        <ErrorBoundary>
+          <Routes>
+            <Route path="/" element={logueado ? <HomeLoggedIn /> : <HomeLoggedOut />} />
+            <Route path="/ver-partidos" element={<VerPartido />} />
+            <Route path="/crear-partido" element={<CrearPartido />} />
+            <Route path="/torneos" element={<Torneos />} />
+            <Route path="/crear-torneo" element={<CrearTorneoForm />} />
+            <Route path="/perfil" element={<Perfil />} />
+            <Route path="/equipos" element={<Equipos />} />
+            <Route path="/info-torneo/:id" element={<InfoTorneo />} />
+            <Route path="/unirse-torneo/:id" element={<UnirseTorneo />} />
+            <Route path="/ver-info-partido/:id" element={<VerInfoPartido />} />
+          </Routes>
+        </ErrorBoundary>
       </div>
 
       <Footer />
