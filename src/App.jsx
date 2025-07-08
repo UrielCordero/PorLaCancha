@@ -1,6 +1,6 @@
 import './App.css';
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 import Header from './componentes/Header/Header';
 import MenuLateral from './componentes/MenuLateral/MenuLateral';
@@ -22,7 +22,8 @@ import MisPartidos from './componentes/MisPartidos/MisPartidos';
 import MiEquipo from './componentes/MiEquipo/MiEquipo';
 import ErrorBoundary from './componentes/ErrorBoundary/ErrorBoundary';
 
-function App() {
+function AppWrapper() {
+  const location = useLocation();
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [logueado, setLogueado] = useState(false);
   const [usuario, setUsuario] = useState(null);
@@ -66,8 +67,12 @@ function App() {
     setMenuAbierto(false);
   };
 
+  // Determine if footer should be fixed based on current path
+  const fixedFooterPaths = ['/mis-partidos', '/mi-equipo'];
+  const isFooterFixed = fixedFooterPaths.includes(location.pathname);
+
   return (
-    <Router>
+    <>
       <Header
         onMenuClick={() => setMenuAbierto(!menuAbierto)}
         isLoggedIn={logueado}
@@ -101,7 +106,7 @@ function App() {
         </ErrorBoundary>
       </div>
 
-      <Footer />
+      <Footer fixed={isFooterFixed} />
 
       {mostrarLogin && (
         <IniciarSesion
@@ -120,6 +125,14 @@ function App() {
           onRegisterSuccess={registroExitoso}
         />
       )}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppWrapper />
     </Router>
   );
 }

@@ -8,6 +8,9 @@
   max-width: none;
   margin: 0;
   overflow-x: hidden;
+}
+
+.fixed-footer {
   position: fixed;
   bottom: 0;
   left: 0;
