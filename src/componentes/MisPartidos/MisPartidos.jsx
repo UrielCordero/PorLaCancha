@@ -41,29 +41,9 @@ const MisPartidos = () => {
       // Fetch match details for these partido IDs
       const { data: partidosData, error: partidosError } = await supabase
         .from('partidos')
-        .select(`
-          id_Partidos,
-          fecha,
-          horaInicio,
-          horaFin,
-          Cancha (
-            nombre,
-            FotoCancha,
-            precioXHora,
-            zona,
-            tipoCancha: id_Tipo (
-              descripcion
-            )
-          ),
-          equipo1: idEquipo1 (
-            nombre,
-            imgEscudo
-          ),
-          equipo2: idEquipo2 (
-            nombre,
-            imgEscudo
-          )
-        `)
+        .select(
+          "id_Partidos, fecha, horaInicio, horaFin, Cancha ( nombre, FotoCancha, precioXHora, zona, tipoCancha: id_Tipo ( descripcion ) ), equipo1: idEquipo1 ( nombre, imgEscudo ), equipo2: idEquipo2 ( nombre, imgEscudo )"
+        )
         .in('id_Partidos', partidoIds)
         .order('fecha', { ascending: false });
 
@@ -89,7 +69,7 @@ const MisPartidos = () => {
       ) : (
         <div className="partidos-grid">
           {misPartidos.map((partido) => (
-            <div key={partido.id_Partidos} className="partido-card" onClick={() => navigate(`/ver-info-partido/${partido.id_Partidos}`)}>
+            <div key={partido.id_Partidos} className="partido-card">
               <img
                 src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
                 alt="Foto cancha"
@@ -99,6 +79,17 @@ const MisPartidos = () => {
                 <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
                 <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
                 <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
+                <div className="boton-unirse-container">
+                  <button
+                    className="boton-crear boton-unirse"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      navigate('/ver-info-partido/' + partido.id_Partidos);
+                    }}
+                  >
+                    Ver mas info
+                  </button>
+                </div>
               </div>
             </div>
           ))}
