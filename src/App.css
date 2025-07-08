@@ -487,4 +487,5 @@ body {
 
 .content {
   flex-grow: 1;
+  padding-bottom: 160px; /* space for fixed footer */
 }
