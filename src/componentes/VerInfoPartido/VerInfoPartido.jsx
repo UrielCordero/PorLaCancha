@@ -40,6 +40,19 @@ const VerInfoPartido = () => {
       return;
     }
 
+    // Check if user already joined the match
+    const { data: existingJoin, error: existingJoinError } = await supabase
+      .from('partidoXUsuarios')
+      .select('*')
+      .eq('id_usuarios', loggedInUser.idUsuarios)
+      .eq('id_partidos', partido.id_Partidos)
+      .limit(1);
+
+    if (existingJoinError === null && existingJoin && existingJoin.length > 0) {
+      alert('No se puede unir porque ya forma parte del partido.');
+      return;
+    }
+
     // Fetch user's teams
     const { data: userTeams, error: userTeamsError } = await supabase
       .from('usariosXEquipos')
@@ -84,11 +97,33 @@ const VerInfoPartido = () => {
           return;
         }
 
-        // Insert all team users to partidoXUsuarios
-        const inserts = teamUsers.map(u => ({ id_usuarios: u.idUsuarios, id_partidos: partido.id_Partidos }));
+        // Filter out users who already joined
+        const userIds = teamUsers.map(u => u.idUsuarios);
+        const { data: existingJoins, error: existingJoinsError } = await supabase
+          .from('partidoXUsuarios')
+          .select('id_usuarios')
+          .eq('id_partidos', partido.id_Partidos)
+          .in('id_usuarios', userIds);
+
+        if (existingJoinsError) {
+          alert('Error al verificar usuarios ya unidos.');
+          return;
+        }
+
+        const existingUserIds = existingJoins ? existingJoins.map(e => e.id_usuarios) : [];
+        const newUsersToInsert = userIds
+          .filter(id => !existingUserIds.includes(id))
+          .map(id => ({ id_usuarios: id, id_partidos: partido.id_Partidos }));
+
+        if (newUsersToInsert.length === 0) {
+          alert('Todos los miembros de tu equipo ya están unidos a este partido.');
+          return;
+        }
+
+        // Insert all new team users to partidoXUsuarios
         const { error: insertError } = await supabase
           .from('partidoXUsuarios')
-          .insert(inserts);
+          .insert(newUsersToInsert);
 
         if (insertError) {
           alert('Error al unirse al partido con el equipo: ' + insertError.message);
