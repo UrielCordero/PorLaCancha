@@ -8,4 +8,9 @@
   max-width: none;
   margin: 0;
   overflow-x: hidden;
+  /* Remove fixed positioning to avoid overlap */
+  position: relative;
+  bottom: auto;
+  left: auto;
+  z-index: auto;
 }
