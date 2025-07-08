@@ -1,0 +1,36 @@
+.mis-partidos-container {
+  padding: 1rem;
+}
+
+.partidos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.partido-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.partido-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.partido-imagen {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.partido-info {
+  padding: 0.5rem 1rem;
+}
+
+.partido-info p {
+  margin: 0.3rem 0;
+}

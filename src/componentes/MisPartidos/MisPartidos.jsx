@@ -1,0 +1,111 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { supabase } from '../../supabaseClient';
+import '../VerPartido/VerPartido.css';
+
+const MisPartidos = () => {
+  const [misPartidos, setMisPartidos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchMisPartidos = async () => {
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+      if (!loggedInUser) {
+        setMisPartidos([]);
+        setLoading(false);
+        return;
+      }
+
+      // Get partido IDs the user has joined
+      const { data: partidoXUsuariosData, error: pxeError } = await supabase
+        .from('partidoXUsuarios')
+        .select('id_partidos')
+        .eq('id_usuarios', loggedInUser.idUsuarios);
+
+      if (pxeError) {
+        console.error('Error fetching user joined matches:', pxeError);
+        setMisPartidos([]);
+        setLoading(false);
+        return;
+      }
+
+      const partidoIds = partidoXUsuariosData.map(item => item.id_partidos);
+
+      if (partidoIds.length === 0) {
+        setMisPartidos([]);
+        setLoading(false);
+        return;
+      }
+
+      // Fetch match details for these partido IDs
+      const { data: partidosData, error: partidosError } = await supabase
+        .from('partidos')
+        .select(`
+          id_Partidos,
+          fecha,
+          horaInicio,
+          horaFin,
+          Cancha (
+            nombre,
+            FotoCancha,
+            precioXHora,
+            zona,
+            tipoCancha: id_Tipo (
+              descripcion
+            )
+          ),
+          equipo1: idEquipo1 (
+            nombre,
+            imgEscudo
+          ),
+          equipo2: idEquipo2 (
+            nombre,
+            imgEscudo
+          )
+        `)
+        .in('id_Partidos', partidoIds)
+        .order('fecha', { ascending: false });
+
+      if (partidosError) {
+        console.error('Error fetching matches:', partidosError);
+        setMisPartidos([]);
+      } else {
+        setMisPartidos(partidosData || []);
+      }
+      setLoading(false);
+    };
+
+    fetchMisPartidos();
+  }, []);
+
+  return (
+    <div className="mis-partidos-container">
+      <h2>Mis Partidos</h2>
+      {loading ? (
+        <p>Cargando...</p>
+      ) : misPartidos.length === 0 ? (
+        <p>No te has unido a ningún partido aún.</p>
+      ) : (
+        <div className="partidos-grid">
+          {misPartidos.map((partido) => (
+            <div key={partido.id_Partidos} className="partido-card" onClick={() => navigate(`/ver-info-partido/${partido.id_Partidos}`)}>
+              <img
+                src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
+                alt="Foto cancha"
+                className="partido-imagen"
+              />
+              <div className="partido-info">
+                <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
+                <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
+                <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MisPartidos;

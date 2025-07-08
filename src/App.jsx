@@ -18,6 +18,7 @@ import Equipos from './componentes/Equipos/Equipos';
 import InfoTorneo from './componentes/InfoTorneo/InfoTorneo';
 import UnirseTorneo from './componentes/UnirseTorneo/UnirseTorneo';
 import VerInfoPartido from './componentes/VerInfoPartido/VerInfoPartido';
+import MisPartidos from './componentes/MisPartidos/MisPartidos';
 import ErrorBoundary from './componentes/ErrorBoundary/ErrorBoundary';
 
 function App() {
@@ -93,6 +94,7 @@ function App() {
             <Route path="/info-torneo/:id" element={<InfoTorneo />} />
             <Route path="/unirse-torneo/:id" element={<UnirseTorneo />} />
             <Route path="/ver-info-partido/:id" element={<VerInfoPartido />} />
+            <Route path="/mis-partidos" element={<MisPartidos />} />
           </Routes>
         </ErrorBoundary>
       </div>
