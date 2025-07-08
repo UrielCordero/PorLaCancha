@@ -37,14 +37,28 @@ function Perfil() {
       }
       try {
         // Use exact field names from schema
-        const { data, error } = await supabase
+        let query = supabase
           .from('Usuarios')
-          .select('idUsuarios, nombre, genero, email, contrasenia, fotoDePerfil, nivelHabilidad, fechaNacimiento')
-          .eq('email', loggedInUser.email)
-          .maybeSingle();
+          .select('idUsuarios, nombre, genero, email, contrasenia, fotoDePerfil, nivelHabilidad, fechaNacimiento');
+
+        if (loggedInUser.idUsuarios) {
+          query = query.eq('idUsuarios', loggedInUser.idUsuarios).maybeSingle();
+        } else if (loggedInUser.email) {
+          query = query.eq('email', loggedInUser.email).maybeSingle();
+        } else {
+          setError('User identifier not found');
+          setLoading(false);
+          return;
+        }
+
+        const { data, error } = await query;
 
         if (error) {
           setError(error.message);
+          setLoading(false);
+          return;
+        } else if (!data) {
+          setError('User not found');
           setLoading(false);
           return;
         } else {

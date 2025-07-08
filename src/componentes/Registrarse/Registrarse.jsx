@@ -41,6 +41,13 @@ function Registrarse({ onClose, onRegisterSuccess }) {
       setErrorMsg('Debe seleccionar un nivel de habilidad');
       return;
     }
+    const isValidImageUrl = (url) => {
+      return /\.(jpeg|jpg|gif|png|bmp|webp|svg)$/i.test(url);
+    };
+    if (!isValidImageUrl(fotoDePerfil)) {
+      setErrorMsg('La URL de la foto de perfil no es válida. Debe ser una imagen (jpg, png, gif, bmp, webp, svg).');
+      return;
+    }
     try {
       // Insert user data into "Usuarios" table
       const { data, error: insertError } = await supabase
@@ -82,7 +89,7 @@ function Registrarse({ onClose, onRegisterSuccess }) {
 
       onRegisterSuccess(data);
       onClose();
-    } catch (err) {
+    } catch {
       setErrorMsg('Error al registrar usuario');
     }
   };
