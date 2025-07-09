@@ -68,7 +68,7 @@ function AppWrapper() {
   };
 
   // Determine if footer should be fixed based on current path
-  const fixedFooterPaths = ['/mis-partidos', '/mi-equipo'];
+  const fixedFooterPaths = ['/mis-partidos'];
   const isFooterFixed = fixedFooterPaths.includes(location.pathname);
 
   return (
