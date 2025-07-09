@@ -35,7 +35,6 @@
 
 .partido-card {
   display: flex;
-  
   align-items: center;
   background-color: transparent;
   border: 1px solid #ccc;
@@ -131,7 +130,6 @@
   display: flex;
   justify-content: center;
   margin-top: 4rem;
-
   gap: 0.5rem;
 }
 
@@ -164,4 +162,15 @@
   background-color: #1e7e34;
   color: white;
   box-shadow: 0 0 6px #1e7e34;
+}
+
+.placeholder-card {
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  width: 100%;
+  height: 130px; /* Same height as partido-card */
+  margin: 0;
+  padding: 0;
+  border: none;
 }

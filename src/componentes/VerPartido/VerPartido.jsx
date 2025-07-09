@@ -230,33 +230,35 @@ const VerPartido = () => {
           <p>No hay partidos disponibles con los filtros aplicados</p>
         ) : (
           <>
-            <div className="partidos-grid">
-              {partidosFiltrados
-                .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-                .map((partido) => (
-                  <div key={partido.id_Partidos} className="partido-card">
-                    <img
-                      src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
-                      alt="Foto cancha"
-                      className="partido-imagen"
-                    />
-                    <div className="partido-info">
-                      <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
-                      <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
-                      <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
-
-                      <div className="boton-unirse-container">
-                        <button
-                          className="boton-crear boton-unirse"
-                          onClick={() => navigate(`/ver-info-partido/${partido.id_Partidos}`)}
-                        >
-                          Ver mas info
-                        </button>
-                      </div>
+          <div className="partidos-grid">
+            {partidosFiltrados
+              .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+              .map((partido) => (
+                <div key={partido.id_Partidos} className="partido-card">
+                  <img
+                    src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
+                    alt="Foto cancha"
+                    className="partido-imagen"
+                  />
+                  <div className="partido-info">
+                    <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
+                    <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
+                    <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
+                    <div className="boton-unirse-container">
+                      <button
+                        className="boton-crear boton-unirse"
+                        onClick={() => navigate(`/ver-info-partido/${partido.id_Partidos}`)}
+                      >
+                        Ver mas info
+                      </button>
                     </div>
                   </div>
-                ))}
-            </div>
+                </div>
+              ))}
+            {Array.from({ length: itemsPerPage - Math.min(itemsPerPage, partidosFiltrados.length - (currentPage - 1) * itemsPerPage) }).map((_, index) => (
+              <div key={`placeholder-${index}`} className="partido-card placeholder-card" aria-hidden="true" />
+            ))}
+          </div>
 
             <div className="pagination">
               <button
