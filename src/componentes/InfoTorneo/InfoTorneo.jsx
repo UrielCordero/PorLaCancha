@@ -135,6 +135,25 @@ const InfoTorneo = () => {
       return;
     }
 
+    // Check if team is already joined to the tournament
+    const { data: existingEntry, error: existingError } = await supabase
+      .from('equiposXTorneos')
+      .select('*')
+      .eq('idequipos', userTeamData.idEquipos)
+      .eq('idtorneo', torneo.id)
+      .single();
+
+    if (existingError && existingError.code !== 'PGRST116') { // PGRST116 = No rows found
+      console.error('Error al verificar si el equipo ya está en el torneo:', existingError);
+      alert('Error al verificar el estado del torneo. Intente nuevamente más tarde.');
+      return;
+    }
+
+    if (existingEntry) {
+      alert('Tu equipo ya está unido a este torneo.');
+      return;
+    }
+
     // Insert link between team and tournament
     const { error: insertError } = await supabase
       .from('equiposXTorneos')
@@ -150,7 +169,8 @@ const InfoTorneo = () => {
     }
 
     alert('Te has unido correctamente al torneo');
-    navigate(`/unirse-torneo/${torneo.id}`);
+    // Removed navigate to prevent redirection as per user request
+    // navigate(`/unirse-torneo/${torneo.id}`);
   };
 
   return (
