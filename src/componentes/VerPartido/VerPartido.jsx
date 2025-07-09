@@ -13,7 +13,7 @@ const VerPartido = () => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 9;
 
   const [zonaSeleccionada, setZonaSeleccionada] = useState('');
   const [tipoSeleccionado, setTipoSeleccionado] = useState('');
