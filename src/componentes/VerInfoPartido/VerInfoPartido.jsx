@@ -7,6 +7,7 @@ const VerInfoPartido = () => {
   const { id } = useParams();
   const [partido, setPartido] = useState(null);
   const [cancha, setCancha] = useState(null);
+  const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,9 +23,23 @@ const VerInfoPartido = () => {
       } else {
         setPartido(partidoData);
         setCancha(partidoData.Cancha);
+        fetchUsuarios(partidoData.id_Partidos);
       }
 
       setLoading(false);
+    };
+
+    const fetchUsuarios = async (idPartido) => {
+      const { data: usuariosData, error } = await supabase
+        .from('partidoXUsuarios')
+        .select('id_usuarios, Usuarios(nombre, fotoDePerfil)')
+        .eq('id_partidos', idPartido);
+
+      if (error) {
+        console.error('Error al obtener los usuarios del partido:', error);
+      } else {
+        setUsuarios(usuariosData);
+      }
     };
 
     fetchPartido();
@@ -53,6 +68,20 @@ const VerInfoPartido = () => {
       return;
     }
 
+    // Check current number of joined users
+    const { data: currentUsers, error: currentUsersError } = await supabase
+      .from('partidoXUsuarios')
+      .select('id_usuarios')
+      .eq('id_partidos', partido.id_Partidos);
+
+    if (currentUsersError) {
+      alert('Error al verificar usuarios actuales del partido.');
+      return;
+    }
+
+    const currentUserCount = currentUsers ? currentUsers.length : 0;
+    const maxJugadores = 10;
+
     // Fetch user's teams
     const { data: userTeams, error: userTeamsError } = await supabase
       .from('usariosXEquipos')
@@ -75,6 +104,10 @@ const VerInfoPartido = () => {
 
     try {
       if (joinOption === 'solo') {
+        if (currentUserCount >= maxJugadores) {
+          alert('No se puede unir porque se excedería el límite de jugadores.');
+          return;
+        }
         // Insert single user to partidoXUsuarios
         const { error } = await supabase
           .from('partidoXUsuarios')
@@ -84,6 +117,7 @@ const VerInfoPartido = () => {
           return;
         }
         alert('Se ha unido al partido correctamente.');
+        fetchUsuarios(partido.id_Partidos);
       } else if (joinOption === 'equipo') {
         // Get all users in the same teams
         const teamIds = userTeams.map(t => t.idEquipos);
@@ -120,6 +154,11 @@ const VerInfoPartido = () => {
           return;
         }
 
+        if (currentUserCount + newUsersToInsert.length > maxJugadores) {
+          alert('No se puede unir porque se excedería el límite de jugadores.');
+          return;
+        }
+
         // Insert all new team users to partidoXUsuarios
         const { error: insertError } = await supabase
           .from('partidoXUsuarios')
@@ -130,11 +169,14 @@ const VerInfoPartido = () => {
           return;
         }
         alert('Se ha unido al partido con todo su equipo correctamente.');
+        fetchUsuarios(partido.id_Partidos);
       }
     } catch {
-      alert('Error inesperado al unirse al partido.');
+      
     }
   };
+
+  const maxJugadores = 10;
 
   return (
     <div className="ver-info-container">
@@ -167,6 +209,22 @@ const VerInfoPartido = () => {
         <div className="info-box">
           <div className="icono">&#36;</div>
           <div className="texto">{cancha ? `$${cancha.precioXHora}` : ''}</div>
+        </div>
+      </div>
+
+      <div className="jugadores-container">
+        <h3>Jugadores ({usuarios.length}/{maxJugadores})</h3>
+        <div className="jugadores-lista">
+          {usuarios.map((u) => (
+            <div key={u.id_usuarios} className="jugador-item">
+              <img
+                src={u.Usuarios.fotoDePerfil || '/src/assets/ImgPerfil.png'}
+                alt={u.Usuarios.nombre}
+                className="jugador-avatar"
+              />
+              <div className="jugador-nombre">{u.Usuarios.nombre}</div>
+            </div>
+          ))}
         </div>
       </div>
 
