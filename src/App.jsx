@@ -21,6 +21,7 @@ import VerInfoPartido from './componentes/VerInfoPartido/VerInfoPartido';
 import MisPartidos from './componentes/MisPartidos/MisPartidos';
 import MiEquipo from './componentes/MiEquipo/MiEquipo';
 import ErrorBoundary from './componentes/ErrorBoundary/ErrorBoundary';
+import MisTorneos from './componentes/MisTorneos/MisTorneos';
 
 function AppWrapper() {
   const location = useLocation();
@@ -68,7 +69,7 @@ function AppWrapper() {
   };
 
   // Determine if footer should be fixed based on current path
-  const fixedFooterPaths = ['/mis-partidos'];
+  const fixedFooterPaths = ['/mis-partidos', '/mis-torneos'];
   const isFooterFixed = fixedFooterPaths.includes(location.pathname);
 
   return (
@@ -102,6 +103,7 @@ function AppWrapper() {
             <Route path="/ver-info-partido/:id" element={<VerInfoPartido />} />
             <Route path="/mis-partidos" element={<MisPartidos />} />
             <Route path="/mi-equipo" element={<MiEquipo />} />
+            <Route path="/mis-torneos" element={<MisTorneos />} />
           </Routes>
         </ErrorBoundary>
       </div>

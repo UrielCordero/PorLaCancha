@@ -1,0 +1,53 @@
+.mis-torneos-container {
+  padding: 1rem;
+}
+
+.torneos-lista {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.torneo-card {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 240px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.torneo-imagen {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.torneo-card h3 {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.torneo-card p {
+  color: #666;
+  margin-bottom: 0.8rem;
+}
+
+.ver-info {
+  background-color: #00b66f;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.ver-info:hover {
+  background-color: #00995c;
+}

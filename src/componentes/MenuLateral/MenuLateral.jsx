@@ -41,6 +41,7 @@ function MenuLateral({ menuOpen, onClose, user, onLogout }) {
         <li><Link to="/equipos" onClick={onClose}>Equipos</Link></li>
         <li><Link to="/mis-partidos" onClick={onClose}>Mis Partidos</Link></li>
         <li><Link to="/mi-equipo" onClick={onClose}>Mi Equipo</Link></li>
+        <li><Link to="/mis-torneos" onClick={onClose}>Mis Torneos</Link></li>
         <li><a href="#logout" className="logout-link" onClick={(e) => { e.preventDefault(); onLogout(); onClose(); }}>Cerrar Sesion</a></li>
       </ul>
     </div>
