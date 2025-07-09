@@ -11,6 +11,10 @@ const VerPartido = () => {
   const [partidosFiltrados, setPartidosFiltrados] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
   const [zonaSeleccionada, setZonaSeleccionada] = useState('');
   const [tipoSeleccionado, setTipoSeleccionado] = useState('');
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
@@ -59,8 +63,10 @@ const VerPartido = () => {
   useEffect(() => {
     if (partidos.length > 0) {
       handleBuscar();
+      setCurrentPage(1); // Reset to first page on filter change
     }
   }, [zonaSeleccionada, tipoSeleccionado, fechaSeleccionada, partidos]);
+
 
   const fetchPartidos = async () => {
     setLoading(true);
@@ -223,31 +229,70 @@ const VerPartido = () => {
         ) : partidosFiltrados.length === 0 ? (
           <p>No hay partidos disponibles con los filtros aplicados</p>
         ) : (
-          <div className="partidos-grid">
-            {partidosFiltrados.map((partido) => (
-              <div key={partido.id_Partidos} className="partido-card">
-                <img
-                  src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
-                  alt="Foto cancha"
-                  className="partido-imagen"
-                />
-                <div className="partido-info">
-                  <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
-                  <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
-                  <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
+          <>
+            <div className="partidos-grid">
+              {partidosFiltrados
+                .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                .map((partido) => (
+                  <div key={partido.id_Partidos} className="partido-card">
+                    <img
+                      src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
+                      alt="Foto cancha"
+                      className="partido-imagen"
+                    />
+                    <div className="partido-info">
+                      <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
+                      <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
+                      <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
 
-                  <div className="boton-unirse-container">
-                    <button
-                      className="boton-crear boton-unirse"
-                      onClick={() => navigate(`/ver-info-partido/${partido.id_Partidos}`)}
-                    >
-                      Ver mas info
-                    </button>
+                      <div className="boton-unirse-container">
+                        <button
+                          className="boton-crear boton-unirse"
+                          onClick={() => navigate(`/ver-info-partido/${partido.id_Partidos}`)}
+                        >
+                          Ver mas info
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                ))}
+            </div>
+
+            <div className="pagination">
+              <button
+                className="pagination-button"
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                {'<'}
+              </button>
+
+              {Array.from(
+                { length: Math.ceil(partidosFiltrados.length / itemsPerPage) },
+                (_, i) => i + 1
+              ).map((pageNum) => (
+                <button
+                  key={pageNum}
+                  className={`pagination-button ${currentPage === pageNum ? 'active' : ''}`}
+                  onClick={() => setCurrentPage(pageNum)}
+                >
+                  {pageNum}
+                </button>
+              ))}
+
+              <button
+                className="pagination-button"
+                onClick={() =>
+                  setCurrentPage((prev) =>
+                    Math.min(prev + 1, Math.ceil(partidosFiltrados.length / itemsPerPage))
+                  )
+                }
+                disabled={currentPage === Math.ceil(partidosFiltrados.length / itemsPerPage)}
+              >
+                {'>'}
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
