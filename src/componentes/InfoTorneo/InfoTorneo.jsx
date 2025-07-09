@@ -129,6 +129,23 @@ const InfoTorneo = () => {
       return;
     }
 
+    // Check if tournament is full
+    const { data: joinedTeams, error: joinedTeamsError } = await supabase
+      .from('equiposXTorneos')
+      .select('idequipos', { count: 'exact' })
+      .eq('idtorneo', torneo.id);
+
+    if (joinedTeamsError) {
+      console.error('Error al verificar la cantidad de equipos en el torneo:', joinedTeamsError);
+      alert('Error al verificar el estado del torneo. Intente nuevamente más tarde.');
+      return;
+    }
+
+    if (joinedTeams && joinedTeams.length >= torneo.cantEquipos) {
+      alert('No se puede unir porque ya se alcanzó el límite de equipos del torneo.');
+      return;
+    }
+
     // Check if team is already joined to the tournament
     const { data: existingEntry, error: existingError } = await supabase
       .from('equiposXTorneos')
