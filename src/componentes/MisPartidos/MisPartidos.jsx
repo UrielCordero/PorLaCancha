@@ -6,6 +6,8 @@ import '../VerPartido/VerPartido.css';
 const MisPartidos = () => {
   const [misPartidos, setMisPartidos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,6 +61,11 @@ const MisPartidos = () => {
     fetchMisPartidos();
   }, []);
 
+  const displayedPartidos = misPartidos.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
   return (
     <div className="mis-partidos-container">
       <h2>Mis Partidos</h2>
@@ -67,33 +74,70 @@ const MisPartidos = () => {
       ) : misPartidos.length === 0 ? (
         <p>No te has unido a ningún partido aún.</p>
       ) : (
-        <div className="partidos-grid">
-          {misPartidos.map((partido) => (
-            <div key={partido.id_Partidos} className="partido-card">
-              <img
-                src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
-                alt="Foto cancha"
-                className="partido-imagen"
-              />
-              <div className="partido-info">
-                <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
-                <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
-                <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
-                <div className="boton-unirse-container">
-                  <button
-                    className="boton-crear boton-unirse"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      navigate('/ver-info-partido/' + partido.id_Partidos);
-                    }}
-                  >
-                    Ver mas info
-                  </button>
+        <>
+          <div className="partidos-grid">
+            {displayedPartidos.map((partido) => (
+              <div key={partido.id_Partidos} className="partido-card">
+                <img
+                  src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
+                  alt="Foto cancha"
+                  className="partido-imagen"
+                />
+                <div className="partido-info">
+                  <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
+                  <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
+                  <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
+                  <div className="boton-unirse-container">
+                    <button
+                      className="boton-crear boton-unirse"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        navigate('/ver-info-partido/' + partido.id_Partidos);
+                      }}
+                    >
+                      Ver mas info
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+
+          <div className="pagination">
+            <button
+              className="pagination-button"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              {'<'}
+            </button>
+
+            {Array.from(
+              { length: Math.ceil(misPartidos.length / itemsPerPage) },
+              (_, i) => i + 1
+            ).map((pageNum) => (
+              <button
+                key={pageNum}
+                className={`pagination-button ${currentPage === pageNum ? 'active' : ''}`}
+                onClick={() => setCurrentPage(pageNum)}
+              >
+                {pageNum}
+              </button>
+            ))}
+
+            <button
+              className="pagination-button"
+              onClick={() =>
+                setCurrentPage((prev) =>
+                  Math.min(prev + 1, Math.ceil(misPartidos.length / itemsPerPage))
+                )
+              }
+              disabled={currentPage === Math.ceil(misPartidos.length / itemsPerPage)}
+            >
+              {'>'}
+            </button>
+          </div>
+        </>
       )}
     </div>
   );
