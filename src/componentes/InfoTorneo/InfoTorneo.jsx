@@ -65,33 +65,92 @@ const InfoTorneo = () => {
   };
 
   const handleJoinTournament = async () => {
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
+    // Try to get user from localStorage first
+    let user = null;
+    const storedUser = localStorage.getItem('loggedInUser');
+    if (storedUser) {
+      try {
+        user = JSON.parse(storedUser);
+      } catch (e) {
+        console.error('Error parsing loggedInUser from localStorage', e);
+      }
+    }
 
-    if (userError || !user) {
-      alert('No se pudo obtener el usuario. Por favor, inicie sesión.');
+    // If no user in localStorage, fallback to supabase session
+    if (!user) {
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+
+      if (sessionError || !session || !session.user) {
+        alert('No se pudo obtener el usuario. Por favor, inicie sesión.');
+        return;
+      }
+
+      user = session.user;
+    }
+
+    // Check if user belongs to a team
+    console.log('User ID:', user.id);
+    console.log('User email:', user.email);
+
+    // Get idUsuarios from Usuarios table by email
+    const { data: usuarioData, error: usuarioError } = await supabase
+      .from('Usuarios')
+      .select('idUsuarios')
+      .eq('email', user.email)
+      .single();
+
+    if (usuarioError || !usuarioData) {
+      console.error('Error al obtener el idUsuarios:', usuarioError);
+      alert('Error al verificar el usuario. Intente nuevamente más tarde.');
       return;
     }
 
-    const { data: teamData, error: teamError } = await supabase
-      .from('user_teams')
-      .select('*')
-      .eq('user_id', user.id);
+    const idUsuarios = usuarioData.idUsuarios;
 
-    if (teamError) {
-      console.error('Error al verificar el equipo del usuario:', teamError);
+    const { data: userTeamData, error: userTeamError } = await supabase
+      .from('usariosXEquipos')
+      .select('idEquipos')
+      .eq('idUsuarios', idUsuarios)
+      .single();
+
+    console.log('User team data:', userTeamData, 'Error:', userTeamError);
+
+    if (userTeamError) {
+      console.error('Error al verificar el equipo del usuario:', userTeamError);
       alert('Error al verificar el equipo. Intente nuevamente más tarde.');
       return;
     }
 
-    if (teamData && teamData.length > 0) {
-      alert('te has unido correctamente al torneo');
-      navigate(`/unirse-torneo/${torneo.id}`);
-    } else {
+    if (!userTeamData) {
       alert('Conseguite un equipo para competir');
+      return;
     }
+
+    // Confirm joining tournament
+    const confirmed = window.confirm('Esta seguro que desea unirse al torneo?');
+    if (!confirmed) {
+      return;
+    }
+
+    // Insert link between team and tournament
+    const { error: insertError } = await supabase
+      .from('equiposXTorneos')
+      .insert({
+        idequipos: userTeamData.idEquipos,
+        idtorneo: torneo.id,
+      });
+
+    if (insertError) {
+      console.error('Error al unirse al torneo:', insertError);
+      alert('Error al unirse al torneo. Intente nuevamente más tarde.');
+      return;
+    }
+
+    alert('Te has unido correctamente al torneo');
+    navigate(`/unirse-torneo/${torneo.id}`);
   };
 
   return (
