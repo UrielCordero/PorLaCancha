@@ -95,6 +95,12 @@ const VerInfoPartido = () => {
 
     const belongsToTeam = userTeams && userTeams.length > 0;
 
+    // New confirmation before asking join option
+    const confirmedJoin = window.confirm('¿Está seguro que desea unirse al partido?');
+    if (!confirmedJoin) {
+      return;
+    }
+
     let joinOption = 'solo';
     if (belongsToTeam) {
       joinOption = window.confirm('Desea unirse al partido con todo su equipo? (Aceptar = Equipo, Cancelar = Solo)') ? 'equipo' : 'solo';

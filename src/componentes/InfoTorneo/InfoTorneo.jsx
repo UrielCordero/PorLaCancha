@@ -129,12 +129,6 @@ const InfoTorneo = () => {
       return;
     }
 
-    // Confirm joining tournament
-    const confirmed = window.confirm('Esta seguro que desea unirse al torneo?');
-    if (!confirmed) {
-      return;
-    }
-
     // Check if team is already joined to the tournament
     const { data: existingEntry, error: existingError } = await supabase
       .from('equiposXTorneos')
@@ -151,6 +145,12 @@ const InfoTorneo = () => {
 
     if (existingEntry) {
       alert('Tu equipo ya está unido a este torneo.');
+      return;
+    }
+
+    // Confirm joining tournament
+    const confirmed = window.confirm('Esta seguro que desea unirse al torneo?');
+    if (!confirmed) {
       return;
     }
 
