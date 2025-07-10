@@ -33,6 +33,20 @@ function Registrarse({ onClose, onRegisterSuccess }) {
   const handleRegister = async (e) => {
     e.preventDefault();
     setErrorMsg('');
+
+    // Validate birth date is before current date
+    if (fechaNacimiento) {
+      const today = new Date();
+      const birthDate = new Date(fechaNacimiento);
+      // Set time to 0 for accurate comparison ignoring time of day
+      today.setHours(0, 0, 0, 0);
+      birthDate.setHours(0, 0, 0, 0);
+      if (birthDate >= today) {
+        setErrorMsg('La fecha de nacimiento debe ser anterior a la fecha actual');
+        return;
+      }
+    }
+
     if (password !== confirmPassword) {
       setErrorMsg('Las contraseñas no coinciden');
       return;
