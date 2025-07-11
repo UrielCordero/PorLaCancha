@@ -102,7 +102,7 @@ const VerPartido = () => {
           imgEscudo
         )
       `)
-      .order('fecha', { ascending: false });
+      .order('fecha', { ascending: true });
 
     if (error) {
       console.error('Error al obtener partidos:', error);

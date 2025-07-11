@@ -53,7 +53,7 @@ const MisPartidos = () => {
           "id_Partidos, fecha, horaInicio, horaFin, Cancha ( nombre, FotoCancha, precioXHora, zona, tipoCancha: id_Tipo ( descripcion ) ), equipo1: idEquipo1 ( nombre, imgEscudo ), equipo2: idEquipo2 ( nombre, imgEscudo )"
         )
         .in('id_Partidos', partidoIds)
-        .order('fecha', { ascending: false });
+        .order('fecha', { ascending: true });
 
       if (partidosError) {
         console.error('Error fetching matches:', partidosError);
