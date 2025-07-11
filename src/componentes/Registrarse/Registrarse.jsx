@@ -55,13 +55,13 @@ function Registrarse({ onClose, onRegisterSuccess }) {
       setErrorMsg('Debe seleccionar un nivel de habilidad');
       return;
     }
-    const isValidImageUrl = (url) => {
-      return /\.(jpeg|jpg|gif|png|bmp|webp|svg)$/i.test(url);
-    };
-    if (!isValidImageUrl(fotoDePerfil)) {
-      setErrorMsg('La URL de la foto de perfil no es válida. Debe ser una imagen (jpg, png, gif, bmp, webp, svg).');
-      return;
-    }
+    // const isValidImageUrl = (url) => {
+    //   return /\.(jpeg|jpg|gif|png|bmp|webp|svg)$/i.test(url);
+    // };
+    // if (!isValidImageUrl(fotoDePerfil)) {
+    //   setErrorMsg('La URL de la foto de perfil no es válida. Debe ser una imagen (jpg, png, gif, bmp, webp, svg).');
+    //   return;
+    // }
     try {
       // Insert user data into "Usuarios" table
       const { data, error: insertError } = await supabase
@@ -158,12 +158,34 @@ function Registrarse({ onClose, onRegisterSuccess }) {
             <option value="Masculino">Masculino</option>
             <option value="Femenino">Femenino</option>
           </select>
-          <label>URL Foto de Perfil</label>
+          <label>Foto de Perfil</label>
           <input
-            type="text"
-            value={fotoDePerfil}
-            onChange={(e) => setFotoDePerfil(e.target.value)}
-            placeholder="https://example.com/mi-foto.jpg"
+            type="file"
+            accept="image/png, image/jpeg, image/jpg, image/gif, image/bmp, image/webp, image/svg+xml"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                const validTypes = [
+                  'image/png',
+                  'image/jpeg',
+                  'image/jpg',
+                  'image/gif',
+                  'image/bmp',
+                  'image/webp',
+                  'image/svg+xml',
+                ];
+                if (!validTypes.includes(file.type)) {
+                  setErrorMsg('Por favor, seleccione un archivo de imagen válido (png, jpg, jpeg, gif, bmp, webp, svg).');
+                  setFotoDePerfil('');
+                  e.target.value = null;
+                  return;
+                }
+                setErrorMsg('');
+                // Create a local URL for preview or upload
+                const fileUrl = URL.createObjectURL(file);
+                setFotoDePerfil(fileUrl);
+              }
+            }}
             required
           />
           <label>Nivel de habilidad</label>
