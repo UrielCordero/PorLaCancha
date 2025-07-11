@@ -23,6 +23,12 @@ const VerPartido = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Helper function to format time string by removing seconds
+  const formatTime = (timeStr) => {
+    if (!timeStr) return '';
+    return timeStr.split(':').slice(0, 2).join(':');
+  };
+
   useEffect(() => {
     fetchPartidos();
     fetchTiposCancha();
@@ -241,7 +247,7 @@ const VerPartido = () => {
                     className="partido-imagen"
                   />
                   <div className="partido-info">
-                    <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
+                    <p><strong>Hora:</strong> {formatTime(partido.horaInicio)} - {formatTime(partido.horaFin)}</p>
                     <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
                     <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
                     <div className="boton-unirse-container">

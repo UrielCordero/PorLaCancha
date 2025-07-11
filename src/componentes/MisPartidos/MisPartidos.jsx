@@ -10,6 +10,12 @@ const MisPartidos = () => {
   const itemsPerPage = 9;
   const navigate = useNavigate();
 
+  // Helper function to format time string by removing seconds
+  const formatTime = (timeStr) => {
+    if (!timeStr) return '';
+    return timeStr.split(':').slice(0, 2).join(':');
+  };
+
   useEffect(() => {
     const fetchMisPartidos = async () => {
       const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
@@ -84,7 +90,7 @@ const MisPartidos = () => {
                   className="partido-imagen"
                 />
                 <div className="partido-info">
-                  <p><strong>Hora:</strong> {partido.horaInicio} - {partido.horaFin}</p>
+                  <p><strong>Hora:</strong> {formatTime(partido.horaInicio)} - {formatTime(partido.horaFin)}</p>
                   <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
                   <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
                   <div className="boton-unirse-container">
