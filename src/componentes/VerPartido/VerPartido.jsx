@@ -129,7 +129,8 @@ const VerPartido = () => {
   const extraerZonasUnicas = () => {
     const zonas = partidos
       .map((p) => p.Cancha?.zona)
-      .filter((zona, index, self) => zona && self.indexOf(zona) === index);
+      .filter((zona, index, self) => zona && self.indexOf(zona) === index)
+      .sort((a, b) => a.localeCompare(b));
     setZonasDisponibles(zonas);
   };
 
