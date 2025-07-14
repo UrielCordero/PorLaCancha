@@ -149,3 +149,9 @@
   color: #555;
   text-align: center;
 }
+
+.volver-button-par{
+  display: block;
+  margin-top: 6px;
+  margin-bottom: 20px;
+}

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './VerInfoPartido.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 
 const VerInfoPartido = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [partido, setPartido] = useState(null);
   const [cancha, setCancha] = useState(null);
   const [usuarios, setUsuarios] = useState([]);
@@ -217,7 +218,8 @@ const VerInfoPartido = () => {
           <div className="texto">{cancha ? `$${cancha.precioXHora}` : ''}</div>
         </div>
       </div>
-
+      <button className="boton volver-button-par" onClick={() => navigate('/ver-partidos')}>Volver</button>
+      
       <div className="jugadores-container">
         <h3>Jugadores ({usuarios.length}/{maxJugadores})</h3>
         <div className="jugadores-lista">
