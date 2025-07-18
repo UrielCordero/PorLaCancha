@@ -83,13 +83,19 @@ const MisPartidos = () => {
         <>
           <div className="partidos-grid">
             {displayedPartidos.map((partido) => (
-              <div key={partido.id_Partidos} className="partido-card">
+                <div key={partido.id_Partidos} className="partido-card">
                 <img
                   src={partido.Cancha?.FotoCancha || 'https://via.placeholder.com/300x150'}
                   alt="Foto cancha"
                   className="partido-imagen"
                 />
                 <div className="partido-info">
+                  <p><strong>Fecha:</strong> {(() => {
+                    const d = partido.fecha.split('-');
+                    const dateObj = new Date(Date.UTC(d[0], d[1] - 1, d[2]));
+                    dateObj.setUTCDate(dateObj.getUTCDate() + 1);
+                    return dateObj.toLocaleDateString('es-AR');
+                  })()}</p>
                   <p><strong>Hora:</strong> {formatTime(partido.horaInicio)} - {formatTime(partido.horaFin)}</p>
                   <p><strong>Cancha:</strong> {partido.Cancha?.nombre || 'Desconocida'}</p>
                   <p><strong>Precio:</strong> ${partido.Cancha?.precioXHora || 'Desconocido'}</p>
