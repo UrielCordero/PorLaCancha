@@ -19,6 +19,8 @@ const VerPartido = () => {
   const [zonaSeleccionada, setZonaSeleccionada] = useState('');
   const [tipoSeleccionado, setTipoSeleccionado] = useState('');
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
+  const [fechaInicioSeleccionada, setFechaInicioSeleccionada] = useState('');
+  const [fechaFinSeleccionada, setFechaFinSeleccionada] = useState('');
   const [CurrentUser, setCurrentUser] = useState(null);
 
   const navigate = useNavigate();
@@ -72,7 +74,7 @@ const VerPartido = () => {
       handleBuscar();
       setCurrentPage(1); // Reset to first page on filter change
     }
-  }, [zonaSeleccionada, tipoSeleccionado, fechaSeleccionada, partidos]);
+  }, [zonaSeleccionada, tipoSeleccionado, fechaSeleccionada, fechaInicioSeleccionada, fechaFinSeleccionada, partidos]);
 
 
   const fetchPartidos = async () => {
@@ -167,7 +169,15 @@ const VerPartido = () => {
         ? partido.fecha === fechaSeleccionada
         : true;
 
-      return zonaMatch && tipoMatch && fechaMatch;
+      const fechaInicioMatch = fechaInicioSeleccionada
+        ? partido.fecha >= fechaInicioSeleccionada
+        : true;
+
+      const fechaFinMatch = fechaFinSeleccionada
+        ? partido.fecha <= fechaFinSeleccionada
+        : true;
+
+      return zonaMatch && tipoMatch && fechaMatch && fechaInicioMatch && fechaFinMatch;
     });
 
     setPartidosFiltrados(filtrados);
@@ -200,21 +210,94 @@ const VerPartido = () => {
           </select>
         </div>
 
-            <div className="search-option no-border">
-              <i className="fa fa-calendar-alt"></i>
-              <input
-                type="date"
-                value={fechaSeleccionada}
-                onChange={(e) => setFechaSeleccionada(e.target.value)}
-              />
-            </div>
-            <div className="search-option clear-filters" title="Reiniciar filtros" onClick={() => {
-              setZonaSeleccionada('');
-              setTipoSeleccionado('');
-              setFechaSeleccionada('');
-            }}>
-              <span style={{ color: 'white', fontWeight: 'bold' }}>×</span>
-            </div>
+      <div className="search-option no-border" style={{ position: 'relative' }}>
+        <i className="fa fa-calendar-alt"></i>
+        <input
+          type="date"
+          value={fechaInicioSeleccionada}
+          onChange={(e) => {
+            setFechaInicioSeleccionada(e.target.value);
+            if (fechaFinSeleccionada && e.target.value > fechaFinSeleccionada) {
+              setFechaFinSeleccionada('');
+            }
+          }}
+          title="Fecha inicio"
+          style={{
+            position: 'relative',
+            zIndex: 2,
+            background: 'transparent',
+            color: fechaInicioSeleccionada ? 'inherit' : 'transparent',
+          }}
+        />
+        {!fechaInicioSeleccionada && (
+          <span
+            style={{
+              position: 'absolute',
+              left: '1rem',
+              top: '40%',
+              transform: 'translateY(-50%)',
+              color: '#555',
+              pointerEvents: 'none',
+              zIndex: 1,
+              fontSize: '1rem',
+              fontWeight: 'normal',
+              fontFamily: 'inherit',
+              lineHeight: 'normal',
+            }}
+          >
+            Desde
+          </span>
+        )}
+      </div>
+      <div className="search-option no-border" style={{ position: 'relative' }}>
+        <i className="fa fa-calendar-alt"></i>
+        <input
+          type="date"
+          value={fechaFinSeleccionada}
+          onChange={(e) => {
+            if (!fechaInicioSeleccionada || e.target.value >= fechaInicioSeleccionada) {
+              setFechaFinSeleccionada(e.target.value);
+            } else {
+              alert('La fecha fin debe ser igual o posterior a la fecha inicio');
+            }
+          }}
+          title="Fecha fin"
+          style={{
+            position: 'relative',
+            zIndex: 2,
+            background: 'transparent',
+            color: fechaFinSeleccionada ? 'inherit' : 'transparent',
+          }}
+        />
+        {!fechaFinSeleccionada && (
+          <span
+            style={{
+              position: 'absolute',
+              left: '1rem',
+              top: '40%',
+              transform: 'translateY(-50%)',
+              color: '#555',
+              pointerEvents: 'none',
+              zIndex: 1,
+              fontSize: '1rem',
+              fontWeight: 'normal',
+              fontFamily: 'inherit',
+              lineHeight: 'normal',
+            }}
+          >
+            Hasta
+          </span>
+        )}
+      </div>
+      <div className="search-option clear-filters" title="Reiniciar filtros" onClick={() => {
+        setZonaSeleccionada('');
+        setTipoSeleccionado('');
+        setFechaSeleccionada('');
+        setFechaInicioSeleccionada('');
+        setFechaFinSeleccionada('');
+      }}>
+        <span style={{ color: 'white', fontWeight: 'bold' }}>×</span>
+      </div>
 
         
       </div>
