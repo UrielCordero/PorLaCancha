@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
+import StarRating from '../StarRating/StarRating';
 import './CrearEquipo.css';
 
 const CrearEquipo = () => {
@@ -67,17 +68,11 @@ const CrearEquipo = () => {
 
           <div className="form-group">
             <label htmlFor="nivelHabilidad">Nivel de Habilidad</label>
-            <select
-              id="nivelHabilidad"
-              value={nivelHabilidad}
-              onChange={(e) => setNivelHabilidad(e.target.value)}
-            >
-              <option value="1">Principiante</option>
-              <option value="2">Amateur</option>
-              <option value="3">Intermedio</option>
-              <option value="4">Avanzado</option>
-              <option value="5">Profesional</option>
-            </select>
+            <StarRating
+              level={nivelHabilidad}
+              editable={true}
+              onChange={(newLevel) => setNivelHabilidad(newLevel)}
+            />
           </div>
 
           <div className="form-group">
