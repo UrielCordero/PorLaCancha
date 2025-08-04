@@ -1,11 +1,18 @@
 .equipos-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 32px;
   padding: 16px;
   justify-content: center;
   min-height: calc(100vh - 160px);
   box-sizing: border-box;
+}
+
+.crear-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 24px;
 }
 
 .equipo-card {

@@ -22,6 +22,7 @@ import MisPartidos from './componentes/MisPartidos/MisPartidos';
 import MiEquipo from './componentes/MiEquipo/MiEquipo';
 import ErrorBoundary from './componentes/ErrorBoundary/ErrorBoundary';
 import MisTorneos from './componentes/MisTorneos/MisTorneos';
+import CrearEquipo from './componentes/CrearEquipo/CrearEquipo';
 
 function AppWrapper() {
   const location = useLocation();
@@ -98,6 +99,7 @@ function AppWrapper() {
             <Route path="/crear-torneo" element={<CrearTorneoForm />} />
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/equipos" element={<Equipos />} />
+            <Route path="/crear-equipo" element={<CrearEquipo />} />
             <Route path="/info-torneo/:id" element={<InfoTorneo />} />
             <Route path="/unirse-torneo/:id" element={<UnirseTorneo />} />
             <Route path="/ver-info-partido/:id" element={<VerInfoPartido />} />

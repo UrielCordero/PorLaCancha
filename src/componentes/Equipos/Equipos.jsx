@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import StarRating from '../StarRating/StarRating';
 import './Equipos.css';
@@ -7,6 +8,7 @@ function Equipos() {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchTeams() {
@@ -29,23 +31,34 @@ function Equipos() {
     fetchTeams();
   }, []);
 
+  const handleCrearEquipo = () => {
+    navigate('/crear-equipo');
+  };
+
   if (loading) return <div className="equipos-container">Cargando equipos...</div>;
   if (error) return <div className="equipos-container error">Error: {error}</div>;
 
   return (
-    <div className="equipos-container">
-      {teams.map(team => (
-        <div key={team.idEquipos} className="equipo-card">
-          {team.imgEscudo && <img src={team.imgEscudo} alt={`${team.nombre} escudo`} className="equipo-escudo" />}
-          <h3>{team.nombre}</h3>
-          <p><strong>Nivel de Habilidad:</strong> <StarRating level={team.nivelHabilidad} /></p>
-          <p><strong>Partidos Ganados:</strong> {team.partidosGanados}</p>
-          <p><strong>Partidos Empatados:</strong> {team.partidosEmpatados}</p>
-          <p><strong>Partidos Perdidos:</strong> {team.partidosPerdidos}</p>
-          <p><strong>Máximo de Integrantes:</strong> {team.maxIntegrantes}</p>
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="crear-container">
+        <button className="boton-crear" onClick={handleCrearEquipo}>
+          Crear Equipo
+        </button>
+      </div>
+      <div className="equipos-container">
+        {teams.map(team => (
+          <div key={team.idEquipos} className="equipo-card">
+            {team.imgEscudo && <img src={team.imgEscudo} alt={`${team.nombre} escudo`} className="equipo-escudo" />}
+            <h3>{team.nombre}</h3>
+            <p><strong>Nivel de Habilidad:</strong> <StarRating level={team.nivelHabilidad} /></p>
+            <p><strong>Partidos Ganados:</strong> {team.partidosGanados}</p>
+            <p><strong>Partidos Empatados:</strong> {team.partidosEmpatados}</p>
+            <p><strong>Partidos Perdidos:</strong> {team.partidosPerdidos}</p>
+            <p><strong>Máximo de Integrantes:</strong> {team.maxIntegrantes}</p>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
