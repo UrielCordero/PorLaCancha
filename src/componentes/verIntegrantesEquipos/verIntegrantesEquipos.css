@@ -1,0 +1,124 @@
+.integrantes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.boton-volver {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.boton-volver:hover {
+  background-color: #28a745;
+}
+
+.equipo-info {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.equipo-info h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.equipo-escudo-grande {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 10px 0;
+  border: 3px solid #28a745;
+}
+
+.integrantes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.integrante-card {
+  background-color: white;
+  border: 1px solid #28a745;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.integrante-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.integrante-foto {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #28a745;
+}
+
+.integrante-foto-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #28a745;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 auto 10px;
+}
+
+.integrante-card h3 {
+  margin: 10px 0;
+  color: #333;
+}
+
+.integrante-card p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.sin-integrantes {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 18px;
+}
+
+.error {
+  color: #dc3545;
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .integrantes-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .integrantes-container {
+    padding: 10px;
+  }
+}

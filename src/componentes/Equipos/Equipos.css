@@ -38,3 +38,20 @@
   border-radius: 50%;
   border: 1px solid #ddd;
 }
+
+.boton-ver-integrantes {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.boton-ver-integrantes:hover {
+  background-color: #218838;
+}

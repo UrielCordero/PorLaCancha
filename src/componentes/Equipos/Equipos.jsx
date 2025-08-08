@@ -51,10 +51,13 @@ function Equipos() {
             {team.imgEscudo && <img src={team.imgEscudo} alt={`${team.nombre} escudo`} className="equipo-escudo" />}
             <h3>{team.nombre}</h3>
             <p><strong>Nivel de Habilidad:</strong> <StarRating level={team.nivelHabilidad} /></p>
-            <p><strong>Partidos Ganados:</strong> {team.partidosGanados}</p>
-            <p><strong>Partidos Empatados:</strong> {team.partidosEmpatados}</p>
-            <p><strong>Partidos Perdidos:</strong> {team.partidosPerdidos}</p>
             <p><strong>Máximo de Integrantes:</strong> {team.maxIntegrantes}</p>
+            <button 
+              className="boton-ver-integrantes"
+              onClick={() => navigate(`/equipos/${team.idEquipos}/integrantes`)}
+            >
+              Ver Integrantes
+            </button>
           </div>
         ))}
       </div>
