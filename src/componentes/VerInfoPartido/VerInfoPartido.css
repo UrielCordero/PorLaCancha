@@ -144,6 +144,18 @@
   background-color: #2e6b2e;
 }
 
+.boton-unirme.disabled,
+.boton-unirme:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.boton-unirme.disabled:hover,
+.boton-unirme:disabled:hover {
+  background-color: gray;
+}
+
 .footer-texto {
   font-size: 0.9rem;
   color: #555;
