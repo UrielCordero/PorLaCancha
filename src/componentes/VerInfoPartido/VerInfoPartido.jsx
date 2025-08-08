@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import './VerInfoPartido.css';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -236,7 +237,13 @@ const VerInfoPartido = () => {
         </div>
       </div>
 
-      <button className="boton-unirme" onClick={handleJoinClick}>Unirme al partido</button>
+      <button
+        className={`boton-unirme ${usuarios.length >= maxJugadores ? 'disabled' : ''}`}
+        onClick={handleJoinClick}
+        disabled={usuarios.length >= maxJugadores}
+      >
+        Unirme al partido
+      </button>
     </div>
   );
 };
