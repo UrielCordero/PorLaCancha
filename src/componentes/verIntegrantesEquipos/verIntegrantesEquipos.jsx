@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
+import StarRating from '../StarRating/StarRating';
 import './verIntegrantesEquipos.css';
 
 function VerIntegrantesEquipos() {
@@ -82,7 +83,7 @@ function VerIntegrantesEquipos() {
               className="equipo-escudo-grande"
             />
           )}
-          <p><strong>Nivel del equipo:</strong> {equipo.nivelHabilidad}/5</p>
+          <p><strong>Nivel del equipo:</strong> <StarRating level={equipo.nivelHabilidad} /></p>
           <p><strong>Máximo de integrantes:</strong> {equipo.maxIntegrantes}</p>
           <p><strong>Integrantes actuales:</strong> {integrantes.length}</p>
         </div>
@@ -104,11 +105,11 @@ function VerIntegrantesEquipos() {
             )}
             <h3>{integrante.nombre}</h3>
             <p><strong>Género:</strong> {integrante.genero || 'No especificado'}</p>
-            <p><strong>Nivel de habilidad:</strong> {integrante.nivelHabilidad}/5</p>
             <p><strong>Edad:</strong> {integrante.fechaNacimiento ? 
               new Date().getFullYear() - new Date(integrante.fechaNacimiento).getFullYear() : 
               'No especificada'}
             </p>
+            <p><strong>Nivel de habilidad:</strong> <StarRating level={integrante.nivelHabilidad} /></p>
           </div>
         ))}
       </div>
