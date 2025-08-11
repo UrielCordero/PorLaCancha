@@ -55,3 +55,90 @@
 .boton-ver-integrantes:hover {
   background-color: #218838;
 }
+
+/* Modal backdrop similar to login modal */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal container similar to login modal */
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Notification card inside modal */
+.notification-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+/* Avatar image */
+.notification-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+}
+
+/* Info container */
+.notification-info {
+  flex: 1;
+}
+
+/* Actions container */
+.notification-actions {
+  margin-top: 5px;
+}
+
+/* Accept and reject buttons */
+.accept-btn,
+.reject-btn {
+  padding: 6px 12px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.accept-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.reject-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Close modal button */
+.btn-close-modal {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #777;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
