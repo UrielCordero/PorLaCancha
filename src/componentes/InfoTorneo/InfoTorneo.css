@@ -91,3 +91,16 @@
   display: block;
   margin-top: 6px;
 }
+
+.boton-deshabilitado {
+  background-color: #cccccc !important;
+  color: #666666 !important;
+  cursor: not-allowed !important;
+  opacity: 0.6 !important;
+  pointer-events: none !important;
+}
+
+.boton-deshabilitado:hover {
+  background-color: #cccccc !important;
+  transform: none !important;
+}

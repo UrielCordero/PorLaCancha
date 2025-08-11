@@ -8,6 +8,7 @@ const InfoTorneo = () => {
   const navigate = useNavigate();
   const [torneo, setTorneo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [equiposInscritos, setEquiposInscritos] = useState(0);
 
   useEffect(() => {
     const fetchTorneo = async () => {
@@ -39,6 +40,16 @@ const InfoTorneo = () => {
         console.error('Error al obtener el torneo:', error);
       } else {
         setTorneo(data);
+        
+        // Fetch current number of teams
+        const { data: equiposData, error: equiposError } = await supabase
+          .from('equiposXTorneos')
+          .select('idequipos', { count: 'exact' })
+          .eq('idtorneo', data.id);
+
+        if (!equiposError) {
+          setEquiposInscritos(equiposData.length);
+        }
       }
       setLoading(false);
     };
@@ -202,16 +213,17 @@ const InfoTorneo = () => {
         <p className="info-torneo-detail"><strong>Lugar:</strong> {torneo.Id_Cancha?.ubicacion || torneo.Id_Cancha?.nombre}</p>
         <p className="info-torneo-detail"><strong>Fecha de inicio:</strong> {formatDate(torneo.fechaInicio)}</p>
         <p className="info-torneo-detail"><strong>Fecha de cierre:</strong> {formatDate(torneo.fechaFin)}</p>
-        <p className="info-torneo-detail"><strong>Cantidad de equipos:</strong> {torneo.cantEquipos}</p>
+        <p className="info-torneo-detail"><strong>Cantidad de equipos:</strong> {equiposInscritos}/{torneo.cantEquipos}</p>
         <p className="info-torneo-detail"><strong>Tipo de cancha:</strong> {torneo.tipoCancha?.descripcion}</p>
         <p className="info-torneo-detail"><strong>Precio de inscripción:</strong> ${torneo.precioPersona}</p>
         <p className="info-torneo-detail"><strong>Premio del ganador:</strong> ${torneo.premio}</p>
       </div>
       <button
-        className="boton"
+        className={`boton ${equiposInscritos >= torneo.cantEquipos ? 'boton-deshabilitado' : ''}`}
         onClick={handleJoinTournament}
+        disabled={equiposInscritos >= torneo.cantEquipos}
       >
-        Unirme al torneo
+        {equiposInscritos >= torneo.cantEquipos ? 'Torneo Lleno' : 'Unirme al torneo'}
       </button>
       <button
         className="boton volver-button"
