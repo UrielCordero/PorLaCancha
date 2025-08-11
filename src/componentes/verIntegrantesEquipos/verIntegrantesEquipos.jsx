@@ -9,6 +9,7 @@ function VerIntegrantesEquipos() {
   const navigate = useNavigate();
   const [integrantes, setIntegrantes] = useState([]);
   const [equipo, setEquipo] = useState(null);
+  const [administradores, setAdministradores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -50,7 +51,17 @@ function VerIntegrantesEquipos() {
         } else {
           setIntegrantes(integrantesData.map(item => item.Usuarios));
         }
-      } catch (err) {
+
+        // Obtener los administradores del equipo
+        const { data: administradoresData, error: administradoresError } = await supabase
+          .from('administradorEquipo')
+          .select('idUsuarioCreador')
+          .eq('idEquipo', idEquipo);
+
+        if (!administradoresError) {
+          setAdministradores(administradoresData);
+        }
+      } catch {
         setError('Error inesperado al cargar los datos');
       } finally {
         setLoading(false);
@@ -104,6 +115,9 @@ function VerIntegrantesEquipos() {
               </div>
             )}
             <h3>{integrante.nombre}</h3>
+            {administradores.some(admin => admin.idUsuarioCreador === integrante.idUsuarios) && (
+              <p className="admin-label">Administrador</p>
+            )}
             <p><strong>Género:</strong> {integrante.genero || 'No especificado'}</p>
             <p><strong>Edad:</strong> {integrante.fechaNacimiento ? 
               new Date().getFullYear() - new Date(integrante.fechaNacimiento).getFullYear() : 
