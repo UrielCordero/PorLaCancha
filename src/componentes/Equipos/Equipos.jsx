@@ -236,13 +236,22 @@ function Equipos() {
                 Ver Integrantes
               </button>
 
-              {!isUserInTeam(team.idEquipos) && loggedInUser && (
-                <button
-                  className="boton-ver-integrantes boton-postularse"
-                  onClick={() => handlePostularse(team.idEquipos)}
-                >
-                  Postularse
-                </button>
+              {loggedInUser && (
+                isUserInTeam(team.idEquipos) ? (
+                  <button
+                    className="boton-postularse boton-disabled"
+                    disabled
+                  >
+                    Ya forma parte de este equipo
+                  </button>
+                ) : (
+                  <button
+                    className="boton-ver-integrantes boton-postularse"
+                    onClick={() => handlePostularse(team.idEquipos)}
+                  >
+                    Postularse
+                  </button>
+                )
               )}
             </div>
           </div>

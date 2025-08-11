@@ -142,3 +142,21 @@
   cursor: pointer;
   float: right;
 }
+
+/* Disabled postularse button */
+.boton-disabled {
+  background-color: #b0b0b0 !important; /* lighter gray similar to the photo */
+  cursor: default !important;
+  color: white !important;
+  pointer-events: none;
+  border-radius: 5px !important; /* same border radius as Postularse button */
+  padding: 8px 16px !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  transition: none !important;
+  box-shadow: none !important;
+  user-select: none !important;
+  width: 100% !important; /* same width as Postularse button */
+  text-align: center !important;
+  margin-top: 10px !important; /* same margin as boton-ver-integrantes */
+}
