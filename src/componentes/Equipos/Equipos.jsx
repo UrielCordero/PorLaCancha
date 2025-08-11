@@ -101,9 +101,9 @@ function Equipos() {
         console.error('Error al enviar solicitud:', error);
         alert('Error al enviar solicitud: ' + JSON.stringify(error));
       } else if (data) {
-        alert('Solicitud enviada exitosamente');
+        alert('Se postulo al equipo correctamente');
       } else {
-        alert('Error al enviar solicitud: respuesta inesperada');
+        alert('Se postulo al equipo correctamente');
       }
     } catch (error) {
       console.error('Error inesperado:', error);
@@ -127,6 +127,13 @@ function Equipos() {
           // Add user to team
           const application = applications.find(app => app.id === applicationId);
           if (application) {
+            // Remove user from previous teams
+            await supabase
+              .from('usariosXEquipos')
+              .delete()
+              .eq('idUsuarios', application.idUsuario);
+
+            // Add user to new team
             await supabase
               .from('usariosXEquipos')
               .insert([{
