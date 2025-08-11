@@ -25,6 +25,7 @@ function IniciarSesion({ onClose, onLoginSuccess, onSwitchToRegister }) {
 
       onLoginSuccess(data);
       onClose();
+      window.location.reload();
     } catch (err) {
       setErrorMsg('Error al iniciar sesión');
     }
