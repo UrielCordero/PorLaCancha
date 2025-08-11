@@ -55,3 +55,11 @@
   font-size: 14px;
   color: #333;
 }
+
+.admin-label {
+  color: #32CD32;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+}
