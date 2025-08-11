@@ -6,23 +6,52 @@ const MiEquipo = () => {
   const [team, setTeam] = useState(null);
   const [teamMembers, setTeamMembers] = useState([]);
   const [administradores, setAdministradores] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const handleMakeAdmin = async (newAdminId) => {
+    if (!team || !loggedInUser) return;
+    
+    // Check if user is already an administrator
+    const isAlreadyAdmin = administradores.some(admin => admin.idUsuarioCreador === newAdminId);
+    if (isAlreadyAdmin) {
+      console.log('El usuario ya es administrador');
+      return;
+    }
+
+    try {
+      // Add the new administrator without removing existing ones
+      const { error: insertError } = await supabase
+        .from('administradorEquipo')
+        .insert([{ idUsuarioCreador: newAdminId, idEquipo: team.idEquipos }]);
+
+      if (insertError) {
+        console.error('Error al hacer administrador:', insertError);
+        return;
+      }
+
+      // Update local state to include the new admin
+      setAdministradores(prevAdmins => [...prevAdmins, { idUsuarioCreador: newAdminId }]);
+    } catch (err) {
+      console.error('Error inesperado:', err);
+    }
+  };
 
   useEffect(() => {
     const fetchTeamData = async () => {
-      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-      if (!loggedInUser) {
+      const user = JSON.parse(localStorage.getItem('loggedInUser'));
+      if (!user) {
         setTeam(null);
         setTeamMembers([]);
         setLoading(false);
         return;
       }
+      setLoggedInUser(user);
 
-      // Get the team ID the user belongs to
       const { data: userTeamData, error: userTeamError } = await supabase
         .from('usariosXEquipos')
         .select('idEquipos')
-        .eq('idUsuarios', loggedInUser.idUsuarios)
+        .eq('idUsuarios', user.idUsuarios)
         .maybeSingle();
 
       if (userTeamError || !userTeamData) {
@@ -34,7 +63,6 @@ const MiEquipo = () => {
 
       const teamId = userTeamData.idEquipos;
 
-      // Fetch team details
       const { data: teamData, error: teamError } = await supabase
         .from('equipos')
         .select('idEquipos, nombre, imgEscudo')
@@ -50,7 +78,6 @@ const MiEquipo = () => {
 
       setTeam(teamData);
 
-      // Fetch all users in the team
       const { data: membersData, error: membersError } = await supabase
         .from('usariosXEquipos')
         .select('Usuarios(idUsuarios, nombre, fotoDePerfil)')
@@ -59,12 +86,10 @@ const MiEquipo = () => {
       if (membersError || !membersData) {
         setTeamMembers([]);
       } else {
-        // Extract user info from nested Usuarios
         const members = membersData.map(item => item.Usuarios).filter(Boolean);
         setTeamMembers(members);
       }
 
-      // Fetch administrators for the team
       const { data: adminsData, error: adminsError } = await supabase
         .from('administradorEquipo')
         .select('idUsuarioCreador')
@@ -88,6 +113,10 @@ const MiEquipo = () => {
     return <div className="mi-equipo-container"><p>No perteneces a ningún equipo.</p></div>;
   }
 
+  // Check if logged-in user is an administrator
+  const isLoggedInUserAdmin = loggedInUser && 
+    administradores.some(admin => admin.idUsuarioCreador === loggedInUser.idUsuarios);
+
   return (
     <div className="mi-equipo-container">
       <h2>Mi Equipo</h2>
@@ -99,19 +128,35 @@ const MiEquipo = () => {
         {teamMembers.length === 0 ? (
           <p>No hay miembros en tu equipo.</p>
         ) : (
-          teamMembers.map(member => (
-            <div key={member.idUsuarios} className="team-member-card">
-              <img
-                src={member.fotoDePerfil || '/default-profile.png'}
-                alt={member.nombre}
-                className="team-member-photo"
-              />
-              <p className="team-member-name">{member.nombre}</p>
-              {administradores.some(admin => admin.idUsuarioCreador === member.idUsuarios) && (
-                <p className="admin-label">Administrador</p>
-              )}
-            </div>
-          ))
+          teamMembers.map(member => {
+            const isMemberAdmin = administradores.some(
+              admin => admin.idUsuarioCreador === member.idUsuarios
+            );
+            
+            return (
+              <div key={member.idUsuarios} className="team-member-card">
+                <img
+                  src={member.fotoDePerfil || '/default-profile.png'}
+                  alt={member.nombre}
+                  className="team-member-photo"
+                />
+                <p className="team-member-name">{member.nombre}</p>
+                {isMemberAdmin && (
+                  <p className="admin-label">Administrador</p>
+                )}
+                {isLoggedInUserAdmin && 
+                 !isMemberAdmin && 
+                 member.idUsuarios !== loggedInUser.idUsuarios && (
+                  <button
+                    className="make-admin-button"
+                    onClick={() => handleMakeAdmin(member.idUsuarios)}
+                  >
+                    Hacer Administrador
+                  </button>
+                )}
+              </div>
+            );
+          })
         )}
       </div>
     </div>
