@@ -5,6 +5,7 @@ import './MiEquipo.css';
 const MiEquipo = () => {
   const [team, setTeam] = useState(null);
   const [teamMembers, setTeamMembers] = useState([]);
+  const [administradores, setAdministradores] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -63,6 +64,16 @@ const MiEquipo = () => {
         setTeamMembers(members);
       }
 
+      // Fetch administrators for the team
+      const { data: adminsData, error: adminsError } = await supabase
+        .from('administradorEquipo')
+        .select('idUsuarioCreador')
+        .eq('idEquipo', teamId);
+
+      if (!adminsError && adminsData) {
+        setAdministradores(adminsData);
+      }
+
       setLoading(false);
     };
 
@@ -96,6 +107,9 @@ const MiEquipo = () => {
                 className="team-member-photo"
               />
               <p className="team-member-name">{member.nombre}</p>
+              {administradores.some(admin => admin.idUsuarioCreador === member.idUsuarios) && (
+                <p className="admin-label">Administrador</p>
+              )}
             </div>
           ))
         )}
