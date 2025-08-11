@@ -86,3 +86,24 @@
 .make-admin-button:hover {
   background-color: #218838;
 }
+
+.leave-team-button {
+  margin-top: 40px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.leave-team-button:hover {
+  background-color: #c82333;
+}
+
+.leave-team-button:active {
+  background-color: #bd2130;
+}
