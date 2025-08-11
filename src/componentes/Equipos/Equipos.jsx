@@ -183,7 +183,7 @@ function Equipos() {
                     className="notification-avatar"
                   />
                   <div className="notification-info">
-                    <p><strong>{app.Usuarios?.nombre}</strong> quiere unirse al equipo</p>
+                    <p><strong>{app.Usuarios?.nombre}</strong> quiere unirse al equipo <strong>{teams.find(team => team.idEquipos === app.idEquipo)?.nombre || 'Desconocido'}</strong></p>
                     <div className="notification-actions">
                       <button
                         className="accept-btn"
@@ -231,7 +231,7 @@ function Equipos() {
 
               {!isUserInTeam(team.idEquipos) && loggedInUser && (
                 <button
-                  className="boton-postularse"
+                  className="boton-ver-integrantes boton-postularse"
                   onClick={() => handlePostularse(team.idEquipos)}
                 >
                   Postularse
