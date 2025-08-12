@@ -165,54 +165,6 @@ function Equipos() {
   return (
     <>
       {/* Notification Bell for Admins */}
-      {isUserAdmin() && (
-        <div className="notification-container">
-          <button
-            className="notification-bell"
-            onClick={() => setShowModal(true)}
-          >
-            🔔 {applications.length}
-          </button>
-        </div>
-      )}
-      {showModal && (
-        <div className="modal-backdrop" onClick={() => setShowModal(false)}>
-          <div className="modal" onClick={e => e.stopPropagation()}>
-            <h4>Solicitudes Pendientes</h4>
-            {applications.length === 0 ? (
-              <p>No hay solicitudes pendientes.</p>
-            ) : (
-              applications.map(app => (
-                <div key={app.id} className="notification-card">
-                  <img
-                    src={app.Usuarios?.fotoDePerfil || '/default-profile.png'}
-                    alt={app.Usuarios?.nombre}
-                    className="notification-avatar"
-                  />
-                  <div className="notification-info">
-                    <p><strong>{app.Usuarios?.nombre}</strong> quiere unirse al equipo <strong>{teams.find(team => team.idEquipos === app.idEquipo)?.nombre || 'Desconocido'}</strong></p>
-                    <div className="notification-actions">
-                      <button
-                        className="accept-btn"
-                        onClick={() => handleApplicationResponse(app.id, true)}
-                      >
-                        Aceptar
-                      </button>
-                      <button
-                        className="reject-btn"
-                        onClick={() => handleApplicationResponse(app.id, false)}
-                      >
-                        Rechazar
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-            <button className="btn-close-modal" onClick={() => setShowModal(false)}>Cerrar</button>
-          </div>
-        </div>
-      )}
 
       <div className="crear-container">
         <button className="boton-crear" onClick={handleCrearEquipo}>
