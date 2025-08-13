@@ -68,6 +68,8 @@ function AppWrapper() {
     setUsuario(null);
     localStorage.removeItem('loggedInUser');
     setMenuAbierto(false);
+    // Recargar la página automáticamente cuando se cierra sesión
+    window.location.reload();
   };
 
   // Determine if footer should be fixed based on current path
