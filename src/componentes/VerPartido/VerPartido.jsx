@@ -211,7 +211,6 @@ const VerPartido = () => {
         </div>
 
       <div className="search-option no-border" style={{ position: 'relative' }}>
-        <i className="fa fa-calendar-alt"></i>
         <input
           type="date"
           value={fechaInicioSeleccionada}
@@ -250,7 +249,6 @@ const VerPartido = () => {
         )}
       </div>
       <div className="search-option no-border" style={{ position: 'relative' }}>
-        <i className="fa fa-calendar-alt"></i>
         <input
           type="date"
           value={fechaFinSeleccionada}
