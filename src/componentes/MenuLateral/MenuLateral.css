@@ -72,8 +72,13 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 0.5rem;
+  padding-right: 0.5rem;
+  padding-left: 0;
   margin-bottom: 1rem;
+}
+
+.notification-bell {
+  margin-left: -5px;
 }
 
 .notification-bell {
