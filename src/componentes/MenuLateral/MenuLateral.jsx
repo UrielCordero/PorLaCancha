@@ -139,12 +139,12 @@ function MenuLateral({ menuOpen, onClose, user, onLogout }) {
 
   return (
     <div className={`side-menu ${menuOpen ? 'open' : ''}`} ref={menuRef}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 10px' }}>
+      <div className="menu-buttons-container">
         {isUserAdmin() && (
           <button
             className="notification-bell"
             onClick={() => setShowModal(true)}
-            style={{ fontSize: '20px', background: 'none', border: 'none', cursor: 'pointer', marginRight: 'auto' }}
+            style={{ fontSize: '20px', border: 'none', cursor: 'pointer' }}
             aria-label="Notificaciones"
           >
             🔔 {applications.length}

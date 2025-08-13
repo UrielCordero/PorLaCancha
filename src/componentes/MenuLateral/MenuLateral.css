@@ -66,3 +66,39 @@
 .side-menu ul li a:hover {
   text-decoration: underline;
 }
+
+.menu-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.notification-bell {
+  background-color: white;
+  color: #00B56A;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.side-menu .close-button {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  padding-right: 0;
+}
