@@ -9,7 +9,8 @@ function Heroe({ isLoggedIn }) {
 
   const [zonaSeleccionada, setZonaSeleccionada] = useState('');
   const [tipoSeleccionado, setTipoSeleccionado] = useState('');
-  const [fechaSeleccionada, setFechaSeleccionada] = useState('');
+  const [fechaInicioSeleccionada, setFechaInicioSeleccionada] = useState('');
+  const [fechaFinSeleccionada, setFechaFinSeleccionada] = useState('');
 
   const navigate = useNavigate();
 
@@ -55,7 +56,8 @@ function Heroe({ isLoggedIn }) {
       state: {
         zonaSeleccionada,
         tipoSeleccionado,
-        fechaSeleccionada,
+        fechaInicioSeleccionada,
+        fechaFinSeleccionada,
       },
     });
   };
@@ -91,12 +93,83 @@ function Heroe({ isLoggedIn }) {
               </select>
             </div>
 
-            <div className="search-option no-border">
+            <div className="search-option no-border" style={{ position: 'relative' }}>
               <input
                 type="date"
-                value={fechaSeleccionada}
-                onChange={(e) => setFechaSeleccionada(e.target.value)}
+                value={fechaInicioSeleccionada}
+                onChange={(e) => {
+                  setFechaInicioSeleccionada(e.target.value);
+                  if (fechaFinSeleccionada && e.target.value > fechaFinSeleccionada) {
+                    setFechaFinSeleccionada('');
+                  }
+                }}
+                title="Fecha inicio"
+                style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  background: 'transparent',
+                  color: fechaInicioSeleccionada ? 'inherit' : 'transparent',
+                }}
               />
+              {!fechaInicioSeleccionada && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    left: '1rem',
+                    top: '40%',
+                    transform: 'translateY(-50%)',
+                    color: '#555',
+                    pointerEvents: 'none',
+                    zIndex: 1,
+                    fontSize: '1rem',
+                    fontWeight: 'normal',
+                    fontFamily: 'inherit',
+                    lineHeight: 'normal',
+                  }}
+                >
+                  Desde
+                </span>
+              )}
+            </div>
+
+            <div className="search-option no-border" style={{ position: 'relative' }}>
+              <input
+                type="date"
+                value={fechaFinSeleccionada}
+                onChange={(e) => {
+                  if (!fechaInicioSeleccionada || e.target.value >= fechaInicioSeleccionada) {
+                    setFechaFinSeleccionada(e.target.value);
+                  } else {
+                    alert('La fecha fin debe ser igual o posterior a la fecha inicio');
+                  }
+                }}
+                title="Fecha fin"
+                style={{
+                  position: 'relative',
+                  zIndex: 2,
+                  background: 'transparent',
+                  color: fechaFinSeleccionada ? 'inherit' : 'transparent',
+                }}
+              />
+              {!fechaFinSeleccionada && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    left: '1rem',
+                    top: '40%',
+                    transform: 'translateY(-50%)',
+                    color: '#555',
+                    pointerEvents: 'none',
+                    zIndex: 1,
+                    fontSize: '1rem',
+                    fontWeight: 'normal',
+                    fontFamily: 'inherit',
+                    lineHeight: 'normal',
+                  }}
+                >
+                  Hasta
+                </span>
+              )}
             </div>
 
             <div className="search-button-wrapper">

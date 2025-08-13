@@ -61,10 +61,12 @@ const VerPartido = () => {
   // Prefill filters from navigation state if available
   useEffect(() => {
     if (location.state) {
-      const { zonaSeleccionada, tipoSeleccionado, fechaSeleccionada } = location.state;
+      const { zonaSeleccionada, tipoSeleccionado, fechaSeleccionada, fechaInicioSeleccionada, fechaFinSeleccionada } = location.state;
       if (zonaSeleccionada) setZonaSeleccionada(zonaSeleccionada);
       if (tipoSeleccionado) setTipoSeleccionado(tipoSeleccionado);
       if (fechaSeleccionada) setFechaSeleccionada(fechaSeleccionada);
+      if (fechaInicioSeleccionada) setFechaInicioSeleccionada(fechaInicioSeleccionada);
+      if (fechaFinSeleccionada) setFechaFinSeleccionada(fechaFinSeleccionada);
     }
   }, [location.state]);
 
