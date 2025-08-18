@@ -105,7 +105,33 @@ const VerInfoPartido = () => {
 
     let joinOption = 'solo';
     if (belongsToTeam) {
-      joinOption = window.confirm('Desea unirse al partido con todo su equipo? (Aceptar = Equipo, Cancelar = Solo)') ? 'equipo' : 'solo';
+      // Verificar si el usuario es administrador de alguno de sus equipos
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+      
+      // Obtener equipos donde el usuario es administrador
+      const { data: adminTeams, error: adminError } = await supabase
+        .from('administradorEquipo')
+        .select('idEquipo')
+        .eq('idUsuarioCreador', loggedInUser.idUsuarios);
+
+      if (adminError) {
+        alert('Error al verificar equipos administrados.');
+        return;
+      }
+
+      const adminTeamIds = adminTeams ? adminTeams.map(t => t.idEquipo) : [];
+      
+      // Verificar si alguno de los equipos del usuario es administrado por él
+      const userAdminTeams = userTeams.filter(team => 
+        adminTeamIds.includes(team.idEquipos)
+      );
+
+      if (userAdminTeams.length > 0) {
+        joinOption = window.confirm('Desea unirse al partido con todo su equipo? (Aceptar = Equipo, Cancelar = Solo)') ? 'equipo' : 'solo';
+      } else {
+        alert('Solo puedes unirte con tu equipo si eres administrador de alguno de tus equipos.');
+        joinOption = 'solo';
+      }
     } else {
       alert('Se unirá solo al partido ya que no pertenece a ningún equipo.');
     }
