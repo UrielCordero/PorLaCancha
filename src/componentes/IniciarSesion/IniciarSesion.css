@@ -95,3 +95,27 @@
 .btn-close:hover {
   background-color: #4caf50;
 }
+
+/* Mostrar contraseña: alinear checkbox y texto en una fila */
+.show-password-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+  width: 100%;
+}
+
+.show-password-row input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  order: 1;
+}
+
+.show-password-row label {
+  display: inline;
+  margin: 0;
+  font-weight: bold;
+  cursor: pointer;
+  order: 0;
+}

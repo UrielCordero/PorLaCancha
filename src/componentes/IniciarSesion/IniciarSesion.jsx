@@ -5,6 +5,7 @@ import './IniciarSesion.css';
 function IniciarSesion({ onClose, onLoginSuccess, onSwitchToRegister }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleLogin = async (e) => {
@@ -50,11 +51,20 @@ function IniciarSesion({ onClose, onLoginSuccess, onSwitchToRegister }) {
           />
           <label>Contraseña</label>
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          <div className="show-password-row">
+            <input
+              id="toggle-password-visibility"
+              type="checkbox"
+              checked={showPassword}
+              onChange={(e) => setShowPassword(e.target.checked)}
+            />
+            <label htmlFor="toggle-password-visibility"> Mostrar contraseña</label>
+          </div>
           {/* Removed Olvide mi contraseña link */}
           {errorMsg && <p className="error">{errorMsg}</p>}
           <p>¿No tienes cuenta? <button className="link-button" onClick={() => { onClose(); onSwitchToRegister(); }}>Registrate.</button></p>
