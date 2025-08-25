@@ -108,7 +108,7 @@ const CrearEquipo = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="nivelHabilidad">Nivel de Habilidad</label>
+            <label htmlFor="nivelHabilidad">Nivel de Habilidad *</label>
             <StarRating
               level={nivelHabilidad}
               editable={true}
@@ -117,7 +117,7 @@ const CrearEquipo = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="maxIntegrantes">Máximo de Integrantes</label>
+            <label htmlFor="maxIntegrantes">Máximo de Integrantes *</label>
             <select
               id="maxIntegrantes"
               value={maxIntegrantes}

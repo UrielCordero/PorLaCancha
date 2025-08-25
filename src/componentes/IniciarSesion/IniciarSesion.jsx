@@ -42,14 +42,14 @@ function IniciarSesion({ onClose, onLoginSuccess, onSwitchToRegister }) {
             handleLogin(e);
           }
         }}>
-          <label>Email</label>
+          <label>Email *</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <label>Contraseña</label>
+          <label>Contraseña *</label>
           <input
             type={showPassword ? 'text' : 'password'}
             value={password}

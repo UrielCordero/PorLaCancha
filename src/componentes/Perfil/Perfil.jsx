@@ -211,7 +211,7 @@ function Perfil() {
         {editing ? (
           <>
             <label>
-              Foto de Perfil URL:
+              Foto de Perfil URL: (opcional)
               <input
                 type="text"
                 name="fotoDePerfil"
@@ -221,41 +221,44 @@ function Perfil() {
               />
             </label>
             <label>
-              Nombre:
+              Nombre: *
               <input
                 type="text"
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleInputChange}
                 className="perfil-input"
+                required
               />
             </label>
             <label>
-              Género:
+              Género: *
               <input
                 type="text"
                 name="genero"
                 value={formData.genero}
                 onChange={handleInputChange}
                 className="perfil-input"
+                required
               />
             </label>
             <label>
-              Email:
+              Email: *
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
                 className="perfil-input"
+                required
               />
             </label>
             <label>
-              Nivel de Habilidad:
+              Nivel de Habilidad: *
               <StarRating level={formData.nivelHabilidad} editable={true} onChange={handleNivelHabilidadChange} />
             </label>
             <label>
-              Contraseña:
+              Contraseña: (opcional)
               <input
                 type="password"
                 name="contrasenia"
@@ -265,7 +268,7 @@ function Perfil() {
               />
             </label>
             <label>
-              Confirmar Contraseña:
+              Confirmar Contraseña: (opcional)
               <input
                 type="password"
                 name="confirmarContrasenia"
@@ -275,7 +278,7 @@ function Perfil() {
               />
             </label>
             <label>
-              Fecha de Nacimiento:
+              Fecha de Nacimiento: (opcional)
               <input
                 type="date"
                 name="fechaNacimiento"

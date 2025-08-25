@@ -133,15 +133,16 @@ export default function CrearTorneo() {
           </p>
         )}
 
-        <label>Nombre del torneo:</label>
+        <label>Nombre del torneo: *</label>
         <input
           type="text"
           name="nombreTorneo"
           value={formData.nombreTorneo}
           onChange={handleChange}
+          required
         />
 
-        <label>URL de imagen del torneo:</label>
+        <label>URL de imagen del torneo: (opcional)</label>
         <input
           type="text"
           name="fotoTorneo"
@@ -149,8 +150,8 @@ export default function CrearTorneo() {
           onChange={handleChange}
         />
 
-        <label>Cancha:</label>
-        <select name="nombreCancha" value={formData.nombreCancha} onChange={handleChange}>
+        <label>Cancha: *</label>
+        <select name="nombreCancha" value={formData.nombreCancha} onChange={handleChange} required>
           <option value="">Selecciona una cancha</option>
           {nombresCanchasUnicos.map((nombre, index) => (
             <option key={index} value={nombre}>
@@ -159,12 +160,13 @@ export default function CrearTorneo() {
           ))}
         </select>
 
-        <label>Tipo de torneo:</label>
+        <label>Tipo de torneo: *</label>
         <select
           name="id_Tipo"
           value={formData.id_Tipo}
           onChange={handleChange}
           disabled={tiposCancha.length === 0}
+          required
         >
           <option value="">Selecciona tipo</option>
           {tiposCancha.map((tipo) => (
@@ -174,49 +176,54 @@ export default function CrearTorneo() {
           ))}
         </select>
 
-        <label>Fecha de inicio:</label>
+        <label>Fecha de inicio: *</label>
         <input
           type="date"
           name="fechaInicio"
           value={formData.fechaInicio}
           onChange={handleChange}
           min={new Date().toISOString().split('T')[0]}
+          required
         />
 
-        <label>Fecha de finalización:</label>
+        <label>Fecha de finalización: *</label>
         <input
           type="date"
           name="fechaFin"
           value={formData.fechaFin}
           onChange={handleChange}
           min={formData.fechaInicio || new Date().toISOString().split('T')[0]}
+          required
         />
 
-        <label>Cantidad de equipos:</label>
+        <label>Cantidad de equipos: *</label>
         <input
           type="number"
           name="cantEquipos"
           value={formData.cantEquipos}
           onChange={handleChange}
           min="4"
+          required
         />
 
-        <label>Premio:</label>
+        <label>Premio: *</label>
         <input
           type="number"
           name="premio"
           value={formData.premio}
           onChange={handleChange}
           step="any"
+          required
         />
 
-        <label>Precio por persona ($):</label>
+        <label>Precio por persona ($): *</label>
         <input
           type="number"
           name="precioPersona"
           value={formData.precioPersona}
           onChange={handleChange}
           step="0.01"
+          required
         />
 
         <button type="submit" className="boton">Publicar el torneo</button>

@@ -113,42 +113,42 @@ function Registrarse({ onClose, onRegisterSuccess }) {
       <div className="modal">
         <h2>REGISTRARSE</h2>
         <form onSubmit={handleRegister}>
-          <label>Nombre</label>
+          <label>Nombre *</label>
           <input
             type="text"
             value={nombre}
             onChange={(e) => setNombre(e.target.value)}
             required
           />
-          <label>Email</label>
+          <label>Email *</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <label>Contraseña</label>
+          <label>Contraseña *</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <label>Confirmar contraseña</label>
+          <label>Confirmar contraseña *</label>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />
-          <label>Fecha de nacimiento</label>
+          <label>Fecha de nacimiento *</label>
           <input
             type="date"
             value={fechaNacimiento}
             onChange={(e) => setFechaNacimiento(e.target.value)}
             required
           />
-          <label>Genero</label>
+          <label>Genero *</label>
           <select
             value={genero}
             onChange={(e) => setGenero(e.target.value)}
@@ -158,15 +158,14 @@ function Registrarse({ onClose, onRegisterSuccess }) {
             <option value="Masculino">Masculino</option>
             <option value="Femenino">Femenino</option>
           </select>
-          <label>Foto de Perfil (URL)</label>
+          <label>Foto de Perfil (URL) (opcional)</label>
           <input
             type="url"
             placeholder="Ingrese la URL de la foto de perfil"
             value={fotoDePerfil}
             onChange={(e) => setFotoDePerfil(e.target.value)}
-            required
           />
-          <label>Nivel de habilidad</label>
+          <label>Nivel de habilidad *</label>
           <select
             value={nivelHabilidad}
             onChange={(e) => setNivelHabilidad(parseInt(e.target.value))}

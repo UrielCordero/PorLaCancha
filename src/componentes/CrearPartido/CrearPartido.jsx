@@ -119,8 +119,8 @@ export default function CrearPartidoForm() {
       {errorMensaje && <p style={{ color: 'red' }}>{errorMensaje}</p>}
 
       {/* Selección del nombre de la cancha */}
-      <label>Nombre de la cancha:</label>
-      <select name="nombreCancha" value={formData.nombreCancha} onChange={handleChange}>
+      <label>Nombre de la cancha: *</label>
+      <select name="nombreCancha" value={formData.nombreCancha} onChange={handleChange} required>
         <option value="">Selecciona un nombre de cancha</option>
         {[...new Set(canchas.map(c => c.nombre))].map(nombre => (
           <option key={nombre} value={nombre}>{nombre}</option>
@@ -130,8 +130,8 @@ export default function CrearPartidoForm() {
       {/* Selección de tipo si hay más de uno */}
       {formData.nombreCancha && (
         <>
-          <label>Tipo de cancha:</label>
-          <select name="cancha" value={formData.cancha} onChange={handleChange}>
+          <label>Tipo de cancha: *</label>
+          <select name="cancha" value={formData.cancha} onChange={handleChange} required>
             <option value="">Selecciona un tipo de cancha</option>
             {canchasFiltradas.map(cancha => (
               <option key={cancha.id_Cancha} value={cancha.id_Cancha}>
@@ -142,7 +142,7 @@ export default function CrearPartidoForm() {
         </>
       )}
 
-      <label>Equipo 1:</label>
+      <label>Equipo 1: (opcional)</label>
       <select name="equipo1" value={formData.equipo1} onChange={handleChange}>
         <option value="">Sin equipo</option>
         {equipos.map((equipo) => (
@@ -150,7 +150,7 @@ export default function CrearPartidoForm() {
         ))}
       </select>
 
-      <label>Equipo 2:</label>
+      <label>Equipo 2: (opcional)</label>
       <select name="equipo2" value={formData.equipo2} onChange={handleChange}>
         <option value="">Sin equipo</option>
         {equipos.map((equipo) => (
@@ -158,14 +158,14 @@ export default function CrearPartidoForm() {
         ))}
       </select>
 
-      <label>Fecha:</label>
-      <input type="date" name="fecha" min={new Date().toISOString().split('T')[0]} value={formData.fecha} onChange={handleChange} />
+      <label>Fecha: *</label>
+      <input type="date" name="fecha" min={new Date().toISOString().split('T')[0]} value={formData.fecha} onChange={handleChange} required />
 
-      <label>Hora de inicio:</label>
-      <input type="time" name="horaInicio" value={formData.horaInicio} onChange={handleChange} />
+      <label>Hora de inicio: *</label>
+      <input type="time" name="horaInicio" value={formData.horaInicio} onChange={handleChange} required />
 
-      <label>Hora de finalización:</label>
-      <input type="time" name="horaFin" value={formData.horaFin} onChange={handleChange} />
+      <label>Hora de finalización: *</label>
+      <input type="time" name="horaFin" value={formData.horaFin} onChange={handleChange} required />
 
       <button type="submit" className="boton">Publicar el partido</button>
       <button type="button" className="boton" onClick={() => navigate('/ver-partidos')}>Volver</button>
