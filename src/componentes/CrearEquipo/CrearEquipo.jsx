@@ -8,7 +8,7 @@ const CrearEquipo = () => {
   const navigate = useNavigate();
   const [nombre, setNombre] = useState('');
   const [nivelHabilidad, setNivelHabilidad] = useState(0);
-  const [maxIntegrantes, setMaxIntegrantes] = useState(11);
+  const [maxIntegrantes, setMaxIntegrantes] = useState('');
   const [imgEscudo, setImgEscudo] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -82,6 +82,7 @@ const CrearEquipo = () => {
               value={maxIntegrantes}
               onChange={(e) => setMaxIntegrantes(e.target.value)}
             >
+              <option value="">Seleccionar...</option>
               <option value="5">5 jugadores</option>
               <option value="7">7 jugadores</option>
               <option value="11">11 jugadores</option>
