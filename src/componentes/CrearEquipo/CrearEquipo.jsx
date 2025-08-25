@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import StarRating from '../StarRating/StarRating';
@@ -19,7 +19,16 @@ const CrearEquipo = () => {
     setError(null);
 
     try {
-      const { error } = await supabase
+      // Obtener el usuario logueado
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+      if (!loggedInUser || !loggedInUser.idUsuarios) {
+        setError('No se pudo obtener la información del usuario. Por favor, inicie sesión nuevamente.');
+        setLoading(false);
+        return;
+      }
+
+      // Crear el equipo
+      const { data: equipoData, error: equipoError } = await supabase
         .from('equipos')
         .insert([
           {
@@ -31,15 +40,47 @@ const CrearEquipo = () => {
             partidosEmpatados: 0,
             partidosPerdidos: 0
           }
-        ]);
+        ])
+        .select();
 
-      if (error) {
-        setError(error.message);
+      if (equipoError) {
+        setError(equipoError.message);
       } else {
-        alert('Equipo creado exitosamente!');
-        navigate('/equipos');
+        // Obtener el ID del equipo recién creado
+        const nuevoEquipo = equipoData[0];
+        
+        // Asignar al usuario como administrador del equipo
+        const { error: adminError } = await supabase
+          .from('administradorEquipo')
+          .insert([
+            {
+              idUsuarioCreador: loggedInUser.idUsuarios,
+              idEquipo: nuevoEquipo.idEquipos
+            }
+          ]);
+
+        if (adminError) {
+          setError('Error al asignar administrador: ' + adminError.message);
+        } else {
+          // Insertar al usuario en la tabla usariosXEquipos
+          const { error: usuarioEquipoError } = await supabase
+            .from('usariosXEquipos')
+            .insert([
+              {
+                idUsuarios: loggedInUser.idUsuarios,
+                idEquipos: nuevoEquipo.idEquipos
+              }
+            ]);
+
+          if (usuarioEquipoError) {
+            setError('Error al integrar usuario al equipo: ' + usuarioEquipoError.message);
+          } else {
+            alert('Equipo creado exitosamente! Eres ahora el administrador y miembro del equipo.');
+            navigate('/equipos');
+          }
+        }
       }
-    } catch (err) {
+    } catch {
       setError('Error al crear el equipo');
     } finally {
       setLoading(false);
