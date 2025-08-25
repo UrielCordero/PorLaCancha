@@ -7,7 +7,7 @@ import './CrearEquipo.css';
 const CrearEquipo = () => {
   const navigate = useNavigate();
   const [nombre, setNombre] = useState('');
-  const [nivelHabilidad, setNivelHabilidad] = useState(3);
+  const [nivelHabilidad, setNivelHabilidad] = useState(0);
   const [maxIntegrantes, setMaxIntegrantes] = useState(11);
   const [imgEscudo, setImgEscudo] = useState('');
   const [loading, setLoading] = useState(false);

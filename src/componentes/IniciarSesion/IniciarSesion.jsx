@@ -27,7 +27,7 @@ function IniciarSesion({ onClose, onLoginSuccess, onSwitchToRegister }) {
       onLoginSuccess(data);
       onClose();
       window.location.reload();
-    } catch (err) {
+    } catch {
       setErrorMsg('Error al iniciar sesión');
     }
   };
@@ -65,7 +65,6 @@ function IniciarSesion({ onClose, onLoginSuccess, onSwitchToRegister }) {
             />
             <label htmlFor="toggle-password-visibility"> Mostrar contraseña</label>
           </div>
-          {/* Removed Olvide mi contraseña link */}
           {errorMsg && <p className="error">{errorMsg}</p>}
           <p>¿No tienes cuenta? <button className="link-button" onClick={() => { onClose(); onSwitchToRegister(); }}>Registrate.</button></p>
           <button type="submit" className="btn-login">Iniciar sesion</button>
