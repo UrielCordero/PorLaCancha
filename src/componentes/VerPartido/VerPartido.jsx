@@ -82,6 +82,10 @@ const VerPartido = () => {
   const fetchPartidos = async () => {
     setLoading(true);
 
+    // Obtener fecha actual ajustada por zona horaria
+    const fechaHoy = new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0];
+    console.log('Fecha usada para filtrar:', fechaHoy);
+
     const { data, error } = await supabase
       .from('partidos')
       .select(`
@@ -107,11 +111,13 @@ const VerPartido = () => {
           imgEscudo
         )
       `)
+      .gte('fecha', fechaHoy) // Solo partidos con fecha igual o posterior a hoy (ajustado por zona horaria)
       .order('fecha', { ascending: true });
 
     if (error) {
       console.error('Error al obtener partidos:', error);
     } else {
+      console.log('Partidos obtenidos:', data);
       setPartidos(data || []);
       setPartidosFiltrados(data || []);
     }
