@@ -183,7 +183,13 @@ function Equipos() {
             <div className="equipo-actions">
               <button
                 className="boton-ver-integrantes"
-                onClick={() => navigate(`/equipos/${team.idEquipos}/integrantes`)}
+                onClick={() => {
+                  if (isUserInTeam(team.idEquipos)) {
+                    navigate('/mi-equipo');
+                  } else {
+                    navigate(`/equipos/${team.idEquipos}/integrantes`);
+                  }
+                }}
               >
                 Ver Integrantes
               </button>
