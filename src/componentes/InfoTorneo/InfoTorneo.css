@@ -49,6 +49,28 @@
   color: #34495e;
 }
 
+.cantidad-equipos-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mini-boton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.mini-boton:hover {
+  background-color: #218838;
+}
+
 .info-torneo-button {
   display: block;
   width: 100%;
@@ -103,4 +125,240 @@
 .boton-deshabilitado:hover {
   background-color: #cccccc !important;
   transform: none !important;
+}
+
+/* Modal equipos participantes */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  width: 92%;
+  max-width: 640px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2), 0 0 0 2px rgba(46, 204, 113, 0.25);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ececec;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  color: #555;
+}
+
+.modal-body {
+  padding: 12px 16px 16px 16px;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+.equipos-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.equipos-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid #e6f5ed;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7fbf9 100%);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06), 0 0 0 2px rgba(46, 204, 113, 0.15) inset;
+}
+
+.equipos-escudo {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #2ecc71;
+  background: #fff;
+}
+
+.equipos-escudo.placeholder {
+  display: inline-block;
+}
+
+.equipos-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.equipos-nombre {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.equipos-detalle {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* Mejor contorno para cards dentro del modal (reutilizando equipo-card) */
+.equipo-card {
+  border: 1px solid #e6f5ed;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fffb 100%);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06), 0 0 0 2px rgba(46, 204, 113, 0.15) inset;
+}
+
+/* Reducir tamaño de cards dentro del modal de equipos */
+.modal-content .equipo-card {
+  width: 220px;
+  height: 300px;
+  padding: 10px;
+}
+
+.modal-content .equipo-escudo {
+  width: 72px;
+  height: 72px;
+}
+
+.modal-content .equipo-actions .boton-ver-integrantes {
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+/* Ajuste leve de tipografías dentro de la card en el modal */
+.modal-content .equipo-card h3 {
+  font-size: 1rem;
+}
+
+.modal-content .equipo-card p {
+  font-size: 0.95rem;
+}
+
+.modal-integrantes .equipo-escudo-grande {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 50%;
+  border: 2px solid #2ecc71;
+  display: block;
+  margin: 0 auto 10px auto;
+}
+
+.equipo-info-modal {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.integrantes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.integrante-card {
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+}
+
+.integrante-foto {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #e1e1e1;
+  background: #f6f6f6;
+}
+
+.integrante-foto-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e8f7ef;
+  color: #2c3e50;
+  font-weight: 700;
+  border: 1px solid #cfeedd;
+  margin: 0 auto;
+}
+
+.admin-label {
+  margin: 4px 0 0 0;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: #2ecc71;
+  color: white;
+  font-size: 12px;
+}
+
+.sin-integrantes {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 10px;
+}
+
+/* Integrantes dentro de cada equipo */
+.integrantes-lista {
+  list-style: none;
+  margin: 8px 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.integrantes-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 20px;
+  padding: 6px 10px;
+}
+
+.integrante-foto {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #e1e1e1;
+  background: #f6f6f6;
+}
+
+.integrante-foto.placeholder {
+  display: inline-block;
+}
+
+.integrante-nombre {
+  font-size: 0.95rem;
+  color: #374151;
 }
