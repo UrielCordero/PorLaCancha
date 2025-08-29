@@ -60,7 +60,7 @@
   padding: 16px;
   width: 280px;
   text-align: center;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   height: 360px; /* Altura fija para que no cambie al filtrar */
   display: flex;
   flex-direction: column;
@@ -68,7 +68,8 @@
 
 .equipo-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.15), 0 0 18px rgba(46, 204, 113, 0.55); /* brillo verde */
+  border-color: #2ecc71;
 }
 
 .equipo-escudo {
