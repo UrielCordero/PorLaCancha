@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import StarRating from '../StarRating/StarRating';
 import './Equipos.css';
+import '../VerPartido/VerPartido.css';
 
 function Equipos() {
   const [teams, setTeams] = useState([]);
@@ -14,6 +15,13 @@ function Equipos() {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  // Filtros por torneo/cancha
+  const [zonasDisponibles, setZonasDisponibles] = useState([]);
+  const [tiposCancha, setTiposCancha] = useState([]);
+  const [zonaSeleccionada, setZonaSeleccionada] = useState('');
+  const [tipoSeleccionado, setTipoSeleccionado] = useState('');
+  // Mapa equipo -> info de torneos/canchas
+  const [teamTournamentInfo, setTeamTournamentInfo] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,6 +69,57 @@ function Equipos() {
       setLoading(false);
     };
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchTeamTournamentLinks = async () => {
+      // Relación equipos -> torneos -> canchas y tipo de cancha
+      const { data, error } = await supabase
+        .from('equiposXTorneos')
+        .select(`
+          idequipos,
+          torneo: idtorneo (
+            id,
+            nombreTorneo,
+            Id_Cancha (
+              nombre,
+              zona,
+              id_Tipo (
+                descripcion
+              )
+            )
+          )
+        `);
+
+      if (error) {
+        console.error('Error obteniendo relación equipos-torneos:', error);
+        return;
+      }
+
+      const map = {};
+      const zonasSet = new Set();
+      const tiposSet = new Set();
+      for (const row of data || []) {
+        const teamId = row.idequipos;
+        const torneo = row.torneo;
+        const cancha = torneo?.Id_Cancha;
+        const tipo = cancha?.id_Tipo?.descripcion;
+        if (!map[teamId]) map[teamId] = [];
+        map[teamId].push({
+          torneoId: torneo?.id,
+          torneoNombre: torneo?.nombreTorneo,
+          canchaNombre: cancha?.nombre,
+          zona: cancha?.zona,
+          tipoDescripcion: tipo,
+        });
+        if (cancha?.zona) zonasSet.add(cancha.zona);
+        if (tipo) tiposSet.add(tipo);
+      }
+      setTeamTournamentInfo(map);
+      setZonasDisponibles(Array.from(zonasSet).sort((a, b) => a.localeCompare(b)));
+      setTiposCancha(Array.from(tiposSet).sort((a, b) => a.localeCompare(b)));
+    };
+    fetchTeamTournamentLinks();
   }, []);
 
   const handleCrearEquipo = () => {
@@ -163,12 +222,50 @@ function Equipos() {
   if (loading) return <div className="equipos-container">Cargando equipos...</div>;
   if (error) return <div className="equipos-container error">Error: {error}</div>;
 
-  const filteredTeams = teams.filter(team =>
-    team.nombre?.toLowerCase().includes(searchTerm.toLowerCase().trim())
-  );
+  const filteredTeams = teams.filter(team => {
+    const nameMatch = team.nombre?.toLowerCase().includes(searchTerm.toLowerCase().trim());
+    if (!nameMatch) return false;
+    const torneoInfo = teamTournamentInfo[team.idEquipos] || [];
+    const zonaMatch = zonaSeleccionada ? torneoInfo.some(t => t.zona === zonaSeleccionada) : true;
+    const tipoMatch = tipoSeleccionado ? torneoInfo.some(t => t.tipoDescripcion === tipoSeleccionado) : true;
+    return zonaMatch && tipoMatch;
+  });
 
   return (
     <>
+      {/* Navbar de filtros similar a VerPartido */}
+      <div className="search-bar-container" style={{ marginTop: '2rem' }}>
+        <div className="search-option">
+          <i className="fa fa-map-marker-alt"></i>
+          <select value={zonaSeleccionada} onChange={(e) => setZonaSeleccionada(e.target.value)}>
+            <option value="">Buscar zona</option>
+            {zonasDisponibles.map((zona, index) => (
+              <option key={index} value={zona}>
+                {zona}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="search-option">
+          <i className="fa fa-futbol"></i>
+          <select value={tipoSeleccionado} onChange={(e) => setTipoSeleccionado(e.target.value)}>
+            <option value="">Tipo cancha</option>
+            {tiposCancha.map((tipo, index) => (
+              <option key={index} value={tipo}>
+                {tipo}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="search-option clear-filters" title="Reiniciar filtros" onClick={() => {
+          setZonaSeleccionada('');
+          setTipoSeleccionado('');
+        }}>
+          <span style={{ color: 'white', fontWeight: 'bold' }}>×</span>
+        </div>
+      </div>
       {/* Notification Bell for Admins */}
 
       <div className="buscador-container">

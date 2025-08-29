@@ -102,6 +102,18 @@
   margin-top: auto; /* Mantiene los botones al fondo y evita que estiren la card */
 }
 
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar-container .search-option {
+  margin: 0 6px;
+}
+
+/* Info de torneos/canchas debajo de la card */
+/* Se elimina info en cards, ahora va en navbar */
+
 /* Asegurar altura consistente de los botones */
 .equipo-actions .boton-ver-integrantes,
 .equipo-actions .boton-postularse,
