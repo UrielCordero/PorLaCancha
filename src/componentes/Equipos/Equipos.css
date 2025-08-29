@@ -61,6 +61,9 @@
   width: 280px;
   text-align: center;
   transition: transform 0.2s ease;
+  height: 360px; /* Altura fija para que no cambie al filtrar */
+  display: flex;
+  flex-direction: column;
 }
 
 .equipo-card:hover {
@@ -72,7 +75,7 @@
   width: 100px;
   height: 100px;
   object-fit: contain;
-  margin-bottom: 12px;
+  margin: 0 auto 12px auto; /* Centrado horizontal en la card */
   border-radius: 50%;
   border: 1px solid #ddd;
 }
@@ -92,6 +95,17 @@
 
 .boton-ver-integrantes:hover {
   background-color: #218838;
+}
+
+.equipo-actions {
+  margin-top: auto; /* Mantiene los botones al fondo y evita que estiren la card */
+}
+
+/* Asegurar altura consistente de los botones */
+.equipo-actions .boton-ver-integrantes,
+.equipo-actions .boton-postularse,
+.equipo-actions .boton-disabled {
+  min-height: 36px;
 }
 
 /* Modal backdrop similar to login modal */
