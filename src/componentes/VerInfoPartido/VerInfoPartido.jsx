@@ -12,6 +12,55 @@ const VerInfoPartido = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchUsuarios = async (idPartido) => {
+    const { data: usuariosData, error } = await supabase
+      .from('partidoXUsuarios')
+      .select(`
+        id_usuarios,
+        Usuarios (
+          nombre,
+          fotoDePerfil
+        )
+      `)
+      .eq('id_partidos', idPartido);
+
+    if (error) {
+      console.error('Error al obtener los usuarios del partido:', error);
+      setUsuarios([]);
+      return;
+    }
+
+    const usuariosConEquipo = await Promise.all(
+      usuariosData.map(async (usuario) => {
+        // Get the user's team id from usariosXEquipos
+        const { data: userTeamData, error: userTeamError } = await supabase
+          .from('usariosXEquipos')
+          .select('idEquipos')
+          .eq('idUsuarios', usuario.id_usuarios)
+          .maybeSingle();
+
+        if (userTeamError || !userTeamData) {
+          return { ...usuario, equipoNombre: 'Sin equipo' };
+        }
+
+        // Get the team name from equipos table
+        const { data: teamData, error: teamError } = await supabase
+          .from('equipos')
+          .select('nombre')
+          .eq('idEquipos', userTeamData.idEquipos)
+          .maybeSingle();
+
+        if (teamError || !teamData) {
+          return { ...usuario, equipoNombre: 'Sin equipo' };
+        }
+
+        return { ...usuario, equipoNombre: teamData.nombre };
+      })
+    );
+
+    setUsuarios(usuariosConEquipo);
+  };
+
   useEffect(() => {
     const fetchPartido = async () => {
       const { data: partidoData, error } = await supabase
@@ -29,19 +78,6 @@ const VerInfoPartido = () => {
       }
 
       setLoading(false);
-    };
-
-    const fetchUsuarios = async (idPartido) => {
-      const { data: usuariosData, error } = await supabase
-        .from('partidoXUsuarios')
-        .select('id_usuarios, Usuarios(nombre, fotoDePerfil)')
-        .eq('id_partidos', idPartido);
-
-      if (error) {
-        console.error('Error al obtener los usuarios del partido:', error);
-      } else {
-        setUsuarios(usuariosData);
-      }
     };
 
     fetchPartido();
@@ -205,8 +241,8 @@ const VerInfoPartido = () => {
         alert('Se ha unido al partido con todo su equipo correctamente.');
         fetchUsuarios(partido.id_Partidos);
       }
-    } catch {
-      
+    } catch (error) {
+      console.error('Error al unirse al partido:', error);
     }
   };
 
@@ -257,9 +293,12 @@ const VerInfoPartido = () => {
                 alt={u.Usuarios.nombre}
                 className="jugador-avatar"
               />
-              <div className="jugador-nombre">{u.Usuarios.nombre}</div>
-            </div>
-          ))}
+          <div className="jugador-nombre">{u.Usuarios.nombre}</div>
+          <div className="jugador-equipo">
+            {u.equipoNombre || 'Sin equipo'}
+          </div>
+        </div>
+      ))}
         </div>
       </div>
 
