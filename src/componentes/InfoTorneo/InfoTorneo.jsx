@@ -37,7 +37,13 @@ const InfoTorneo = () => {
           Id_Cancha (
             nombre,
             ubicacion,
-            id_Tipo
+            id_Tipo,
+            Localidad (
+              Localidad
+            ),
+            Provinicia (
+              nombre_provincia
+            )
           ),
           tipoCancha: id_Tipo (
             descripcion
@@ -313,6 +319,8 @@ const InfoTorneo = () => {
       />
       <div className="info-torneo-details">
         <p className="info-torneo-detail"><strong>Lugar:</strong> {torneo.Id_Cancha?.ubicacion || torneo.Id_Cancha?.nombre}</p>
+        <p className="info-torneo-detail"><strong>Localidad:</strong> {torneo.Id_Cancha?.Localidad?.Localidad}</p>
+        <p className="info-torneo-detail"><strong>Provincia:</strong> {torneo.Id_Cancha?.Provinicia?.nombre_provincia}</p>
         <p className="info-torneo-detail"><strong>Fecha de inicio:</strong> {formatDate(torneo.fechaInicio)}</p>
         <p className="info-torneo-detail"><strong>Fecha de cierre:</strong> {formatDate(torneo.fechaFin)}</p>
         <p className="info-torneo-detail cantidad-equipos-row">
