@@ -7,7 +7,7 @@ import '/src/componentes/Heroe/Heroe.css';
 
 const VerPartido = () => {
   const [partidos, setPartidos] = useState([]);
-  const [zonasDisponibles, setZonasDisponibles] = useState([]);
+  const [localidadesDisponibles, setLocalidadesDisponibles] = useState([]);
   const [tiposCancha, setTiposCancha] = useState([]);
   const [partidosFiltrados, setPartidosFiltrados] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +16,7 @@ const VerPartido = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
-  const [zonaSeleccionada, setZonaSeleccionada] = useState('');
+  const [localidadSeleccionada, setLocalidadSeleccionada] = useState('');
   const [tipoSeleccionado, setTipoSeleccionado] = useState('');
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
   const [fechaInicioSeleccionada, setFechaInicioSeleccionada] = useState('');
@@ -55,14 +55,14 @@ const VerPartido = () => {
   }, []);
 
   useEffect(() => {
-    extraerZonasUnicas();
+    extraerLocalidadesUnicas();
   }, [partidos]);
 
   // Prefill filters from navigation state if available
   useEffect(() => {
     if (location.state) {
-      const { zonaSeleccionada, tipoSeleccionado, fechaSeleccionada, fechaInicioSeleccionada, fechaFinSeleccionada } = location.state;
-      if (zonaSeleccionada) setZonaSeleccionada(zonaSeleccionada);
+      const { localidadSeleccionada: zonaSeleccionada, tipoSeleccionado, fechaSeleccionada, fechaInicioSeleccionada, fechaFinSeleccionada } = location.state;
+      if (zonaSeleccionada) setLocalidadSeleccionada(zonaSeleccionada);
       if (tipoSeleccionado) setTipoSeleccionado(tipoSeleccionado);
       if (fechaSeleccionada) setFechaSeleccionada(fechaSeleccionada);
       if (fechaInicioSeleccionada) setFechaInicioSeleccionada(fechaInicioSeleccionada);
@@ -76,7 +76,7 @@ const VerPartido = () => {
       handleBuscar();
       setCurrentPage(1); // Reset to first page on filter change
     }
-  }, [zonaSeleccionada, tipoSeleccionado, fechaSeleccionada, fechaInicioSeleccionada, fechaFinSeleccionada, partidos]);
+  }, [localidadSeleccionada, tipoSeleccionado, fechaSeleccionada, fechaInicioSeleccionada, fechaFinSeleccionada, partidos]);
 
 
   const fetchPartidos = async () => {
@@ -97,7 +97,9 @@ const VerPartido = () => {
           nombre,
           FotoCancha,
           precioXHora,
-          zona,
+          Localidad (
+            Localidad
+          ),
           tipoCancha: id_Tipo (
             descripcion
           )
@@ -137,12 +139,12 @@ const VerPartido = () => {
     }
   };
 
-  const extraerZonasUnicas = () => {
-    const zonas = partidos
-      .map((p) => p.Cancha?.zona)
-      .filter((zona, index, self) => zona && self.indexOf(zona) === index)
+  const extraerLocalidadesUnicas = () => {
+    const localidades = partidos
+      .map((p) => p.Cancha?.Localidad?.Localidad)
+      .filter((localidad, index, self) => localidad && self.indexOf(localidad) === index)
       .sort((a, b) => a.localeCompare(b));
-    setZonasDisponibles(zonas);
+    setLocalidadesDisponibles(localidades);
   };
 
   const handleCrearPartido = async () => {
@@ -165,8 +167,8 @@ const VerPartido = () => {
 
   const handleBuscar = () => {
     const filtrados = partidos.filter((partido) => {
-      const zonaMatch = zonaSeleccionada
-        ? partido.Cancha?.zona === zonaSeleccionada
+      const localidadMatch = localidadSeleccionada
+        ? partido.Cancha?.Localidad?.Localidad === localidadSeleccionada
         : true;
 
       const tipoMatch = tipoSeleccionado
@@ -185,7 +187,7 @@ const VerPartido = () => {
         ? partido.fecha <= fechaFinSeleccionada
         : true;
 
-      return zonaMatch && tipoMatch && fechaMatch && fechaInicioMatch && fechaFinMatch;
+      return localidadMatch && tipoMatch && fechaMatch && fechaInicioMatch && fechaFinMatch;
     });
 
     setPartidosFiltrados(filtrados);
@@ -196,11 +198,11 @@ const VerPartido = () => {
       <div className="search-bar-container" style={{ marginTop: '2rem' }}>
         <div className="search-option">
           <i className="fa fa-map-marker-alt"></i>
-          <select value={zonaSeleccionada} onChange={(e) => setZonaSeleccionada(e.target.value)}>
-            <option value="">Buscar zona</option>
-            {zonasDisponibles.map((zona, index) => (
-              <option key={index} value={zona}>
-                {zona}
+          <select value={localidadSeleccionada} onChange={(e) => setLocalidadSeleccionada(e.target.value)}>
+            <option value="">Buscar localidad</option>
+            {localidadesDisponibles.map((localidad, index) => (
+              <option key={index} value={localidad}>
+                {localidad}
               </option>
             ))}
           </select>
@@ -296,7 +298,7 @@ const VerPartido = () => {
         )}
       </div>
       <div className="search-option clear-filters" title="Reiniciar filtros" onClick={() => {
-        setZonaSeleccionada('');
+        setLocalidadSeleccionada('');
         setTipoSeleccionado('');
         setFechaSeleccionada('');
         setFechaInicioSeleccionada('');
