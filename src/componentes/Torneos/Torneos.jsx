@@ -26,6 +26,12 @@ const Torneos = () => {
     extraerTiposCanchaUnicas();
   }, [torneos]);
 
+  useEffect(() => {
+    if (torneos.length > 0) {
+      handleFiltrar();
+    }
+  }, [provinciaSeleccionada, localidadSeleccionada, tipoCanchaSeleccionada, torneos]);
+
   const fetchTorneos = async () => {
     setLoading(true);
 
@@ -123,7 +129,6 @@ const Torneos = () => {
     setProvinciaSeleccionada('');
     setLocalidadSeleccionada('');
     setTipoCanchaSeleccionada('');
-    setFilteredTorneos(torneos);
   };
 
   return (
@@ -148,7 +153,7 @@ const Torneos = () => {
       <div className="search-bar-container" style={{ marginTop: '2rem' }}>
         <div className="search-option">
           <i className="fa fa-map-marker-alt"></i>
-          <select value={provinciaSeleccionada} onChange={(e) => { setProvinciaSeleccionada(e.target.value); handleFiltrar(); }}>
+          <select value={provinciaSeleccionada} onChange={(e) => setProvinciaSeleccionada(e.target.value)}>
             <option value="">Buscar provincia</option>
             {provinciasDisponibles.map((provincia, index) => (
               <option key={index} value={provincia}>
@@ -159,7 +164,7 @@ const Torneos = () => {
         </div>
         <div className="search-option">
           <i className="fa fa-city"></i>
-          <select value={localidadSeleccionada} onChange={(e) => { setLocalidadSeleccionada(e.target.value); handleFiltrar(); }}>
+          <select value={localidadSeleccionada} onChange={(e) => setLocalidadSeleccionada(e.target.value)}>
             <option value="">Buscar localidad</option>
             {localidadesDisponibles.map((localidad, index) => (
               <option key={index} value={localidad}>
@@ -170,7 +175,7 @@ const Torneos = () => {
         </div>
         <div className="search-option">
           <i className="fa fa-futbol"></i>
-          <select value={tipoCanchaSeleccionada} onChange={(e) => { setTipoCanchaSeleccionada(e.target.value); handleFiltrar(); }}>
+          <select value={tipoCanchaSeleccionada} onChange={(e) => setTipoCanchaSeleccionada(e.target.value)}>
             <option value="">Buscar tipo de cancha</option>
             {tiposCanchaDisponibles.map((tipo, index) => (
               <option key={index} value={tipo}>
