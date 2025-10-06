@@ -18,13 +18,14 @@ const Torneos = () => {
 
   useEffect(() => {
     fetchTorneos();
+    fetchProvincias();
+    fetchLocalidades();
+    fetchTiposCancha();
   }, []);
 
   useEffect(() => {
-    extraerProvinciasUnicas();
-    extraerLocalidadesUnicas();
-    extraerTiposCanchaUnicas();
-  }, [torneos]);
+    fetchLocalidades();
+  }, [provinciaSeleccionada]);
 
   useEffect(() => {
     if (torneos.length > 0) {
@@ -67,6 +68,64 @@ const Torneos = () => {
     setLoading(false);
   };
 
+  const fetchProvincias = async () => {
+    const { data, error } = await supabase
+      .from('Provincias')
+      .select('nombre_provincia')
+      .order('nombre_provincia', { ascending: true });
+
+    if (error) {
+      console.error('Error al obtener provincias:', error);
+    } else {
+      console.log('Provincias obtenidas:', data);
+      setProvinciasDisponibles(data.map((p) => p.nombre_provincia));
+    }
+  };
+
+  const fetchLocalidades = async () => {
+    let query = supabase
+      .from('Localidades')
+      .select('Localidad')
+      .order('Localidad', { ascending: true });
+
+    if (provinciaSeleccionada) {
+      // First get the province ID
+      const { data: provinciaData, error: provinciaError } = await supabase
+        .from('Provincias')
+        .select('id')
+        .eq('nombre_provincia', provinciaSeleccionada)
+        .single();
+
+      if (provinciaError) {
+        console.error('Error al obtener ID de provincia:', provinciaError);
+        return;
+      }
+
+      query = query.eq('id_provincia', provinciaData.id);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error('Error al obtener localidades:', error);
+    } else {
+      console.log('Localidades obtenidas:', data);
+      setLocalidadesDisponibles(data.map((l) => l.Localidad));
+    }
+  };
+
+  const fetchTiposCancha = async () => {
+    const { data, error } = await supabase
+      .from('tipoCancha')
+      .select('descripcion');
+
+    if (error) {
+      console.error('Error al obtener tipos de cancha:', error);
+    } else {
+      setTiposCanchaDisponibles(data.map((t) => t.descripcion));
+    }
+  };
+
   const handleCrearTorneo = async () => {
     // Check if hamburger menu is present in DOM
     const hamburgerMenu = document.querySelector('img[src*="Menu.png"]');
@@ -85,29 +144,7 @@ const Torneos = () => {
     navigate('/crear-torneo');
   };
 
-  const extraerProvinciasUnicas = () => {
-    const provincias = torneos
-      .map((t) => t.Cancha?.Provinicia?.nombre_provincia)
-      .filter((provincia, index, self) => provincia && self.indexOf(provincia) === index)
-      .sort((a, b) => a.localeCompare(b));
-    setProvinciasDisponibles(provincias);
-  };
 
-  const extraerLocalidadesUnicas = () => {
-    const localidades = torneos
-      .map((t) => t.Cancha?.Localidad?.Localidad)
-      .filter((localidad, index, self) => localidad && self.indexOf(localidad) === index)
-      .sort((a, b) => a.localeCompare(b));
-    setLocalidadesDisponibles(localidades);
-  };
-
-  const extraerTiposCanchaUnicas = () => {
-    const tipos = torneos
-      .map((t) => t.Cancha?.tipoCancha?.descripcion)
-      .filter((tipo, index, self) => tipo && self.indexOf(tipo) === index)
-      .sort((a, b) => a.localeCompare(b));
-    setTiposCanchaDisponibles(tipos);
-  };
 
   const handleFiltrar = () => {
     const filtrados = torneos.filter((torneo) => {

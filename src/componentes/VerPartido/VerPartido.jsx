@@ -37,6 +37,7 @@ const VerPartido = () => {
   useEffect(() => {
     fetchPartidos();
     fetchTiposCancha();
+    fetchProvincias();
 
     // Get current user on mount and subscribe to auth changes
     const getUser = async () => {
@@ -57,9 +58,8 @@ const VerPartido = () => {
   }, []);
 
   useEffect(() => {
-    extraerLocalidadesUnicas();
-    extraerProvinciasUnicas();
-  }, [partidos]);
+    fetchLocalidades();
+  }, [provinciaSeleccionada]);
 
   // Prefill filters from navigation state if available
   useEffect(() => {
@@ -146,20 +146,50 @@ const VerPartido = () => {
     }
   };
 
-  const extraerLocalidadesUnicas = () => {
-    const localidades = partidos
-      .map((p) => p.Cancha?.Localidad?.Localidad)
-      .filter((localidad, index, self) => localidad && self.indexOf(localidad) === index)
-      .sort((a, b) => a.localeCompare(b));
-    setLocalidadesDisponibles(localidades);
+  const fetchProvincias = async () => {
+    const { data, error } = await supabase
+      .from('Provincias')
+      .select('nombre_provincia')
+      .order('nombre_provincia', { ascending: true });
+
+    if (error) {
+      console.error('Error al obtener provincias:', error);
+    } else {
+      console.log('Provincias obtenidas:', data);
+      setProvinciasDisponibles(data.map((p) => p.nombre_provincia));
+    }
   };
 
-  const extraerProvinciasUnicas = () => {
-    const provincias = partidos
-      .map((p) => p.Cancha?.Provinicia?.nombre_provincia)
-      .filter((provincia, index, self) => provincia && self.indexOf(provincia) === index)
-      .sort((a, b) => a.localeCompare(b));
-    setProvinciasDisponibles(provincias);
+  const fetchLocalidades = async () => {
+    let query = supabase
+      .from('Localidades')
+      .select('Localidad')
+      .order('Localidad', { ascending: true });
+
+    if (provinciaSeleccionada) {
+      // First get the province ID
+      const { data: provinciaData, error: provinciaError } = await supabase
+        .from('Provincias')
+        .select('id')
+        .eq('nombre_provincia', provinciaSeleccionada)
+        .single();
+
+      if (provinciaError) {
+        console.error('Error al obtener ID de provincia:', provinciaError);
+        return;
+      }
+
+      query = query.eq('id_provincia', provinciaData.id);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error('Error al obtener localidades:', error);
+    } else {
+      console.log('Localidades obtenidas:', data);
+      setLocalidadesDisponibles(data.map((l) => l.Localidad));
+    }
   };
 
   const handleCrearPartido = async () => {

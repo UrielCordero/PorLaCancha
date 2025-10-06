@@ -17,38 +17,57 @@ function Heroe({ isLoggedIn }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchPartidos();
+    fetchProvincias();
     fetchTiposCancha();
   }, []);
 
-  const fetchPartidos = async () => {
+  useEffect(() => {
+    fetchLocalidades();
+  }, [provinciaSeleccionada]);
+
+  const fetchProvincias = async () => {
     const { data, error } = await supabase
-      .from('partidos')
-      .select(`
-        Cancha (
-          Localidad (
-            Localidad
-          ),
-          Provinicia (
-            nombre_provincia
-          )
-        )
-      `);
+      .from('Provincias')
+      .select('nombre_provincia')
+      .order('nombre_provincia', { ascending: true });
 
     if (error) {
-      console.error('Error al obtener localidades y provincias:', error);
+      console.error('Error al obtener provincias:', error);
     } else {
-      const localidades = data
-        .map((p) => p.Cancha?.Localidad?.Localidad)
-        .filter((localidad, index, self) => localidad && self.indexOf(localidad) === index)
-        .sort((a, b) => a.localeCompare(b));
-      setZonasDisponibles(localidades);
+      console.log('Provincias obtenidas:', data);
+      setProvinciasDisponibles(data.map((p) => p.nombre_provincia));
+    }
+  };
 
-      const provincias = data
-        .map((p) => p.Cancha?.Provinicia?.nombre_provincia)
-        .filter((provincia, index, self) => provincia && self.indexOf(provincia) === index)
-        .sort((a, b) => a.localeCompare(b));
-      setProvinciasDisponibles(provincias);
+  const fetchLocalidades = async () => {
+    let query = supabase
+      .from('Localidades')
+      .select('Localidad')
+      .order('Localidad', { ascending: true });
+
+    if (provinciaSeleccionada) {
+      // First get the province ID
+      const { data: provinciaData, error: provinciaError } = await supabase
+        .from('Provincias')
+        .select('id')
+        .eq('nombre_provincia', provinciaSeleccionada)
+        .single();
+
+      if (provinciaError) {
+        console.error('Error al obtener ID de provincia:', provinciaError);
+        return;
+      }
+
+      query = query.eq('id_provincia', provinciaData.id);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error('Error al obtener localidades:', error);
+    } else {
+      console.log('Localidades obtenidas:', data);
+      setZonasDisponibles(data.map((l) => l.Localidad));
     }
   };
 
@@ -89,7 +108,10 @@ function Heroe({ isLoggedIn }) {
           <div className="search-bar-container" style={{ marginTop: '2rem' }}>
             <div className="search-option">
               <i className="fa fa-map-marker-alt"></i>
-              <select value={provinciaSeleccionada} onChange={(e) => setProvinciaSeleccionada(e.target.value)}>
+              <select value={provinciaSeleccionada} onChange={(e) => {
+                setProvinciaSeleccionada(e.target.value);
+                setZonaSeleccionada(''); // Clear locality when province changes
+              }}>
                 <option value="">Buscar provincia</option>
                 {provinciasDisponibles.map((provincia, index) => (
                   <option key={index} value={provincia}>
