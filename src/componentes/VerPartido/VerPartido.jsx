@@ -8,6 +8,7 @@ import '/src/componentes/Heroe/Heroe.css';
 const VerPartido = () => {
   const [partidos, setPartidos] = useState([]);
   const [localidadesDisponibles, setLocalidadesDisponibles] = useState([]);
+  const [provinciasDisponibles, setProvinciasDisponibles] = useState([]);
   const [tiposCancha, setTiposCancha] = useState([]);
   const [partidosFiltrados, setPartidosFiltrados] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,6 +17,7 @@ const VerPartido = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
+  const [provinciaSeleccionada, setProvinciaSeleccionada] = useState('');
   const [localidadSeleccionada, setLocalidadSeleccionada] = useState('');
   const [tipoSeleccionado, setTipoSeleccionado] = useState('');
   const [fechaSeleccionada, setFechaSeleccionada] = useState('');
@@ -56,6 +58,7 @@ const VerPartido = () => {
 
   useEffect(() => {
     extraerLocalidadesUnicas();
+    extraerProvinciasUnicas();
   }, [partidos]);
 
   // Prefill filters from navigation state if available
@@ -76,7 +79,7 @@ const VerPartido = () => {
       handleBuscar();
       setCurrentPage(1); // Reset to first page on filter change
     }
-  }, [localidadSeleccionada, tipoSeleccionado, fechaSeleccionada, fechaInicioSeleccionada, fechaFinSeleccionada, partidos]);
+  }, [provinciaSeleccionada, localidadSeleccionada, tipoSeleccionado, fechaSeleccionada, fechaInicioSeleccionada, fechaFinSeleccionada, partidos]);
 
 
   const fetchPartidos = async () => {
@@ -97,6 +100,9 @@ const VerPartido = () => {
           nombre,
           FotoCancha,
           precioXHora,
+          Provinicia (
+            nombre_provincia
+          ),
           Localidad (
             Localidad
           ),
@@ -147,6 +153,14 @@ const VerPartido = () => {
     setLocalidadesDisponibles(localidades);
   };
 
+  const extraerProvinciasUnicas = () => {
+    const provincias = partidos
+      .map((p) => p.Cancha?.Provinicia?.nombre_provincia)
+      .filter((provincia, index, self) => provincia && self.indexOf(provincia) === index)
+      .sort((a, b) => a.localeCompare(b));
+    setProvinciasDisponibles(provincias);
+  };
+
   const handleCrearPartido = async () => {
     
     const hamburgerMenu = document.querySelector('img[src*="Menu.png"]');
@@ -167,6 +181,10 @@ const VerPartido = () => {
 
   const handleBuscar = () => {
     const filtrados = partidos.filter((partido) => {
+      const provinciaMatch = provinciaSeleccionada
+        ? partido.Cancha?.Provinicia?.nombre_provincia === provinciaSeleccionada
+        : true;
+
       const localidadMatch = localidadSeleccionada
         ? partido.Cancha?.Localidad?.Localidad === localidadSeleccionada
         : true;
@@ -187,7 +205,7 @@ const VerPartido = () => {
         ? partido.fecha <= fechaFinSeleccionada
         : true;
 
-      return localidadMatch && tipoMatch && fechaMatch && fechaInicioMatch && fechaFinMatch;
+      return provinciaMatch && localidadMatch && tipoMatch && fechaMatch && fechaInicioMatch && fechaFinMatch;
     });
 
     setPartidosFiltrados(filtrados);
@@ -196,6 +214,18 @@ const VerPartido = () => {
   return (
     <div className="pagina-container">
       <div className="search-bar-container" style={{ marginTop: '2rem' }}>
+        <div className="search-option">
+          <i className="fa fa-map-marker-alt"></i>
+          <select value={provinciaSeleccionada} onChange={(e) => setProvinciaSeleccionada(e.target.value)}>
+            <option value="">Buscar provincia</option>
+            {provinciasDisponibles.map((provincia, index) => (
+              <option key={index} value={provincia}>
+                {provincia}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="search-option">
           <i className="fa fa-map-marker-alt"></i>
           <select value={localidadSeleccionada} onChange={(e) => setLocalidadSeleccionada(e.target.value)}>
@@ -298,6 +328,7 @@ const VerPartido = () => {
         )}
       </div>
       <div className="search-option clear-filters" title="Reiniciar filtros" onClick={() => {
+        setProvinciaSeleccionada('');
         setLocalidadSeleccionada('');
         setTipoSeleccionado('');
         setFechaSeleccionada('');
