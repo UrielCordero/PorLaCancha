@@ -5,8 +5,10 @@ import './Heroe.css';
 
 function Heroe({ isLoggedIn }) {
   const [zonasDisponibles, setZonasDisponibles] = useState([]);
+  const [provinciasDisponibles, setProvinciasDisponibles] = useState([]);
   const [tiposCancha, setTiposCancha] = useState([]);
 
+  const [provinciaSeleccionada, setProvinciaSeleccionada] = useState('');
   const [zonaSeleccionada, setZonaSeleccionada] = useState('');
   const [tipoSeleccionado, setTipoSeleccionado] = useState('');
   const [fechaInicioSeleccionada, setFechaInicioSeleccionada] = useState('');
@@ -22,16 +24,31 @@ function Heroe({ isLoggedIn }) {
   const fetchPartidos = async () => {
     const { data, error } = await supabase
       .from('partidos')
-      .select('Cancha ( zona )');
+      .select(`
+        Cancha (
+          Localidad (
+            Localidad
+          ),
+          Provinicia (
+            nombre_provincia
+          )
+        )
+      `);
 
     if (error) {
-      console.error('Error al obtener zonas:', error);
+      console.error('Error al obtener localidades y provincias:', error);
     } else {
-      const zonas = data
-        .map((p) => p.Cancha?.zona)
-        .filter((zona, index, self) => zona && self.indexOf(zona) === index)
+      const localidades = data
+        .map((p) => p.Cancha?.Localidad?.Localidad)
+        .filter((localidad, index, self) => localidad && self.indexOf(localidad) === index)
         .sort((a, b) => a.localeCompare(b));
-      setZonasDisponibles(zonas);
+      setZonasDisponibles(localidades);
+
+      const provincias = data
+        .map((p) => p.Cancha?.Provinicia?.nombre_provincia)
+        .filter((provincia, index, self) => provincia && self.indexOf(provincia) === index)
+        .sort((a, b) => a.localeCompare(b));
+      setProvinciasDisponibles(provincias);
     }
   };
 
@@ -54,7 +71,8 @@ function Heroe({ isLoggedIn }) {
     }
     navigate('/ver-partidos', {
       state: {
-        zonaSeleccionada,
+        provinciaSeleccionada,
+        localidadSeleccionada: zonaSeleccionada,
         tipoSeleccionado,
         fechaInicioSeleccionada,
         fechaFinSeleccionada,
@@ -71,8 +89,20 @@ function Heroe({ isLoggedIn }) {
           <div className="search-bar-container" style={{ marginTop: '2rem' }}>
             <div className="search-option">
               <i className="fa fa-map-marker-alt"></i>
+              <select value={provinciaSeleccionada} onChange={(e) => setProvinciaSeleccionada(e.target.value)}>
+                <option value="">Buscar provincia</option>
+                {provinciasDisponibles.map((provincia, index) => (
+                  <option key={index} value={provincia}>
+                    {provincia}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="search-option">
+              <i className="fa fa-map-marker-alt"></i>
               <select value={zonaSeleccionada} onChange={(e) => setZonaSeleccionada(e.target.value)}>
-                <option value="">Buscar zona</option>
+                <option value="">Buscar localidad</option>
                 {zonasDisponibles.map((zona, index) => (
                   <option key={index} value={zona}>
                     {zona}
