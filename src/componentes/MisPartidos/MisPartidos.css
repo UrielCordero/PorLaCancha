@@ -1,5 +1,6 @@
 .mis-partidos-container {
   padding: 1rem;
+  min-height: calc(100vh - 160px); /* Asegurar que el contenido ocupe al menos la altura de la ventana menos el footer */
 }
 
 .partidos-grid {
