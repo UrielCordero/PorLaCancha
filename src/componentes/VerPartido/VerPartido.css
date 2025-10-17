@@ -174,3 +174,114 @@
   padding: 0;
   border: none;
 }
+
+/* Responsive móvil */
+@media (max-width: 480px) {
+  .pagina-container {
+    padding: 1rem;
+  }
+
+  .crear-container .boton-crear {
+    width: 100%;
+  }
+
+  .partidos-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .partido-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem;
+  }
+
+  .partido-imagen {
+    width: 100%;
+    height: 160px;
+    margin: 0 0 0.75rem 0;
+  }
+
+  .boton-unirse-container {
+    position: static;
+    justify-content: stretch;
+    margin-top: 0.75rem;
+  }
+
+  .boton-unirse-container .boton-unirse {
+    width: 100%;
+  }
+
+  .pagination {
+    margin-top: 2rem;
+  }
+}
+
+/* Media queries para móviles */
+@media (max-width: 480px) {
+  .pagina-container {
+    padding: 1rem;
+  }
+
+  .search-bar-container {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .search-option {
+    justify-content: center;
+  }
+
+  .search-button {
+    width: 100%;
+  }
+
+  .crear-container {
+    margin-bottom: 1rem;
+  }
+
+  .boton-crear {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+  }
+
+  .partidos-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .partido-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  .partido-imagen {
+    width: 100%;
+    height: 150px;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .boton-unirse-container {
+    position: static;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .boton-unirse {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .pagination {
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .pagination-button {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+  }
+}
