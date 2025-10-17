@@ -100,3 +100,50 @@
 .ver-info:hover {
   background-color: #00995c;
 }
+
+/* Responsive móvil */
+@media (max-width: 480px) {
+  .torneos-container {
+    padding: 1rem;
+  }
+
+  .torneos-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .imagen-header {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    order: 2;
+  }
+
+  .header-texto {
+    order: 1;
+  }
+
+  .header-texto h2 {
+    font-size: 1.5rem;
+  }
+
+  .boton-crear {
+    width: 100%;
+  }
+
+  .torneos-lista {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .torneo-card {
+    width: 100%;
+  }
+
+  .ver-info {
+    width: 100%;
+  }
+}
