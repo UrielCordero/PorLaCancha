@@ -14,3 +14,11 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
+/* Media queries para móviles */
+@media (max-width: 480px) {
+  .free-play {
+    padding: 2rem 1rem;
+    font-size: 1.2rem;
+  }
+}

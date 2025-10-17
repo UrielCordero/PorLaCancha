@@ -41,3 +41,24 @@
 .btn-secondary:hover {
   background-color: #00B56A;
 }
+
+/* Media queries para móviles */
+@media (max-width: 480px) {
+  .monthly-tournaments {
+    padding: 6rem 1rem;
+    height: auto;
+  }
+
+  .tournaments-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .tournaments-content p {
+    font-size: 1rem;
+  }
+
+  .btn-secondary {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+}

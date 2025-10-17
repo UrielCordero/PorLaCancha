@@ -54,3 +54,34 @@
   font-size: 0.95rem;
   color: #555;
 }
+
+/* Media queries para móviles */
+@media (max-width: 480px) {
+  .features {
+    padding: 2rem 1rem;
+  }
+
+  .features h2 {
+    font-size: 1.5rem;
+  }
+
+  .feature-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .feature-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-width: 250px;
+  }
+
+  .feature-card h3 {
+    font-size: 1rem;
+  }
+
+  .feature-card p {
+    font-size: 0.9rem;
+  }
+}
