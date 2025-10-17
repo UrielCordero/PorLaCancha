@@ -46,11 +46,38 @@ const MisPartidos = () => {
         return;
       }
 
-      // Fetch match details for these partido IDs
+      // Fetch match details for these partido IDs (joins alineados al esquema)
       const { data: partidosData, error: partidosError } = await supabase
         .from('partidos')
         .select(
-          "id_Partidos, fecha, horaInicio, horaFin, Cancha ( nombre, FotoCancha, precioXHora, zona, tipoCancha: id_Tipo ( descripcion ) ), equipo1: idEquipo1 ( nombre, imgEscudo ), equipo2: idEquipo2 ( nombre, imgEscudo )"
+          `
+          id_Partidos,
+          fecha,
+          horaInicio,
+          horaFin,
+          Cancha (
+            nombre,
+            FotoCancha,
+            precioXHora,
+            Provinicia (
+              nombre_provincia
+            ),
+            Localidad (
+              Localidad
+            ),
+            tipoCancha: id_Tipo (
+              descripcion
+            )
+          ),
+          equipo1: idEquipo1 (
+            nombre,
+            imgEscudo
+          ),
+          equipo2: idEquipo2 (
+            nombre,
+            imgEscudo
+          )
+          `
         )
         .in('id_Partidos', partidoIds)
         .order('fecha', { ascending: true });
