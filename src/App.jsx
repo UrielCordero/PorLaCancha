@@ -92,7 +92,7 @@ function AppWrapper() {
         onLogout={cerrarSesion}
       />
 
-      <div className="content">
+      <div className={`content ${isFooterFixed ? 'content--has-fixed-footer' : ''}`}>
         <ErrorBoundary>
           <Routes>
             <Route path="/" element={logueado ? <HomeLoggedIn /> : <HomeLoggedOut />} />

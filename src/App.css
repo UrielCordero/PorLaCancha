@@ -419,26 +419,10 @@ body {
 
 .content {
   flex-grow: 1;
-  padding-bottom: 160px; /* space for fixed footer */
 }
 
 /* Reducir espacio inferior en pantallas pequeñas */
-@media (max-width: 480px) {
-  .content {
-    padding-bottom: 56px; /* menor espacio bajo el contenido en móvil */
-  }
-}
-
-/* Tablet */
-@media (min-width: 481px) and (max-width: 768px) {
-  .content {
-    padding-bottom: 96px;
-  }
-}
-
-/* Small desktop */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .content {
-    padding-bottom: 120px;
-  }
-}
+.content--has-fixed-footer { padding-bottom: 160px; }
+@media (max-width: 480px) { .content--has-fixed-footer { padding-bottom: 56px; } }
+@media (min-width: 481px) and (max-width: 768px) { .content--has-fixed-footer { padding-bottom: 96px; } }
+@media (min-width: 769px) and (max-width: 1024px) { .content--has-fixed-footer { padding-bottom: 120px; } }
