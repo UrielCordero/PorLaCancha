@@ -421,3 +421,10 @@ body {
   flex-grow: 1;
   padding-bottom: 160px; /* space for fixed footer */
 }
+
+/* Reducir espacio inferior en pantallas pequeñas */
+@media (max-width: 480px) {
+  .content {
+    padding-bottom: 56px; /* menor espacio bajo el contenido en móvil */
+  }
+}
