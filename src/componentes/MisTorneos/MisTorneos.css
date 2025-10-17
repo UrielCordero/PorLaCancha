@@ -51,3 +51,10 @@
 .ver-info:hover {
   background-color: #00995c;
 }
+
+/* Responsive móvil */
+@media (max-width: 480px) {
+  .mis-torneos-container {
+    padding-bottom: 0;
+  }
+}

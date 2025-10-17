@@ -167,3 +167,45 @@
   margin-top: 6px;
   margin-bottom: 20px;
 }
+
+/* Responsive móvil */
+@media (max-width: 480px) {
+  .ver-info-container {
+    padding: 16px;
+    margin: 12px auto;
+  }
+
+  .ubicacion-mapa iframe {
+    width: 100% !important;
+    height: 260px !important;
+  }
+
+  .info-boxes {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .info-box {
+    margin: 0;
+    padding: 12px;
+  }
+
+  .jugadores-lista {
+    gap: 16px;
+  }
+
+  .jugador-item {
+    width: 44%;
+    max-width: 180px;
+  }
+
+  .jugador-avatar {
+    width: 76px;
+    height: 76px;
+  }
+
+  .boton-unirme,
+  .volver-button-par {
+    width: 100%;
+  }
+}
