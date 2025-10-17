@@ -83,7 +83,12 @@ function Equipos() {
             nombreTorneo,
             Id_Cancha (
               nombre,
-              zona,
+              Localidad (
+                Localidad
+              ),
+              Provinicia (
+                nombre_provincia
+              ),
               id_Tipo (
                 descripcion
               )
@@ -99,20 +104,21 @@ function Equipos() {
       const map = {};
       const zonasSet = new Set();
       const tiposSet = new Set();
-      for (const row of data || []) {
+      for (const row of (data || [])) {
         const teamId = row.idequipos;
         const torneo = row.torneo;
         const cancha = torneo?.Id_Cancha;
         const tipo = cancha?.id_Tipo?.descripcion;
+        const zonaNombre = cancha?.Localidad?.Localidad || cancha?.Provinicia?.nombre_provincia || '';
         if (!map[teamId]) map[teamId] = [];
         map[teamId].push({
           torneoId: torneo?.id,
           torneoNombre: torneo?.nombreTorneo,
           canchaNombre: cancha?.nombre,
-          zona: cancha?.zona,
+          zona: zonaNombre,
           tipoDescripcion: tipo,
         });
-        if (cancha?.zona) zonasSet.add(cancha.zona);
+        if (zonaNombre) zonasSet.add(zonaNombre);
         if (tipo) tiposSet.add(tipo);
       }
       setTeamTournamentInfo(map);
