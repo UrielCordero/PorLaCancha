@@ -224,6 +224,30 @@
   }
 }
 
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+  .pagina-container {
+    padding: 1.5rem;
+  }
+
+  .partidos-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .partido-imagen {
+    height: 140px;
+  }
+}
+
+/* Small desktop */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .partidos-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+}
+
 /* Media queries para móviles */
 @media (max-width: 480px) {
   .pagina-container {

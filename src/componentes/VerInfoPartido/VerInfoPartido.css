@@ -209,3 +209,26 @@
     width: 100%;
   }
 }
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+  .ver-info-container {
+    max-width: 760px;
+  }
+
+  .ubicacion-mapa iframe {
+    width: 100% !important;
+    height: 320px !important;
+  }
+
+  .info-boxes {
+    gap: 12px;
+  }
+}
+
+/* Small desktop */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ver-info-container {
+    max-width: 900px;
+  }
+}

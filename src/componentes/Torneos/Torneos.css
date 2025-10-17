@@ -147,3 +147,41 @@
     width: 100%;
   }
 }
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+  .torneos-container {
+    padding: 1.25rem;
+  }
+
+  .torneos-header {
+    gap: 1rem;
+  }
+
+  .imagen-header {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .torneos-lista {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .torneo-card {
+    width: 100%;
+  }
+}
+
+/* Small desktop */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .torneos-lista {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .torneo-card {
+    width: 100%;
+  }
+}

@@ -428,3 +428,17 @@ body {
     padding-bottom: 56px; /* menor espacio bajo el contenido en móvil */
   }
 }
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+  .content {
+    padding-bottom: 96px;
+  }
+}
+
+/* Small desktop */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .content {
+    padding-bottom: 120px;
+  }
+}
