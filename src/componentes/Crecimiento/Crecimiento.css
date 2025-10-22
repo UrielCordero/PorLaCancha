@@ -1,5 +1,5 @@
 .growth {
-  background-color: #f0f0f0;
+  background-color: #ffffff00;
   padding: 1rem;
   width: 100vw;
   max-width: none;
@@ -48,7 +48,7 @@
 
 .growth-content blockquote {
   font-style: italic;
-  color: #555;
+  color: #00B56A;
   margin-top: 2rem;
   display: flex;
   justify-content: space-between;
