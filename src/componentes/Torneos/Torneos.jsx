@@ -110,7 +110,7 @@ const Torneos = () => {
       console.error('Error al obtener localidades:', error);
     } else {
       console.log('Localidades obtenidas:', data);
-      setLocalidadesDisponibles(data.map((l) => l.Localidad));
+      setLocalidadesDisponibles([...new Set(data.map((l) => l.Localidad))]);
     }
   };
 
