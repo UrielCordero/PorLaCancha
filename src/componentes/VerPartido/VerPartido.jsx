@@ -188,7 +188,9 @@ const VerPartido = () => {
       console.error('Error al obtener localidades:', error);
     } else {
       console.log('Localidades obtenidas:', data);
-      setLocalidadesDisponibles(data.map((l) => l.Localidad));
+      // Usar un Set para eliminar duplicados
+      const localidadesUnicas = [...new Set(data.map((l) => l.Localidad))];
+      setLocalidadesDisponibles(localidadesUnicas);
     }
   };
 
